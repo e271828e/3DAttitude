@@ -1,0 +1,485 @@
+\chapter{Rotational Motion}
+\section{Angular Velocity} %%%%%%%%
+\subsection{Definition} %%%%%%%%
+Let us consider two orthonormal bases $\basis[\alpha]$ and $\basis[\beta]$ in rotational motion with respect to each other, so that rotation matrix $\RotM{\alpha}{\beta}$ is a function of time.
+
+The orthogonality condition for $\RotM{\alpha}{\beta}$ can be written:
+\eql{Eq.Der.AngVel.Orth}
+{
+\trp{\RotM{\alpha}{\beta}} \RotM{\alpha}{\beta} = \IdM
+}
+
+Transposing \eqref{Eq.Der.AngVel.Orth} yields the equivalent:
+\eql{Eq.Der.AngVel.OrthT}
+{
+\RotM{\alpha}{\beta} \trp{\RotM{\alpha}{\beta}} = \IdM
+}
+
+Taking the time derivative in these two expressions and using properties \eqref{Eq.Res.MatDerTrans} and \eqref{Eq.Res.MatDerProd} gives:
+\begin{gather}
+\trp{\RotMDot{\alpha}{\beta}} \RotM{\alpha}{\beta} + \trp{\RotM{\alpha}{\beta}} \RotMDot{\alpha}{\beta}=\NullM \label{Eq.Der.AngVel.Skew1}\\
+\RotMDot{\alpha}{\beta} \trp{\RotM{\alpha}{\beta}} + \RotM{\alpha}{\beta} \trp{\RotMDot{\alpha}{\beta}}=\NullM \label{Eq.Der.AngVel.Skew2}
+\end{gather}
+
+Where we have introduced the shorthand notation:
+\eqnl
+{
+\RotMDot{\alpha}{\beta} = \frac{d \RotM{\alpha}{\beta}}{dt}
+}
+
+Using \eqref{Eq.Res.MatTransSelf} and \eqref{Eq.Res.MatTransProd}, \eqref{Eq.Der.AngVel.Skew1} and \eqref{Eq.Der.AngVel.Skew2} can be written as:
+\begin{gather}
+\trp{\trp{\RotM{\alpha}{\beta}} \RotMDot{\alpha}{\beta}} + \trp{\RotM{\alpha}{\beta}} \RotMDot{\alpha}{\beta}=\tr{\mat{X}} + \mat{X} =\NullM \label{Eq.Der.AngVel.X}\\
+\RotMDot{\alpha}{\beta} \trp{\RotM{\alpha}{\beta}} + \trp{\RotMDot{\alpha}{\beta} \trp{\RotM{\alpha}{\beta}}}=\mat{Y} + \tr{\mat{Y}} = \NullM \label{Eq.Der.AngVel.Y}
+\end{gather}
+
+Where the following matrices have been defined for convenience:
+\begin{gather*}
+\mat{X} =  \trp{\RotM{\alpha}{\beta}} \RotMDot{\alpha}{\beta} \\
+\mat{Y} = \RotMDot{\alpha}{\beta} \trp{\RotM{\alpha}{\beta}} 
+\end{gather*}
+
+Expressions \eqref{Eq.Der.AngVel.X} and \eqref{Eq.Der.AngVel.Y} show that $\mat{X}$ and $\mat{Y}$ are both skew-symmetric. Therefore, they can be interpreted as cross-product matrices, and from \eqref{Eq.Def.V2Skew} we know there exist two column matrices $\mcol{x}$ and $\mcol{y}$ such that:
+\begin{gather}
+\vskew{\mcol{x}} = \mat{X} = \trp{\RotM{\alpha}{\beta}} \RotMDot{\alpha}{\beta} \label{Eq.Der.AngVel.SkewX}\\
+\vskew{\mcol{y}} = \mat{Y} = \RotMDot{\alpha}{\beta} \trp{\RotM{\alpha}{\beta}} \label{Eq.Der.AngVel.SkewY}
+\end{gather}
+
+Solving for $\RotMDot{\alpha}{\beta}$ in \eqref{Eq.Der.AngVel.SkewX} and substituting into \eqref{Eq.Der.AngVel.SkewY}:
+\eql{Eq.Der.AngVel.XYSkew1}
+{
+\vskew{\mcol{y}} = \RotM{\alpha}{\beta} \vskew{\mcol{x}} \trp{\RotM{\alpha}{\beta}}
+}
+
+Now, turning to property \eqref{Eq.Res.V2Skew} and setting $\mat{A}=\RotM{\alpha}{\beta}$, we obtain the following equality:
+\eql{Eq.Der.AngVel.XYSkew2}
+{
+\vskew{\rndp{\RotM{\alpha}{\beta} \mcol{x}}} = \RotM{\alpha}{\beta} \vskew{\mcol{x}} \trp{\RotM{\alpha}{\beta}}
+}
+
+Comparing \eqref{Eq.Der.AngVel.XYSkew1} and \eqref{Eq.Der.AngVel.XYSkew2} we see that the relation between $\mcol{x}$ and $\mcol{y}$ is:
+\eqnl
+{
+\mcol{y} = \RotM{\alpha}{\beta} \mcol{x}
+}
+
+In its passive interpretation, this transformation represents a coordinate change from basis $\basis[\beta]$ to basis $\basis[\alpha]$ of some time-varying Euclidean vector whose $\basis[\beta]$ and $\basis[\alpha]$ components are given respectively by column matrices $\mcol{x}$ and $\mcol{y}$, which are defined implicitly through \eqref{Eq.Der.AngVel.SkewX} and \eqref{Eq.Der.AngVel.SkewY}.
+
+Letting $\varel{\angvelsymb}{\alpha}{\beta}$ denote this Euclidean vector, we have:
+\begin{gather}
+\vskew{\angvel{\alpha}{\beta}{\beta}} = \trp{\RotM{\alpha}{\beta}} \RotMDot{\alpha}{\beta}  \label{Eq.Def.AngVel.SkewBeta}\\
+\vskew{\angvel{\alpha}{\beta}{\alpha}}  = \RotMDot{\alpha}{\beta} \trp{\RotM{\alpha}{\beta}} \label{Eq.Def.AngVel.SkewAlpha}
+\end{gather}
+
+Vector $\varel{\angvelsymb}{\alpha}{\beta}$ is the \emph{angular velocity} of $\basis[\beta]$ with respect to $\basis[\alpha]$.
+
+We now introduce the following notation:
+\begin{gather}
+\AngVelSkew{\alpha}{\beta}{\beta} = \vskew{\angvel{\alpha}{\beta}{\beta}} \label{E:Rot:Def:AngVelSkewMatBeta}\\
+\AngVelSkew{\alpha}{\beta}{\alpha} = \vskew{\angvel{\alpha}{\beta}{\alpha}} \label{E:Rot:Def:AngVelSkewMatAlpha}
+\end{gather}
+
+With this, \eqref{Eq.Def.AngVel.SkewBeta} and \eqref{Eq.Def.AngVel.SkewAlpha} become:
+\begin{gather}
+\RotMDot{\alpha}{\beta} = \RotM{\alpha}{\beta} \AngVelSkew{\alpha}{\beta}{\beta} \label{Eq.Res.Kin.CDotBeta}\\
+\RotMDot{\alpha}{\beta} = \AngVelSkew{\alpha}{\beta}{\alpha} \RotM{\alpha}{\beta}\label{Eq.Res.Kin.CDotAlpha}
+\end{gather}
+
+We also have, from \eqref{Eq.Der.AngVel.XYSkew1}:
+\eql{Eq.Res.Kin.OmegaAlphaBeta}
+{
+\AngVelSkew{\alpha}{\beta}{\alpha} = \RotM{\alpha}{\beta} \AngVelSkew{\alpha}{\beta}{\beta} \trp{\RotM{\alpha}{\beta}}
+}
+
+Taking the time derivative of \eqref{E:LinTr:Res:RotXAlphaFromBeta} and applying \eqref{Eq.Res.Kin.CDotBeta} yields the following relation between the time derivatives of the $\basis[\beta]$ and $\basis[\alpha]$ components of an arbitrary Euclidean vector:
+\begin{equation} \label{Eq.Res.Coriolis}
+\begin{split}
+\vprjdot{x}{\alpha}&=  \RotM{\alpha}{\beta} \vprjdot{x}{\beta} + \RotMDot{\alpha}{\beta} \vprj{x}{\beta} \\
+			&= \RotM{\alpha}{\beta} \vprjdot{x}{\beta} + \RotM{\alpha}{\beta} \AngVelSkew{\alpha}{\beta}{\beta} \vprj{x}{\beta} \\
+			&= \RotM{\alpha}{\beta} \rndp{\prj{\dot{\mcol{x}}}{\beta} + \AngVelSkew{\alpha}{\beta}{\beta} \vprj{x}{\beta}}
+\end{split}
+\end{equation}
+
+\begin{equation*}
+\vprjdot{x}{\alpha} =  \RotM{\alpha}{\beta} \vprjdot{x}{\beta} + \RotMDot{\alpha}{\beta} \vprj{x}{\beta} = \RotM{\alpha}{\beta} \vprjdot{x}{\beta} + \RotM{\alpha}{\beta} \AngVelSkew{\alpha}{\beta}{\beta} \vprj{x}{\beta} = \RotM{\alpha}{\beta} \rndp{\prj{\dot{\mcol{x}}}{\beta} + \AngVelSkew{\alpha}{\beta}{\beta} \vprj{x}{\beta}}
+\end{equation*}
+
+This result is sometimes known as \emph{Coriolis' Theorem}. It shows that, in general, $\vprjdot{x}{\beta}$ is not simply a rotation of $\vprjdot{x}{\alpha}$. The additional term due to the angular velocity is called the \emph{transport rate}.
+
+\subsection{Interpretation} %%%%%%%%
+
+The previous definition of the angular velocity vector provides little insight about its physical interpretation. To uncover it, we shall take a different approach.
+
+We start from the formal definition of $\RotMDot{\alpha}{\beta}$:
+\eqnl
+{
+\RotMDot{\alpha}{\beta} =  \lim_{\Delta t\to 0} \frac{\RotM{\alpha}{\beta}(t+\Delta t) - \RotM{\alpha}{\beta}(t)}{\Delta t}
+}
+
+This can be rewritten as:
+\begin{equation} \label{Eq.Der.AngVel.RotMDot1}
+\begin{split}
+\RotMDot{\alpha}{\beta} &=  \RotM{\alpha}{\beta}(t) \trp{\RotM{\alpha}{\beta}(t)} \lim_{\Delta t\to 0} \frac{\RotM{\alpha}{\beta}(t+\Delta t) - \RotM{\alpha}{\beta}(t)}{\Delta t}\\
+				&= \RotM{\alpha}{\beta}(t) \lim_{\Delta t\to 0} \frac{\trp{\RotM{\alpha}{\beta}(t)} \RotM{\alpha}{\beta}(t+\Delta t)  - \IdM}{\Delta t}
+\end{split}
+\end{equation}
+
+Being a product of rotation matrices, the first term in the numerator of \eqref{Eq.Der.AngVel.RotMDot1} must also be a rotation matrix, but its meaning is not immediately clear.
+
+\begin{subequations}
+To make sense of it, consider a Euclidean vector $\vabs{x}$ with constant $\basis[\alpha]$ components. The $\basis[\beta]$ components of $\vabs{x}$ at times $t$ and $t+\Delta t$ are given respectively by:
+\begin{gather}
+\vprj{x}{\beta}(t) = \trp{\RotM{\alpha}{\beta}(t)} \vprj{x}{\alpha} \label{Eq.Der.AngVel.CDeltaT1}\\
+\vprj{x}{\beta}(t+\Delta t) = \trp{\RotM{\alpha}{\beta}(t+\Delta t)} \vprj{x}{\alpha} \label{Eq.Der.AngVel.CDeltaT2}
+\end{gather}
+\end{subequations}
+
+Solving for $\vprj{x}{\alpha}$ in \eqref{Eq.Der.AngVel.CDeltaT2} and substituting in \eqref{Eq.Der.AngVel.CDeltaT1} yields:
+\eqnl
+{
+\vprj{x}{\beta}(t) = \trp{\RotM{\alpha}{\beta}(t)} \RotM{\alpha}{\beta}(t+\Delta t) \vprj{x}{\beta}(t+\Delta t)
+}
+
+This shows that the rotation matrix in the numerator of \eqref{Eq.Der.AngVel.RotMDot1} relates the $\basis[\beta]$ components of $\vabs{x}$ at times $t$ and $t + \Delta t$. Thus, abusing our notation somewhat, we may represent it as $\RotM{\beta(t)}{\beta(t+\Delta t)}$. With this notational convention, \eqref{Eq.Der.AngVel.RotMDot1} becomes:
+\eql{Eq.Der.AngVel.RotMDot2}
+{
+\RotMDot{\alpha}{\beta} =  \RotM{\alpha}{\beta}(t) \lim_{\Delta t\to 0} \frac{1}{\Delta t} \rndp{\RotM{\beta(t)}{\beta(t+\Delta t)}  - \IdM}
+}
+
+Note that this interpretation of $\RotM{\beta(t)}{\beta(t+\Delta t)}$ requires that the $\basis[\alpha]$ components of $\vabs{x}$ be constant, and thus it is only meaningful in the context of the rotational motion of $\basis[\beta]$ \emph{with respect to $\basis[\alpha]$}. This essential detail is not made explicit by the notation.
+
+From Euler's theorem, we know that the rotation represented by $\RotM{\beta(t)}{\beta(t+\Delta t)}$ can also be described by a three-component rotation vector, which we will denote by $\varel{\rotvecsymb}{\beta(t)}{\beta(t+\Delta t)}$. The relation between $\RotM{\beta(t)}{\beta(t+\Delta t)}$ and $\varel{\rotvecsymb}{\beta(t)}{\beta(t+\Delta t)}$ is given by the exponential map \eqref{Eq.Def.RotVec.Operator}:
+\eql{Eq.Der.AngVel.RotMatRotVec}
+{
+\RotM{\beta(t)}{\beta(t+\Delta t)} = \RotMRotV{\rotv{\beta(t)}{\beta(t+\Delta t)}}
+}
+
+Substituting in \eqref{Eq.Der.AngVel.RotMDot2}:
+\eqnl
+{
+\RotMDot{\alpha}{\beta} = \RotM{\alpha}{\beta}(t) \lim_{\Delta t\to 0} \frac{1}{\Delta t} \rndp{\RotMRotV{\rotv{\beta(t)}{\beta(t+\Delta t)}}  - \IdM}
+}
+
+In the limit, the rotation represented by $\RotM{\beta(t)}{\beta(t+\Delta t)}$ becomes infinitesimal, so \eqref{Eq.Res.InfRot.Approx} can be applied to yield:
+\eql{Eq.Der.AngVel.RotMDot3}
+{
+\RotMDot{\alpha}{\beta} = \RotM{\alpha}{\beta}(t) \lim_{\Delta t\to 0} \vskew{\rndp{\frac{\rotv{\beta(t)}{\beta(t+\Delta t)}}{\Delta t}}}
+}
+
+Recall from \eqref{Eq.Res.RotVec.RhoAlphaBeta} that the missing superscript in the rotation vector conveys the fact that it can be expressed indistinctly in any of the two bases involved in the rotation, in this case $\basis[\beta(t)]$ and $\basis[\beta(t+\Delta t)]$. Thus, we may rewrite \eqref{Eq.Der.AngVel.RotMDot3} as:
+\eql{Eq.Der.AngVel.RotMatRotVecBeta}
+{
+\RotMDot{\alpha}{\beta} = \RotM{\alpha}{\beta}(t) \lim_{\Delta t\to 0} \vskew{\rndp{\frac{\rotv[\beta(t)]{\beta(t)}{\beta(t+\Delta t)}}{\Delta t}}}
+}
+
+Comparing \eqref{Eq.Der.AngVel.RotMatRotVecBeta} and \eqref{Eq.Res.Kin.CDotBeta} shows that:
+\begin{align*}
+\angvel{\alpha}{\beta}{\beta} &= \lim_{\Delta t\to 0} \frac{\rotv[\beta(t)]{\beta(t)}{\beta(t+\Delta t)}}{\Delta t}
+\end{align*}
+
+More generally:
+\eql{Eq.Res.AngVel.RotMDot}
+{
+\varel{\angvelsymb}{\alpha}{\beta} = \lim_{\Delta t\to 0} \frac{\varel{\rotvecsymb}{\beta(t)}{\beta(t+\Delta t)}}{\Delta t}
+}
+
+This expression, together with our previous definition of the incremental rotation vector $\varel{\rotvecsymb}{\beta(t)}{\beta(t+\Delta t)}$, embodies a more physically meaningful interpretation of the angular velocity vector than \eqref{Eq.Def.AngVel.SkewBeta} and \eqref{Eq.Def.AngVel.SkewAlpha}.
+
+Note that, despite the resemblance of \eqref{Eq.Res.AngVel.RotMDot} to a derivative, it cannot be written as such, because there is no absolute rotation vector of which $\varel{\rotvecsymb}{\beta(t)}{\beta(t+\Delta t)}$ is an increment.
+
+\subsection{Composition} %%%%%%%%
+
+We now write $\RotM{\alpha}{\beta}$ in terms of an intermediate basis $\gamma$:
+\eqnl
+{
+\RotM{\alpha}{\beta} = \RotM{\alpha}{\gamma} \RotM{\gamma}{\beta}
+}
+
+Taking the time derivative and applying \eqref{Eq.Res.MatDerProd}:
+\eql{}
+{
+\RotMDot{\alpha}{\beta} 	= \RotMDot{\alpha}{\gamma} \RotM{\gamma}{\beta} + \RotM{\alpha}{\gamma} \RotMDot{\gamma}{\beta}
+}
+
+Using \eqref{Eq.Res.Kin.CDotBeta} and \eqref{Eq.Res.Kin.CDotAlpha}, and recalling the notation from \eqref{E:Rot:Def:AngVelSkewMatBeta}:
+\begin{equation} \label{Eq.Res.OmegaCompBeta}
+\begin{aligned}
+\RotM{\alpha}{\beta} \AngVelSkew{\alpha}{\beta}{\beta} 	&=  \RotM{\alpha}{\gamma} \rndp{\AngVelSkew{\alpha}{\gamma}{\gamma} + \AngVelSkew{\gamma}{\beta}{\gamma}} \RotM{\gamma}{\beta} \\
+\AngVelSkew{\alpha}{\beta}{\beta}				&= \AngVelSkew{\alpha}{\gamma}{\beta} + \AngVelSkew{\gamma}{\beta}{\beta} \\
+\angvel{\alpha}{\beta}{\beta} 					&= \angvel{\alpha}{\gamma}{\beta} + \angvel{\gamma}{\beta}{\beta}
+\end{aligned}
+\end{equation}
+
+Premultiplying \eqref{Eq.Res.OmegaCompBeta} by $\RotM{\delta}{\beta}$, where $\basis[\delta]$ is an arbitrary orthonormal basis:
+\eql{Eq.Res.OmegaCompAlg}
+{
+\angvel{\alpha}{\beta}{\delta} = \angvel{\alpha}{\gamma}{\delta} + \angvel{\gamma}{\beta}{\delta}
+}
+
+Since \eqref{Eq.Res.OmegaCompAlg} holds for an arbitrary $\basis[\delta]$, it follows that composition of angular velocities corresponds to simple Euclidean vector addition:
+\eql{Eq.Res.OmegaCompPhys}
+{
+\varel{\angvelsymb}{\alpha}{\beta} = \varel{\angvelsymb}{\alpha}{\gamma} + \varel{\angvelsymb}{\gamma}{\beta}
+}
+
+This result is consistent with the interpretation of angular velocity as an infinitesimal rotation vector per unit time, embodied by \eqref{Eq.Res.AngVel.RotMDot}: as shown in section~\ref{AttRep.InfRot}, infinitesimal rotations commute and they compose through rotation vector addition.
+
+Setting $\gamma = \alpha$ in \eqref{Eq.Res.OmegaCompPhys} and noting that $\varel{\angvelsymb}{\alpha}{\alpha} = \vabs{0}$ yields the relation between reciprocal angular velocities:
+\eql{Eq.Res.OmegaRec}
+{
+\varel{\angvelsymb}{\alpha}{\beta} = -\varel{\angvelsymb}{\beta}{\alpha}
+}
+
+\subsection{Rotation Around a Fixed Axis} %%%%%%%%
+In general, for two bases $\basis[\alpha]$ and $\basis[\beta]$ in rotational motion with respect to each other, both the rotation angle $\rel{\rotang}{\alpha}{\beta}$ and the rotation axis, defined by unit vector $\varel{\rotax}{\alpha}{\beta}$, change over time. In the particular case where the $\basis[\alpha]$ and $\basis[\beta]$ components of $\varel{\rotax}{\alpha}{\beta}$ (which we know from \eqref{Eq.Res.RotMat.EulerAlias} to be equal and therefore we denote simply by $\vrel{\rotax}{\alpha}{\beta}$) remain constant, the rotational motion occurs around a fixed axis. As we now show, in this case the angular velocity vector takes on a particularly simple form.
+
+We start by transposing \eqref{Eq.Deriv.RotMat.AxisAngle.CAlphaBeta} and using \eqref{Eq.Res.MatTransSum}, \eqref{Eq.Res.MatTransProd} and \eqref{Eq.Res.V2Skew.Transp} to yield:
+\begin{equation} \label{Eq.Deriv.FixedAxis.CTransp}
+\begin{split}
+\trp{\RotM{\alpha}{\beta}} 	&= \IdM + \trp{\vskew{\vrel{\rotax}{\alpha}{\beta}}} \sin \rel{\rotang}{\alpha}{\beta} + \trp{\vskew{\vrel{\rotax}{\alpha}{\beta}}} \trp{\vskew{\vrel{\rotax}{\alpha}{\beta}}} (1-\cos \rel{\rotang}{\alpha}{\beta}) \\
+					&= \IdM - \vskew{\vrel{\rotax}{\alpha}{\beta}} \sin \rel{\rotang}{\alpha}{\beta} + \vskew{\vrel{\rotax}{\alpha}{\beta}}^2 (1-\cos \rel{\rotang}{\alpha}{\beta})
+\end{split}
+\end{equation}
+
+Then we take the time derivative of \eqref{Eq.Deriv.RotMat.AxisAngle.CAlphaBeta} with constant $\vrel{\rotax}{\alpha}{\beta}$:
+\eql{Eq.Deriv.FixedAxis.CDot}
+{
+\RotMDot{\alpha}{\beta} = \rel{\dot{\rotang}}{\alpha}{\beta} \rndp{\vskew{\vrel{\rotax}{\alpha}{\beta}} \cos \rel{\rotang}{\alpha}{\beta} + {\vskew{\vrel{\rotax}{\alpha}{\beta}}}^2 \sin \rel{\rotang}{\alpha}{\beta}}
+}
+
+Solving for $\AngVelSkew{\alpha}{\beta}{\beta}$ in \eqref{Eq.Res.Kin.CDotBeta} and inserting \eqref{Eq.Deriv.FixedAxis.CTransp} and \eqref{Eq.Deriv.FixedAxis.CDot}:
+\begin{multline*}
+\AngVelSkew{\alpha}{\beta}{\beta} = \trp{\RotM{\alpha}{\beta}} \RotMDot{\alpha}{\beta}
+=	\rel{\dot{\rotang}}{\alpha}{\beta} \rndp{\IdM - \vskew{\vrel{\rotax}{\alpha}{\beta}} \sin \rel{\rotang}{\alpha}{\beta} + \vskew{\vrel{\rotax}{\alpha}{\beta}}^2 (1-\cos \rel{\rotang}{\alpha}{\beta})}\\
+	\rndp{\vskew{\vrel{\rotax}{\alpha}{\beta}} \cos \rel{\rotang}{\alpha}{\beta} + {\vskew{\vrel{\rotax}{\alpha}{\beta}}}^2 \sin \rel{\rotang}{\alpha}{\beta}}
+\end{multline*}
+
+Multiplying out and applying \eqref{Eq.Res.RotVec.SkewEvenRotax} and \eqref{Eq.Res.RotVec.SkewOddRotax} yields, after a bit of algebra:
+\eqnl
+{
+\AngVelSkew{\alpha}{\beta}{\beta} = \rel{\dot{\rotang}}{\alpha}{\beta} \rndp{\vskew{\vrel{\rotax}{\alpha}{\beta}} \cos^2 \rel{\rotang}{\alpha}{\beta} + \vskew{\vrel{\rotax}{\alpha}{\beta}} \sin^2 \rel{\rotang}{\alpha}{\beta}} = \rel{\dot{\rotang}}{\alpha}{\beta} \vskew{\vrel{\rotax}{\alpha}{\beta}}
+}
+
+Thus, the angular velocity is simply:
+\eql{Eq.Res.Kin.FixedAxisAngVel}
+{
+\angvel{\alpha}{\beta}{\beta} = \angvel{\alpha}{\beta}{\alpha} =\angvel{\alpha}{\beta}{} = \rel{\dot{\rotang}}{\alpha}{\beta} \vrel{\rotax}{\alpha}{\beta}
+}
+
+And from \eqref{Eq.Res.RotVec.RhoAlphaBeta} we have:
+\eql{Eq.Res.Kin.FixedAxisRotVec}
+{
+\rotvdot{\alpha}{\beta}{} = \rel{\dot{\rotang}}{\alpha}{\beta} \vrel{\rotax}{\alpha}{\beta} = \angvel{\alpha}{\beta}{}
+}
+
+Note that the constancy of $\vrel{\rotax}{\alpha}{\beta}$ does not translate in general to the components of $\varel{\rotax}{\alpha}{\beta}$ in a third basis $\basis[\gamma]$. Indeed, unless $\basis[\gamma]$ is fixed to either $\basis[\alpha]$ or $\basis[\beta]$, $\vrelprj{\rotax}{\alpha}{\beta}{\gamma}$ will in fact be time-varying.
+
+\section{Angular Acceleration}
+\subsection{Definition}
+We define the angular acceleration of $\basis[\beta]$ with respect to $\basis[\alpha]$ as:
+\begin{equation} \label{Eq.Def.AngVel.AngAccelBeta}
+\angacc{\alpha}{\beta}{\beta} = \vrelprjdot{\angvelsymb}{\alpha}{\beta}{\beta}
+\end{equation}
+
+Its $\basis[\alpha]$ components are given by:
+\begin{equation} \label{Eq.Def.AngVel.AngAccelAlpha}
+\angacc{\alpha}{\beta}{\alpha} = \RotM{\alpha}{\beta} \angacc{\alpha}{\beta}{\beta}  = \RotM{\alpha}{\beta} \vrelprjdot{\angvelsymb}{\alpha}{\beta}{\beta}
+\end{equation}
+
+\subsection{Composition}
+Taking the time derivative in \eqref{Eq.Res.OmegaCompBeta}:
+\begin{equation} \label{Eq.Der.AngAccComp1}
+\begin{aligned}
+\angveldot{\alpha}{\beta}{\beta} = \angveldot{\alpha}{\gamma}{\beta} + \angveldot{\gamma}{\beta}{\beta} \\
+\angacc{\alpha}{\beta}{\beta} = \angveldot{\alpha}{\gamma}{\beta} + \angacc{\gamma}{\beta}{\beta}
+\end{aligned}
+\end{equation}
+
+Applying \eqref{Eq.Res.Coriolis} to $\angveldot{\alpha}{\gamma}{\beta}$:
+\begin{multline} \label{Eq.Der.AngAccComp2}
+\angveldot{\alpha}{\gamma}{\beta} = \RotM{\beta}{\gamma} \rndp{\angveldot{\alpha}{\gamma}{\gamma} + \AngVelSkew{\beta}{\gamma}{\gamma} \angvel{\alpha}{\gamma}{\gamma}} =
+\RotM{\beta}{\gamma} \rndp{\angacc{\alpha}{\gamma}{\gamma} + \AngVelSkew{\beta}{\gamma}{\gamma} \angvel{\alpha}{\gamma}{\gamma}} = 
+\angacc{\alpha}{\gamma}{\beta} + \RotM{\beta}{\gamma} \AngVelSkew{\beta}{\gamma}{\gamma} \angvel{\alpha}{\gamma}{\gamma}
+\end{multline}
+
+Substituting \eqref{Eq.Der.AngAccComp2} into \eqref{Eq.Der.AngAccComp1}:
+\eql{Eq.Der.AngAccComp3}
+{
+\angacc{\alpha}{\beta}{\beta} =\angacc{\alpha}{\gamma}{\beta}  + \angacc{\gamma}{\beta}{\beta} + \RotM{\beta}{\gamma} \AngVelSkew{\beta}{\gamma}{\gamma} \angvel{\alpha}{\gamma}{\gamma}
+}
+
+Premultiplying \eqref{Eq.Der.AngAccComp3} by $\RotM{\delta}{\beta}$ and using property \eqref{Eq.Der.AngVel.XYSkew2}:
+\begin{multline*}
+\angacc{\alpha}{\beta}{\delta} =\angacc{\alpha}{\gamma}{\delta}  + \angacc{\gamma}{\beta}{\delta} + \RotM{\delta}{\gamma} \AngVelSkew{\beta}{\gamma}{\gamma} \angvel{\alpha}{\gamma}{\gamma} \\
+=\angacc{\alpha}{\gamma}{\delta}  + \angacc{\gamma}{\beta}{\delta} + \RotM{\delta}{\gamma} \AngVelSkew{\beta}{\gamma}{\gamma} \trp{\RotM{\delta}{\gamma}} \angvel{\alpha}{\gamma}{\delta}
+=\angacc{\alpha}{\gamma}{\delta}  + \angacc{\gamma}{\beta}{\delta} + \AngVelSkew{\beta}{\gamma}{\delta}  \angvel{\alpha}{\gamma}{\delta}
+\end{multline*}
+
+Applying \eqref{Eq.Res.OmegaRec} and \eqref{Eq.Res.V2Skew.Rec} finally yields:
+\eql{Eq.Res.AngAccComp}
+{
+\angacc{\alpha}{\beta}{\delta} =\angacc{\alpha}{\gamma}{\delta}  + \angacc{\gamma}{\beta}{\delta} + \AngVelSkew{\alpha}{\gamma}{\delta} \angvel{\gamma}{\beta}{\delta}
+}
+
+Since this holds for an arbitrary basis~$\basis[\delta]$, we can conclude:
+\eql{Eq.Res.AngAccCompPhys}
+{
+\varel{\angaccsymb}{\alpha}{\beta} = \varel{\angaccsymb}{\alpha}{\gamma} + \varel{\angaccsymb}{\gamma}{\beta} + \varel{\angvelsymb}{\alpha}{\gamma} \times \varel{\angvelsymb}{\gamma}{\beta}
+}
+
+%\section{Rotation Vector Kinematics}
+%Bortz equation
+
+%\section{Euler Angles Kinematics}
+%obtain omega=omega(Psi), the invert by Gaussian elimination
+
+\section{Quaternion Kinematics}
+Let $\quat{\rotq}$ be an arbitrary unit quaternion, so that:
+\begin{equation*}
+\qcon{\quat{\rotq}} \qprod \quat{\rotq} = \qcol{1}{\mcol{0}}
+\end{equation*}
+
+Taking the time derivative in this equality and applying properties \eqref{E:Quat:Res:DerProd} and \eqref{E:Quat:Res:DerConj}:
+\begin{equation} \label{E:AttKin:QuatKin:Der1}
+	\qcon{\quat{\rotq}} \qprod \dot{\quat{\rotq}} + \qcon{\dot{\quat{\rotq}}} \qprod \quat{\rotq} = \qcol{0}{\mcol{0}}
+\end{equation}
+
+Explicit computation of the quaternion products above yields:
+\begin{subequations}
+	\begin{gather}
+		\qcon{\quat{\rotq}} \qprod \dot{\quat{\rotq}} =
+		\qcol{\qreal{\rotq}}{-\qvec{\rotq}} \qprod \qcol{\qreal{\dot{\rotq}}}{\qvec{\dot{\rotq}}} =
+		\qcol
+		{\qreal{\rotq} \qreal{\dot{\rotq}} + \qvec{\rotq} \cdot \qvec{\dot{\rotq}} }
+		{\qreal{\rotq} \qvec{\dot{\rotq}} - \qreal{\dot{\rotq}} \qvec{\rotq} - \qvec{\rotq} \times \qvec{\dot{\rotq}}} = 
+		\qcol[1ex]
+		{\qreal{\rotq} \qreal{\dot{\rotq}} + \qvec{\rotq} \cdot \qvec{\dot{\rotq}} }
+		{\dfrac{1}{2} \qvangv{\quat{\rotq}}} \label{E:AttKin:QuatKin:Der2a}
+		\\
+		\qcon{\dot{\quat{\rotq}}} \qprod \quat{\rotq} =
+		\qcol{\qreal{\dot{\rotq}}}{-\qvec{\dot{\rotq}}} \qprod \qcol{\qreal{\rotq}}{\qvec{\rotq}} =
+		\qcol
+		{\qreal{\dot{\rotq}} \qreal{\rotq} + \qvec{\dot{\rotq}} \cdot \qvec{\rotq} }
+		{\qreal{\dot{\rotq}} \qvec{\rotq} - \qreal{\rotq} \qvec{\dot{\rotq}} - \qvec{\dot{\rotq}} \times \qvec{\rotq}} = 
+		\qcol[1ex]
+		{\qreal{\dot{\rotq}} \qreal{\rotq} + \qvec{\dot{\rotq}} \cdot \qvec{\rotq} }
+		{-\dfrac{1}{2} \qvangv{\quat{\rotq}}} \label{E:AttKin:QuatKin:Der2b}
+	\end{gather}
+\end{subequations}
+
+Where operator $\qvangv{\quat{\rotq}}$, which takes a unit quaternion as an input and produces a column matrix, is defined as:
+\begin{equation} \label{E:AttKin:QuatKin:OmegaOp}
+	\qvangv{\quat{\rotq}} = 2 \left( \qreal{\rotq} \qvec{\dot{\rotq}} - \qreal{\dot{\rotq}} \qvec{\rotq} - \qvec{\rotq} \times \qvec{\dot{\rotq}} \right) 
+\end{equation}
+
+Inserting \eqref{E:AttKin:QuatKin:Der2a} and \eqref{E:AttKin:QuatKin:Der2b} into \eqref{E:AttKin:QuatKin:Der1} gives:
+\begin{equation*}
+	\qreal{\dot{\rotq}} \qreal{\rotq} + \qvec{\dot{\rotq}} \cdot \qvec{\rotq} = 0
+\end{equation*}
+
+So \eqref{E:AttKin:QuatKin:Der2a} and \eqref{E:AttKin:QuatKin:Der2b} become:
+\begin{subequations}
+\begin{gather}
+	\qcon{\quat{\rotq}} \qprod \dot{\quat{\rotq}} =\dfrac{1}{2} 
+	\qcol[1ex]
+	{0}
+	{\qvangv{\quat{\rotq}}} \label{E:AttKin:QuatKin:Der3a}
+	\\
+	\qcon{\dot{\quat{\rotq}}} \qprod \quat{\rotq} =-\dfrac{1}{2} 
+	\qcol[1ex]
+	{0}
+	{\qvangv{\quat{\rotq}}} \label{E:AttKin:QuatKin:Der3b}
+\end{gather}
+\end{subequations}
+
+Now let us consider an orthonormal basis $\basis[\beta]$ in rotational motion with respect to another $\basis[\alpha]$, with their relative orientation described by $\RotQ{\alpha}{\beta}$. Taking the time derivative in \eqref{E:AttRep:Quat:Der:RotQ6} and applying properties \eqref{E:Quat:Res:ProdAssoc}, \eqref{E:Quat:Res:DerProd} and \eqref{E:Quat:Res:DerConj} yields:
+\begin{equation*}
+	\qprj{\dot{x}}{\alpha} =
+	\RotQ{\alpha}{\beta} \qprod \qprj{\dot{x}}{\beta} \qprod \RotQcon{\alpha}{\beta} + 
+	\RotQdot{\alpha}{\beta} \qprod \qprj{x}{\beta} \qprod \RotQcon{\alpha}{\beta} +
+	\RotQ{\alpha}{\beta} \qprod \qprj{x}{\beta} \qprod \RotQdotcon{\alpha}{\beta}
+\end{equation*}
+
+Factoring out $\RotQ{\alpha}{\beta}$ and $\RotQcon{\alpha}{\beta}$, and noting that $\RotQ{\alpha}{\beta}$ is a unit quaternion, the above expression can be rewritten as follows:
+\begin{equation*}
+	\qprj{\dot{x}}{\alpha} =
+	\RotQ{\alpha}{\beta} \qprod
+	\left( \qprj{\dot{x}}{\beta} + \RotQcon{\alpha}{\beta} \qprod \RotQdot{\alpha}{\beta} \qprod \qprj{x}{\beta} +
+	\qprj{x}{\beta} \qprod \RotQdotcon{\alpha}{\beta} \qprod \RotQ{\alpha}{\beta} \right) \qprod
+	\RotQcon{\alpha}{\beta} 
+\end{equation*}
+
+\begin{comment}
+	\qprj{\dot{x}}{\alpha} =
+	\RotQ{\alpha}{\beta} \qprod
+	\left( \RotQcon{\alpha}{\beta} \qprod \RotQdot{\alpha}{\beta} \qprod \qprj{x}{\beta} \qprod \RotQcon{\alpha}{\beta} \qprod \RotQ{\alpha}{\beta} +
+	\RotQcon{\alpha}{\beta} \qprod \RotQ{\alpha}{\beta} \qprod \qprj{x}{\beta} \qprod \RotQdotcon{\alpha}{\beta} \qprod \RotQ{\alpha}{\beta} \right) \qprod
+	\RotQcon{\alpha}{\beta} \\
+\end{comment}
+
+Inserting \eqref{E:AttRep:Quat:Def:XAlpha} and \eqref{E:AttRep:Quat:Def:XBeta}, and applying \eqref{E:AttKin:QuatKin:Der3a} and \eqref{E:AttKin:QuatKin:Der3b} with $\quat{\rotq} = \RotQ{\alpha}{\beta}$ leads to:
+\begin{equation*}
+	\qcol{0}{\vprj{\dot{x}}{\alpha}} = \RotQ{\alpha}{\beta} \qprod
+	\left( \qcol{0}{\vprj{\dot{x}}{\beta}} + \dfrac{1}{2} \qcol{0}{\qvangv{\RotQ{\alpha}{\beta}}} \qprod
+	\qcol{0}{\vprj{x}{\beta}} + \dfrac{1}{2} \qcol{0}{\vprj{x}{\beta}} \qprod
+	\qcol{0}{- \qvangv{\RotQ{\alpha}{\beta}}} \right) \qprod \RotQcon{\alpha}{\beta}
+\end{equation*}
+
+Carrying out the inner quaternion products gives:
+\begin{equation} \label{E:AttKin:QuatKin:Der4}
+	\qcol{0}{\vprj{\dot{x}}{\alpha}}
+	= \RotQ{\alpha}{\beta} \qprod
+	\qcol{0}{\vprj{\dot{x}}{\beta} + \qvangv{\RotQ{\alpha}{\beta}} \times \vprj{x}{\beta}} \qprod \RotQcon{\alpha}{\beta} 
+\end{equation}
+
+From \eqref{E:AttRep:Quat:Res:XAlphaBeta} we see that the right hand side of \eqref{E:AttKin:QuatKin:Der4} represents a change of basis of vector $\vprj{\dot{x}}{\beta} + \qvangv{\RotQ{\alpha}{\beta}} \times \vprj{x}{\beta}$ from basis $\basis[\beta]$ to $\basis[\alpha]$. Extracting the vector part of this equality we can write:
+\begin{equation} \label{E:AttKin:QuatKin:Der5}
+	\vprj{\dot{x}}{\alpha} =
+	\RotM{\alpha}{\beta} \left(\vprj{\dot{x}}{\beta} + \qvangv{\RotQ{\alpha}{\beta}} \times \vprj{x}{\beta}\right) =
+	\RotM{\alpha}{\beta} \left( \vprj{\dot{x}}{\beta} + \vskew{\qvangv{\RotQ{\alpha}{\beta}}} \vprj{x}{\beta} \right)
+\end{equation}
+
+Comparing \eqref{Eq.Res.Coriolis} and \eqref{E:AttKin:QuatKin:Der5} shows that:
+\begin{equation*}
+	\vskew{\qvangv{\RotQ{\alpha}{\beta}}} = \AngVelSkew{\alpha}{\beta}{\beta}
+\end{equation*}
+
+And therefore:
+\begin{equation*}
+	 \qvangv{\RotQ{\alpha}{\beta}} = \angvel{\alpha}{\beta}{\beta}
+\end{equation*}
+
+We may now rewrite equation \eqref{E:AttKin:QuatKin:Der3a} with $\quat{\rotq} = \RotQ{\alpha}{\beta}$:
+\begin{equation}
+	\RotQcon{\alpha}{\beta} \qprod \RotQdot{\alpha}{\beta} =
+	\dfrac{1}{2} \qcol[1ex]{0}{\qvangv{\RotQ{\alpha}{\beta}}} =
+	\dfrac{1}{2} \qcol[1ex]{0}{\angvel{\alpha}{\beta}{\beta}} =
+	\dfrac{1}{2} \relprj{\quat{\omega}}{\alpha}{\beta}{\beta} \label{E:AttKin:QuatKin:Der6}
+\end{equation}
+
+Where $\relprj{\quat{\omega}}{\alpha}{\beta}{\beta}$ denotes the vector quaternion:
+\begin{equation*}
+	\relprj{\quat{\omega}}{\alpha}{\beta}{\beta} = \qcol{0}{\angvel{\alpha}{\beta}{\beta}}
+\end{equation*}
+
+Solving for $\RotQdot{\alpha}{\beta}$ in \eqref{E:AttKin:QuatKin:Der6} finally yields the kinematic equation for $\RotQ{\alpha}{\beta}$:
+\begin{equation} \label{E:AttKin:QuatKin:Res:RotQdot}
+	\RotQdot{\alpha}{\beta} = \dfrac{1}{2} \RotQ{\alpha}{\beta} \qprod \relprj{\quat{\omega}}{\alpha}{\beta}{\beta}
+\end{equation}
+
+From \eqref{E:AttRep:Quat:Res:XBetaAlpha} we have:
+\begin{equation} \label{E:AttKin:QuatKin:Der7}
+	 \relprj{\quat{\omega}}{\alpha}{\beta}{\beta} = \RotQcon{\alpha}{\beta} \qprod
+	 \relprj{\quat{\omega}}{\alpha}{\beta}{\alpha} \qprod \RotQ{\alpha}{\beta}
+\end{equation}
+
+Inserting \eqref{E:AttKin:QuatKin:Der7} into \eqref{E:AttKin:QuatKin:Res:RotQdot} yields the alternative form of the kinematic equation:
+\begin{equation}
+	\RotQdot{\alpha}{\beta} = \dfrac{1}{2} \relprj{\quat{\omega}}{\alpha}{\beta}{\alpha} \qprod \RotQ{\alpha}{\beta} 
+\end{equation}
+
+% \chapter{Translational Motion}
+
+\endinput
+
+%dfkj df testing bla bla bla

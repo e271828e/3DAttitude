@@ -1,0 +1,47 @@
+\chapter{Numerical Considerations} %%%%%%%%
+
+Main concern lies in the choice of attitude description.
+
+\section{Efficiency} %%%%%%%%
+
+\section{Robustness}
+Mover aquí todo lo de minimal de rotation vector y Quaternions.
+
+Robustness / singularity
+Two desirable properties of any attitude parameterization are
+
+one to one: Every attitude corresponds to a unique value of the parameterization
+
+Continuity: Any two infinitesimally close attitudes are correspond to infinitesimally close values of the parameterizarion.
+
+every neighborhood in SO3,
+
+It can be shown (source) that a continuous, parameterization of the proper rotation group SO3 requires at least 5 scalar parameters. Of all the parameterizations shown, only the rotation matrix satisfies this condition.
+
+Neither the axis angle and rotation vector pars can be simultaneously continuoua and one to one. Bounding the rotation angle within an interval of width 2pi creates a discontinuity by which two infinitesimally close rotations will have finitely distinct representations. If the rotation angle is not bounded, then there will be an infinite set of rotation vectors representing the same actual rotation.
+
+Euler angles are a one to one parameterization, but as seen before they are discontinuous and are subject from singularities. Briefly singularity. Attitudes for which
+Although they are appealing for their intuitiveness, Euler angles are a minimal attitude parameterization, and as such they are not singularity-free/they are subject to singularities/they suffer from... that limit their applicability. In particular... For each Euler sequence there is a set of attitudes for which two of the three Euler angles degenerate into one, and the parametrization loses one of its three degrees of freedom. The parameterization is also discontinuous Around the singularity, infinitesimally close attitudes correspond to finitely distinct Euler angles
+
+This phenomenon is commonly known as gimbal lock. For the psi, theta, phi sequence gimbal lock occurs for theta pm pi/2, which can be readily checked by setting theta = pm/pi/w in ()
+
+Quaternions are continuous, but they are not one to one, double cover. However, this ambiguity does not present no practical limitations.
+
+Efficiency
+Neither the axis angle, the rotation vector or euker angle parameterizarions allow for composition. Thus they must be converted to another representation for this purpose. This is computationally inefficient. This is particularly especially for Euler angles, due to the multiple trigonometric function evaluations involved.
+
+These issues greatly limit the practical applicability
+
+Quaternions: more efficient for composition
+Matrix: more efficient for coordinate transformations.
+
+
+Any alternative Euler angle sequence will run into the same singularity issue for some attitude. In fact, this shortcoming is not specific to Euler angles. It can be shown that a minimal non-singular in three-dimensional Euclidean space is topologically impossible
+It is not difficult to see how the rotation vector description may also run into trouble. Since we have constrained to lie in the interval -pi and pi, the rotation vector will show finite discontinuities for infinitesimally close attitudes as theta crosses from -pi to pi and viceversa. If we instead remove the above constraint, and let abs(theta) increase arbitrarily, the result is a potentially infinite set of rotation vectors, all of which correspond to the same actual rotation
+For example if we are using a rotation vector to keep track of a frame continously rotating with respect to each other around a fixed axis, the angle will continously increase.
+
+It turns out (Hopf, 1940) that a minimum of five scalar parameters is required to provide a 1 to 1 parameterization of SO(3). As we showed in (), unit quaternions provide a 2 to 1 parameterization (double cover) of SO(3), but this has no practical disadvantages.
+
+Bortz equation is numerically problematic for rho=0
+
+\endinput
