@@ -1,0 +1,102 @@
+%Compile using xelatex (pdflatex does not support unicode-math)
+%Full compilation sequence: xelatex-biber-xelatex-xelatex
+\documentclass[12pt,a4paper]{report}
+
+\usepackage[backend=biber]{biblatex}
+\addbibresource{3DAttitudeBib.bib}
+
+\usepackage{CustomMath}
+\usepackage{amsmath} %already included in mathtools
+\usepackage[bold-style=ISO]{unicode-math}%unicode-math is used here for \symbf, \symbfup, etc.
+% \usepackage{mathtools} %needed for the spreadlines environment
+
+\usepackage[toc,page]{appendix}
+\usepackage{indentfirst}
+\usepackage{parskip}
+\usepackage[top=1in, bottom=1.25in, left=1.10in, right=1.10in]{geometry}
+\usepackage{graphicx}
+\usepackage{xr-hyper}
+\usepackage[hidelinks]{hyperref}
+\usepackage{verbatim} %for the comment environment
+\usepackage{xcolor} %required for xwatermark!
+\usepackage[printwatermark]{xwatermark}
+\usepackage{cleveref} %after hyperref!
+\usepackage[shortlabels]{enumitem}
+
+%global settings for enumitem
+\setlist[enumerate,1]{label=\alph*)}
+\setlist[enumerate,2]{label=\arabic*)}
+
+%declare external documents for referencing
+\externaldocument[LinAlg.]{LinearAlgebra}
+\externaldocument[AttRep.]{AttitudeRepresentation}
+\externaldocument[RotMot.]{RotationalMotion}
+
+%\newwatermark[allpages,angle=45,scale=5,xpos=0,ypos=0]{DRAFT}
+%\newwatermark*[allpages,angle=45,scale=5,xpos=0,ypos=0]{DRAFT} %prints on top
+
+%numbering commands
+%\numberwithin{equation}{section}
+\setcounter{secnumdepth}{6}
+\setcounter{tocdepth}{2}
+
+\makeindex
+
+\includeonly{
+LinearAlgebra,
+AttitudeRepresentation,
+RotationalMotion
+}
+
+\begin{document}
+
+% \title{Notes on Kinematics for Aircraft Navigation, Guidance and Control}
+\title{3D Attitude for Aircraft Navigation, Guidance and Control}
+%\author{Miguel Alonso Merch\'an \\ TEAYC-TL2}
+\author{Miguel Alonso \\ TEAYC-TL2}
+\maketitle
+
+%\renewcommand{\abstractname}{Summary}
+%\renewcommand{\theparagraph}{\arabic{paragraph}}
+%\begin{abstract}
+%Abstract goes here
+%\end{abstract}
+
+\tableofcontents
+
+\pagebreak
+
+\include{LinearAlgebra}
+\include{AttitudeRepresentation}
+\include{RotationalMotion}
+%\include{NumericalConsiderations_v00}
+
+%Particular case: Elemental Rotations
+
+% \bibitem{Sh93}
+% Shuster, Malcolm D., \dq{A Survey of Attitude Representations},
+% \emph{The Journal of the Astronautical Sciences}, Vol. 41, No. 4, October-December 1993, pp. 439-517.
+
+% \bibitem{Cr14}
+% Markley, F. Landis and Crassidis, John L., \emph{Fundamentals of Spacecraft Attitude Determination and Control},
+% Springer (2014)
+
+% \bibitem{Go01}
+% Goldstein, H., Poole Jr., Charles P. and Safko, John L., \emph{Classical Mechanics}, 3rd ed.,
+% Addison-Wesley (2001)
+
+% \bibitem{Gr08}
+% Groves, Paul D., \emph{Principles of GNSS, Inertial and Multisensor Integrated Navigation Systems},
+% Artech House (2008)
+
+%\bibitem{Sa00}
+%Savage, P. G., \emph{Strapdown Analytics}, Maple Plain, MN: Strapdown Associates, 2000.
+
+%Crassidis: Spacecraft, Survey.
+%Farrell
+%Titterton
+
+% \cite{einstein}
+% \printbibliography %only prints those references within the bibliography database that have been cited!
+
+\end{document}

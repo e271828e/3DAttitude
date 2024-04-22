@@ -1,0 +1,1412 @@
+\chapter{Attitude Representation} %%%%%%%%
+
+\section{Fundamentals}
+\subsection{Proper Rotations in Euclidean Space} %%%%%%%%
+Let $\mathcal{V}$ be an inner product space of dimension $n$ and let $\basis[\alpha]$ be an \emph{orthonormal} basis for $\mathcal{V}$. Let $f:\mathcal{V}\rightarrow\mathcal{V}$ be an invertible endomorphism, defined by a non-singular transformation matrix $\RotM{\alpha}{\beta}$, that maps $\basis[\alpha]$ into \emph{another} orthonormal basis $\basis[\beta]$.
+
+\begin{subequations}
+Since $\basis[\beta]$ is orthonormal, we can apply \eqref{Eq.Res.ComponentsOrth} in \eqref{E:LinTr:Res:TrMatAutXYComp} and \eqref{E:LinTr:Res:TrMatInvAutXYComp} to yield:
+\begin{gather}
+\cRotM{\alpha}{\beta}{i,j}= \csubprj{\bv}{\beta j}{\alpha}{i} = \vasub{\bv}{\alpha i} \cdot \vasub{\bv}{\beta j} \label{E:LinTr:Res:RotMeAlphaeBeta}\\
+\cRotM{\beta}{\alpha}{i,j}= \csubprj{\bv}{\alpha j}{\beta}{i} = \vasub{\bv}{\beta i} \cdot \vasub{\bv}{\alpha j} = \vasub{\bv}{\alpha j} \cdot \vasub{\bv}{\beta i} \label{E:LinTr:Res:RotMeBetaeAlpha}
+\end{gather}
+\end{subequations}
+
+Which means:
+\begin{equation} \label{E:LinTr:Der:RotMOrth}
+\RotM{\beta}{\alpha} = \trp{\RotM{\alpha}{\beta}}
+\end{equation}
+
+Since $\RotM{\beta}{\alpha} = \invp{\RotM{\alpha}{\beta}}$, we have that:
+\begin{equation} \label{E:LinTr:Res:RotMOrth}
+\invp{\RotM{\alpha}{\beta}} = \trp{\RotM{\alpha}{\beta}}
+\end{equation}
+
+Thus, $\RotM{\alpha}{\beta}$ is an orthogonal matrix, that is, $\RotM{\alpha}{\beta} \in O(n)$
+
+Now, let $\vasub{v}{1}, \vasub{v}{2} \in \mathcal{V}$ be two arbitrary vectors, and let $\vasub{w}{1}=f(\vasub{v}{1})$ and $\vasub{w}{2}=f(\vasub{v}{2})$, so that:
+\begin{gather*}
+\vsubprj{w}{1}{\alpha} = \RotM{\alpha}{\beta} \vsubprj{v}{1}{\alpha} \\
+\vsubprj{w}{2}{\alpha} = \RotM{\alpha}{\beta} \vsubprj{v}{2}{\alpha} \\
+\end{gather*}
+
+Applying \eqref{Eq.Def.VectColMat.InnerProd} and \eqref{Eq.Res.MatTransProd}, their inner product can be written as:
+\begin{equation*}
+	\vasub{w}{1} \cdot \vasub{w}{2} = \trp{\vsubprj{w}{1}{\alpha}} \vsubprj{w}{2}{\alpha} = \trp{\RotM{\alpha}{\beta} \vsubprj{v}{1}{\alpha}} \RotM{\alpha}{\beta} \vsubprj{v}{2}{\alpha} =  \trp{\vsubprj{v}{1}{\alpha}} \trp{\RotM{\alpha}{\beta}} \RotM{\alpha}{\beta} \vsubprj{v}{2}{\alpha} =  \trp{\vsubprj{v}{1}{\alpha}} \vsubprj{v}{2}{\alpha} = \vasub{v}{1} \cdot \vasub{v}{2}
+\end{equation*}
+
+This shows that the inner product remains invariant under $f$. Since distances and angles are defined from the inner product, they are both preserved. It follows that an invertible endomorphism that maps an orthonormal basis into another, and whose matrix is therefore orthogonal, preserves distances and angles. Such an endomorphism is called a \emph{rotation}.
+
+Using \eqref{Eq.Def.Angle}, we can also write \eqref{E:LinTr:Res:RotMeAlphaeBeta} and \eqref{E:LinTr:Res:RotMeBetaeAlpha} as:
+\begin{gather*}
+\cRotM{\alpha}{\beta}{i,j} = \cos \theta_{\vasub{\bv}{\alpha i},\vasub{\bv}{\beta j}} \\
+\cRotM{\beta}{\alpha}{i,j}= \cos \theta_{\vasub{\bv}{\beta i},\vasub{\bv}{\alpha j}}
+\end{gather*}
+
+Thus, the elements of a rotation matrix are the cosines of the angles between the original and transformed basis vectors. For this reason, a rotation matrix is sometimes known as a \emph{direction cosine matrix}.
+
+The composition of rotations is a particular case of the composition of linear transformations, and therefore it is realized through matrix multiplication:
+\begin{equation} \label{E:LinTr:Res:RotComp}
+\RotM{\alpha}{\beta} = \RotM{\alpha}{\delta} \RotM{\delta}{\beta}
+\end{equation}
+
+It follows from \eqref{E:LinTr:Res:RotComp} and the closure property of $O(n)$ that the composition of rotations is also a rotation.
+
+We now focus in the particular case in which $\mathcal{V}$ is the three-dimensional Euclidean space and $\RotM{\alpha}{\beta}$ is a proper orthogonal matrix, that is, $\RotM{\alpha}{\beta} \in SO(3)$.
+
+Under these assumptions, orientation, as defined by \eqref{Eq.Def.Basis.RightHanded} and \eqref{Eq.Def.Basis.LeftHanded}, is preserved by the rotation represented by $\RotM{\alpha}{\beta}$, which means that the transformed basis $\basis[\beta]$ has the same orientation as $\basis[\alpha]$. 
+
+To see why, let us return to \eqref{E:LinTr:Res:RotComp}. Noting that $\det \RotM{\alpha}{\beta}=1$ and using properties \eqref{Eq.Res.DetTransp} and \eqref{Eq.Res.DetProd}, we can write:
+\begin{equation} \label{E:LinTr:Der:ProperRot1}
+\begin{split}
+1 &= \det \RotM{\alpha}{\beta} =  \det \rndp{\RotM{\alpha}{\delta} \RotM{\delta}{\beta}} = \det \rndp{\trp{\RotM{\delta}{\alpha}} \RotM{\delta}{\beta}}\\
+&= \det \trp{\RotM{\delta}{\alpha}} \det \RotM{\delta}{\beta} = \det \RotM{\delta}{\alpha} \det \RotM{\delta}{\beta}
+\end{split}
+\end{equation}
+
+From \eqref{E:LinTr:Res:TrMatAutCols} we know that $\RotM{\delta}{\alpha}$ and $\RotM{\delta}{\beta}$ have the following structure:
+\begin{gather*}
+\RotM{\delta}{\alpha} = 
+\matenv{
+	\vsubprj{\bv}{\alpha 1}{\delta} &
+	\vsubprj{\bv}{\alpha 2}{\delta} &
+	\vsubprj{\bv}{\alpha 3}{\delta}} \\
+\RotM{\delta}{\beta} = 
+\matenv{
+	\vsubprj{\bv}{\beta 1}{\delta} &
+	\vsubprj{\bv}{\beta 2}{\delta} &
+	\vsubprj{\bv}{\beta 3}{\delta}}
+\end{gather*}
+
+\begin{subequations}
+If we choose $\basis[\delta]$ to be orthonormal and right-handed, we can apply \eqref{Eq.Res.TripleProdDet1} to write:
+\begin{gather}
+\det \RotM{\delta}{\alpha} = \rndp{\vasub{\bv}{\alpha 1} \times \vasub{\bv}{\alpha 2}} \cdot \vasub{\bv}{\alpha 3} \label{E:LinTr:Der:ProperRot2A}\\
+\det \RotM{\delta}{\beta} = \rndp{\vasub{\bv}{\beta 1} \times \vasub{\bv}{\beta2}} \cdot \vasub{\bv}{\beta 3} \label{E:LinTr:Der:ProperRot2B}
+\end{gather}
+\end{subequations}
+
+Inserting \eqref{E:LinTr:Der:ProperRot2A} and \eqref{E:LinTr:Der:ProperRot2B} in \eqref{E:LinTr:Der:ProperRot1} yields:
+\begin{equation*}
+\rndp{\rndp{\vasub{\bv}{\alpha 1} \times \vasub{\bv}{\alpha 2}} \cdot \vasub{\bv}{\alpha 3}} \rndp{\rndp{\vasub{\bv}{\beta 1} \times \vasub{\bv}{\beta2}} \cdot \vasub{\bv}{\beta 3}} = 1
+\end{equation*}
+
+And, for the above to hold, $\basis[\alpha]$ and $\basis[\beta]$ must have the same orientation, as we intended to show.
+
+A rotation in Euclidean space whose matrix is proper orthogonal, and therefore preserves orientation, is called a \emph{proper rotation}. From the closure property of $SO(3)$, it follows that the composition of proper rotations yields a proper rotation.
+
+When a proper rotation in Euclidean space transforming basis $\basis[\alpha]$ into $\basis[\beta]$ is interpreted in its passive sense, it is said to represent the \emph{attitude} of $\basis[\beta]$ with respect to $\basis[\alpha]$. The corresponding basis changes \eqref{E:LinTr:Res:XAlphaFromBeta} and \eqref{E:LinTr:Res:XBetaFromAlpha} become:
+\begin{gather}
+\vprj{x}{\alpha} = \RotM{\alpha}{\beta} \vprj{x}{\beta} \label{E:LinTr:Res:RotXAlphaFromBeta}\\
+\vprj{x}{\beta} = \trp{\RotM{\alpha}{\beta}} \vprj{x}{\alpha } \label{E:LinTr:Res:RotXBetaFromAlpha}
+\end{gather}
+
+All the rotations we will be dealing with in the remaining sections are proper rotations in Euclidean space.
+
+\subsection{Euler's Rotation Theorem} %%%%%%%%
+Euler's Rotation Theorem asserts that, for every proper rotation in three-dimen\-sional Euclidean space, there is a direction which remains invariant under it. Such direction is called the \emph{axis of rotation}. As any direction in space, the axis of rotation has two degrees of freedom. It may be defined by means of a unit vector $\vabs{\rotax}$, whose three components are subject to a unit norm constraint.
+
+Additionally specifying a rotation angle $\rotang \in \left[-\pi,\pi\right)$ fully defines the rotation. The rotation sense is given by the right-hand rule: with $\vabs{\rotax}$ pointing towards the viewer, $\rotang>0$ yields a counter-clockwise rotation.
+
+It follows from the above that a three-dimensional rotation has three degrees of freedom. Therefore, the $9$ elements of a rotation matrix $\RotM{\alpha}{\beta}$ cannot possibly be independent, but rather they must satisfy some set of $6$ scalar constraints. Indeed, these constraints arise from the fact that $\RotM{\alpha}{\beta}$ is orthogonal: since its columns $\vsubprj{\bv}{\beta j}{\alpha}$ represent the components of an orthonormal basis, they are related by the orthonormality conditions \eqref{Eq.Res.Basis.OrthKronecker}. Hence, the rotation matrix is a redundant or \emph{non-minimal} attitude descriptor.
+
+An equivalent algebraic statement of Euler's theorem is: for any rotation matrix $\RotM{\alpha}{\beta}$, there exists a unit vector $\varel{\rotax}{\alpha}{\beta}$ such that $\vrelprj{\rotax}{\alpha}{\beta}{\alpha}$ is an eigenvector of $\RotM{\alpha}{\beta}$ with eigenvalue $\lambda=1$:
+\begin{equation}\label{Eq.Res.RotMat.EulerAlibi}
+\RotM{\alpha}{\beta} \vrelprj{\rotax}{\alpha}{\beta}{\alpha} = \vrelprj{\rotax}{\alpha}{\beta}{\alpha}
+\end{equation}
+
+From \eqref{E:LinTr:Res:RotXAlphaFromBeta}:
+\begin{equation}\label{Eq.Res.RotMat.UAlphaUBeta}
+\vrelprj{\rotax}{\alpha}{\beta}{\alpha} = \RotM{\alpha}{\beta} \vrelprj{\rotax}{\alpha}{\beta}{\beta}
+\end{equation}
+
+Since $\RotM{\alpha}{\beta}$ is nonsingular, equating \eqref{Eq.Res.RotMat.EulerAlibi} and \eqref{Eq.Res.RotMat.UAlphaUBeta} we see that:
+\begin{equation}\label{Eq.Res.RotMat.EulerAlias}
+\vrelprj{\rotax}{\alpha}{\beta}{\alpha} = \vrelprj{\rotax}{\alpha}{\beta}{\beta} = \vrel{\rotax}{\alpha}{\beta}
+\end{equation}
+
+Where the omitted superscript indicates that $\varel{\rotax}{\alpha}{\beta}$ can be expressed indistinctly in either $\basis[\alpha]$ or $\basis[\beta]$. Equation \eqref{Eq.Res.RotMat.EulerAlias} embodies an alternative statement of Euler's theorem, connected to the alias interpretation of rotations: any vector along the rotation axis has the same components in both the original and transformed bases.
+
+To prove the theorem one must show that $\lambda=1$ is an eigenvalue of $\RotM{\alpha}{\beta}$, that is, $\det \rndp{\RotM{\alpha}{\beta}-\IdM}=0$. Using \eqref{Eq.Res.DetTransp}, \eqref{Eq.Res.DetProd} and \eqref{Eq.Res.DetScalar}:
+\begin{equation*}
+\begin{split}
+\det \rndp{\RotM{\alpha}{\beta}-\IdM} &= \det \trp{\RotM{\alpha}{\beta}-\IdM} = \det \rndp{\trp{\RotM{\alpha}{\beta}}-\IdM} \\
+						&= \det \rndp{\trp{\RotM{\alpha}{\beta}} \rndp{\IdM - \RotM{\alpha}{\beta}}} = \det \trp{\RotM{\alpha}{\beta}} \det \rndp{\IdM - \RotM{\alpha}{\beta}} \\
+						&= \det \rndp{\RotM{\alpha}{\beta}} \det \rndp{-\rndp{\RotM{\alpha}{\beta}-\IdM}} = (-1)^{3} \det \rndp{\RotM{\alpha}{\beta}-\IdM} \\
+						&= -\det \rndp{\RotM{\alpha}{\beta}-\IdM} 
+\end{split}
+\end{equation*}
+
+Hence, $\det \rndp{\RotM{\alpha}{\beta}-\IdM}=0$. Note that the number of dimensions ($n=3$ in this case) is critical for the proof; the theorem only holds for spaces with an uneven number of dimensions. In particular, it is intuitively obvious that no invariant directions exist in a rotation within the two\nobreakdash-dimensional plane.
+
+\subsection{Rodrigues' Rotation Formula}
+Let $f$ be a proper rotation around the axis defined by unit vector $\vabs{\rotax}$, and let $\rotang$ denote the rotation angle. An arbitrary vector $\vabs{v}$ can be expressed as the sum of a component parallel to $\vabs{\rotax}$ and another perpendicular to $\vabs{\rotax}$:
+\begin{equation*}
+	\vabs{v} = \vasub{v}{\parallel} + \vasub{v}{\perp}
+\end{equation*}
+
+Where:
+\begin{gather}
+\vasub{v}{\parallel} = \rndp{\vabs{v} \cdot \vabs{\rotax}}\vabs{\rotax} \label{Eq.Deriv.RotM.XPar} \\
+\vasub{v}{\perp} = \vabs{v} - \vasub{v}{\parallel} = \vabs{v} - \rndp{\vabs{v}\cdot \vabs{\rotax}} \vabs{\rotax} \label{Eq.Deriv.RotM.XPerp}
+\end{gather}
+
+We now construct the following unit vectors:
+\begin{gather}
+\vasub{\rotax}{\perp} = \frac{\vasub{v}{\perp}}{|\vasub{v}{\perp}|} \label{Eq.Def.RotMat.UPerp}\\
+\vasub{\rotax}{\times} = \vabs{\rotax} \times \vasub{\rotax}{\perp} = \frac{\vabs{\rotax} \times \vasub{v}{\perp}}{|\vasub{v}{\perp}|} = \frac{\vabs{\rotax} \times \rndp{\vasub{v}{\perp}+\vasub{v}{\parallel}}}{|\vasub{v}{\perp}|}= \frac{\vabs{\rotax} \times \vabs{v}}{|\vasub{v}{\perp}|} \label{Eq.Def.RotMat.UTimes}
+\end{gather}
+
+The set $\{\vabs{\rotax}, \vasub{\rotax}{\perp}, \vasub{\rotax}{\times}\}$ forms an orthonormal, right-handed basis.
+
+The rotated vector $\vabs{w}=f\rndp{\vabs{v}}$ can similarly be expressed as:
+\begin{equation}\label{Eq.Deriv.RotM.Y}
+\vabs{w} = \vasub{w}{\parallel} + \vasub{w}{\perp}
+\end{equation}
+
+From Euler's theorem, we know that $\vasub{v}{\parallel}$ is unchanged by the rotation, so:
+\begin{equation}\label{Eq.Deriv.RotM.YPar}
+\vasub{w}{\parallel} = \vasub{v}{\parallel} = \rndp{\vabs{v} \cdot \vabs{\rotax}}\vabs{\rotax}
+\end{equation}
+
+Since the rotation preserves lengths, $|\vabs{w}| = |\vabs{v}|$, and therefore $|\vasub{w}{\perp}| = |\vasub{v}{\perp}|$.
+
+Working on the plane of rotation, we can express $\vasub{w}{\perp}$ as:
+\begin{equation*}
+	\vasub{w}{\perp} = |\vasub{w}{\perp}| \rndp{\vasub{\rotax}{\perp} \cos \rotang + \vasub{\rotax}{\times} \sin \rotang } = |\vasub{v}{\perp}| \rndp{\vasub{\rotax}{\perp} \cos \rotang + \vasub{\rotax}{\times} \sin \rotang}
+\end{equation*}
+
+Using \eqref{Eq.Def.RotMat.UPerp}, \eqref{Eq.Def.RotMat.UTimes} and \eqref{Eq.Deriv.RotM.XPerp}:
+\begin{equation}\label{Eq.Deriv.RotM.YPerp}
+\vasub{w}{\perp} 	=  \vasub{v}{\perp} \cos \rotang + \vabs{\rotax} \times \vabs{v} \sin \rotang
+			= \rndp{\vabs{v} - \rndp{\vabs{v}\cdot \vabs{\rotax}} \vabs{\rotax}} \cos \rotang + \vabs{\rotax} \times \vabs{v} \sin \rotang 
+\end{equation}
+
+Gathering \eqref{Eq.Deriv.RotM.YPar} and \eqref{Eq.Deriv.RotM.YPerp}:
+\begin{equation}\label{Eq:Att:Res:Rodrigues1}
+\vabs{w} =  \rndp{\vabs{v}\cdot \vabs{\rotax}}\vabs{\rotax} + \rndp{\vabs{v} -  \rndp{\vabs{v}\cdot \vabs{\rotax}}\vabs{\rotax}} \cos \rotang + \vabs{\rotax} \times \vabs{v} \sin \rotang
+\end{equation}
+
+Equation \eqref{Eq:Att:Res:Rodrigues1} is known as \emph{Rodrigues' rotation formula}. It is a component-free description of the result of rotating an Euclidean vector $\vabs{v}$ an angle $\rotang$ around the axis defined by $\vabs{\rotax}$ .
+
+Rearranging \eqref{Eq:Att:Res:Rodrigues1} yields the alternative form:
+\begin{equation}\label{Eq:Att:Res:Rodrigues2}
+\vabs{w} =  \vabs{v} \cos \rotang + (1-\cos \rotang) \rndp{\vabs{v}\cdot \vabs{\rotax}}\vabs{\rotax}  + \vabs{\rotax} \times \vabs{v} \sin \rotang 
+\end{equation}
+
+Taking the scalar product with $\vabs{v}$ in \eqref{Eq:Att:Res:Rodrigues1} gives:
+\begin{align*}
+	\vabs{v} \cdot \vabs{w} &= \left( \vabs{v} \cdot \vabs{\rotax} \right)^{2} + \left( \norm{\vabs{v}}^{2} - \left( \vabs{v} \cdot \vabs{\rotax} \right)^{2} \right) \cos \rotang \\
+	\norm{\vabs{v}}^{2} \cos \theta_{\vabs{v}, \vabs{w}} &= \norm{\vabs{v}}^{2} \left(\cos \theta_{\vabs{v},\vabs{\rotax}}\right)^{2} + \norm{\vabs{v}}^{2} \left( 1 - \left(\cos \theta_{\vabs{v},\vabs{\rotax}}\right)^{2} \right) \cos \rotang
+\end{align*}
+
+Solving for $\cos \rotang$ we arrive at the following relation:
+\begin{equation}
+	\rotang = \arccos \left( \frac{\cos \theta_{\vabs{v},\vabs{w}} - \left( \cos \theta_{\vabs{v},\vabs{\rotax}}\right)^{2}}{1 - \left(\cos \theta_{\vabs{v},\vabs{\rotax}}\right)^2 } \right)  = f\left( \left(\cos \theta_{\vabs{v},\vabs{\rotax}}\right)^2 \right)
+\end{equation}
+
+It is easy to verify that $f$ is monotonically increasing. Thus, $\rotang$ is minimum for $\cos \theta_{\vabs{v},\vabs{\rotax}} = 0$, which yields $\rotang_{min} = \theta_{\vabs{v},\vabs{w}}$. In this case, $\vabs{\rotax} \perp \vabs{v}$, so $\vasub{v}{\parallel} = \vasub{w}{\parallel} = 0$. Therefore, $\vabs{v}$ and $\vabs{w}$ are contained in the plane of rotation, and the direction of $\vabs{\rotax}$ is given by $\vabs{v} \times \vabs{w}$.
+
+As $| \cos \theta_{\vabs{v},\vabs{\rotax}} |$ increases, so does $\rotang$, until $\rotang_{max} = \pi$. Setting $\rotang = \pi$ in \eqref{Eq:Att:Res:Rodrigues1} yields:
+\begin{equation*}
+	\vabs{\rotax} = \frac{\vabs{v} + \vabs{w} }{2 \vabs{v} \cdot \vabs{\rotax} }
+\end{equation*}
+
+Thus, in this case $\vabs{\rotax}$ is coplanar with $\vabs{v}$ and $\vabs{w}$, and parallel to their bisecting line.
+
+The above results show that there are infinite rotations mapping $\vabs{v}$ into $\vabs{w}$. Of these, the one which requires the minimum angle ($\rotang_{min} = \theta_{\vabs{v},\vabs{w}}$) corresponds to $\vabs{\rotax} \perp \vabs{v}$.
+
+Now let rotation $f$ act on an orthonormal basis $\basis[\alpha]$ to yield another basis $\basis[\beta]$, so that we may write $\vabs{\rotax} = \varel{\rotax}{\alpha}{\beta}$ and $\rotang = \rel{\rotang}{\alpha}{\beta}$. From the $\basis[\alpha]$ components of $\vabs{v}$ and $\vabs{w}$, the axis for the minimum-angle rotation can be computed as:
+\begin{equation} \label{E:AttRep:Rodrigues:AxAlphaBetaAct}
+	\vrel{\rotax}{\alpha}{\beta} = \frac{\vprj{v}{\alpha} \times \vprj{w}{\alpha}}{\norm{\vprj{v}{\alpha} \times \vprj{w}{\alpha}}}
+\end{equation}
+% n_alphabeta = valpha times walpha / norm(valpha times walpha)
+
+With the direction of $\vabs{\rotax}$ given by $\vabs{v}\times \vabs{w}$, the angle $\theta_{\vabs{v},\vabs{w}}$ measured from $\vabs{v}$ to $\vabs{w}$ lies within $[0, \pi]$. Therefore, we can write:
+\begin{gather} \label{E:AttRep:Rodrigues:Der1}
+	\vprj{v}{\alpha} \times \vprj{w}{\alpha} = \norm{\vprj{v}{\alpha}} \norm{\vprj{w}{\alpha}} \abs{\sin \theta_{\vabs{v},\vabs{w}}} = \norm{\vprj{v}{\alpha}} \norm{\vprj{w}{\alpha}} \sin \theta_{\vabs{v},\vabs{w}} = \norm{\vprj{v}{\alpha}} \norm{\vprj{w}{\alpha}} \sin \rel{\rotang}{\alpha}{\beta}
+\end{gather}
+
+Additionally, we have:
+\begin{equation} \label{E:AttRep:Rodrigues:Der2}
+	\vprj{v}{\alpha} \cdot \vprj{w}{\alpha} = \norm{\vprj{v}{\alpha}} \norm{\vprj{w}{\alpha}} \cos \theta_{\vabs{v},\vabs{w}} = \norm{\vprj{v}{\alpha}} \norm{\vprj{w}{\alpha}} \cos \rel{\rotang}{\alpha}{\beta} = \norm{\vprj{v}{\alpha}} \norm{\vprj{w}{\alpha}} \cos \rel{\rotang}{\alpha}{\beta}
+\end{equation}
+
+From \eqref{E:AttRep:Rodrigues:Der1} and \eqref{E:AttRep:Rodrigues:Der2}, $\rel{\rotang}{\alpha}{\beta}$ can be found as:
+\begin{equation} \label{E:AttRep:Rodrigues:AngAlphaBetaAct}
+	\rel{\rotang}{\alpha}{\beta} = \atan2 \left( \vprj{v}{\alpha} \times \vprj{w}{\alpha}, \vprj{v}{\alpha} \cdot \vprj{w}{\alpha} \right)
+\end{equation}
+
+Finally, by comparing \eqref{E:LinTr:Res:TrMatAutYX} and \eqref{E:LinTr:Res:XAlphaFromBeta}, we see that the passive interpretation equivalents of \eqref{E:AttRep:Rodrigues:AxAlphaBetaAct} and \eqref{E:AttRep:Rodrigues:AngAlphaBetaAct} can be obtained simply by replacing $\vprj{w}{\alpha}$ with $\vprj{x}{\alpha}$ and $\vprj{v}{\alpha}$ with $\vprj{x}{\beta}$:
+\begin{gather}
+	\vrel{\rotax}{\alpha}{\beta} = \frac{\vprj{x}{\beta} \times \vprj{x}{\alpha}}{\norm{\vprj{x}{\beta} \times \vprj{x}{\alpha}}}\\[1ex]
+	\rel{\rotang}{\alpha}{\beta} = \atan2 \left( \vprj{x}{\beta} \times \vprj{x}{\alpha}, \vprj{x}{\beta} \cdot \vprj{x}{\alpha} \right)
+\end{gather}
+
+\section{Parameterizations}
+\subsection{Axis-Angle} \label{AxAng}
+
+Having established that every three-dimensional rotation can be expressed as an axis-angle combination, we now seek the connection between these two parameters and the rotation matrix.
+
+Let $\basis[\alpha]$ be an arbitrary orthonormal right-handed basis, and let $\basis[\beta]$ be the basis that results from applying to $\basis[\alpha]$ the rotation with axis $\varel{\rotax}{\alpha}{\beta}$ and angle $\rel{\rotang}{\alpha}{\beta}$.
+
+Setting $\vabs{\rotax}=\varel{\rotax}{\alpha}{\beta}$, $\rotang =\rel{\rotang}{\alpha}{\beta}$, $\vabs{v}=\vasub{\bv}{\alpha j}$ and $\vabs{w}=\vasub{\bv}{\beta j}$ in \eqref{Eq:Att:Res:Rodrigues2}, we have:
+\begin{equation*}
+	\vasub{\bv}{\beta j} = \vasub{\bv}{\alpha j} \cos \rel{\rotang}{\alpha}{\beta} + (1-\cos \rel{\rotang}{\alpha}{\beta}) \rndp{\vasub{\bv}{\alpha j} \cdot \varel{\rotax}{\alpha}{\beta}} \varel{\rotax}{\alpha}{\beta} + \varel{\rotax}{\alpha}{\beta} \times \vasub{\bv}{\alpha j} \sin \rel{\rotang}{\alpha}{\beta}
+\end{equation*}
+
+Taking the scalar product  with $\vasub{\bv}{\alpha i}$:
+\begin{gather*}
+\vasub{\bv}{\beta j} \cdot \vasub{\bv}{\alpha i} = \vasub{\bv}{\alpha j} \cdot \vasub{\bv}{\alpha i} \cos \rel{\rotang}{\alpha}{\beta} + (1-\cos \rel{\rotang}{\alpha}{\beta}) \rndp{\vasub{\bv}{\alpha j} \cdot \varel{\rotax}{\alpha}{\beta}} \rndp{\varel{\rotax}{\alpha}{\beta} \cdot \vasub{\bv}{\alpha i}} \\
++ (\varel{\rotax}{\alpha}{\beta} \times \vasub{\bv}{\alpha j}) \cdot \vasub{\bv}{\alpha i} \sin \rel{\rotang}{\alpha}{\beta}
+\end{gather*}
+
+Applying \eqref{Eq.Res.ComponentsOrth}, \eqref{E:LinTr:Res:RotMeAlphaeBeta} and \eqref{Eq.Res.Basis.OrthKronecker}:
+\begin{equation} \label{Eq.Deriv.RotMat.AxisAngle.EBetaEAlpha}
+\begin{split}
+\csubprj{\bv}{\beta j}{\alpha}{i} = \cRotM{\alpha}{\beta}{i,j}
+&= \delta_{ij} \cos \rel{\rotang}{\alpha}{\beta} + \rndp{1-\cos \rel{\rotang}{\alpha}{\beta}} \crelprj{\rotax}{\alpha}{\beta}{\alpha}{i} \crelprj{\rotax}{\alpha}{\beta}{\alpha}{j}  \\
+&+ \rndp{ \varel{\rotax}{\alpha}{\beta} \times \vasub{\bv}{\alpha j}}  \cdot \vasub{\bv}{\alpha i} \sin \rel{\rotang}{\alpha}{\beta}
+\end{split}
+\end{equation}
+
+The last term on the right-hand side can be developed using \eqref{Eq.Res.TripleProdCircShift}, \eqref{Eq.Res.CrossProd.Anti}, \eqref{Eq.Def.Vectors.Spanning}, \eqref{Eq.Res.Basis.OrthRHLeviCivita} and \eqref{Eq.Def.VectColMat.CrossProdLeviCivita}:
+\begin{multline} \label{Eq.Deriv.RotMat.AxisAngle.USkew}
+\rndp{ \varel{\rotax}{\alpha}{\beta} \times \vasub{\bv}{\alpha j}}  \cdot \vasub{\bv}{\alpha i} = \rndp{ \vasub{\bv}{\alpha j} \times \vasub{\bv}{\alpha i}}  \cdot \varel{\rotax}{\alpha}{\beta} = -\rndp{ \vasub{\bv}{\alpha i} \times \vasub{\bv}{\alpha j}}  \cdot \varel{\rotax}{\alpha}{\beta} \\
+= -\rndp{ \vasub{\bv}{\alpha i} \times \vasub{\bv}{\alpha j}}  \cdot \sum_{k=1}^{3} \crelprj{\rotax}{\alpha}{\beta}{\alpha}{i} \vasub{\bv}{\alpha k} = - \sum_{k=1}^{3} \crelprj{\rotax}{\alpha}{\beta}{\alpha}{i} \rndp{ \vasub{\bv}{\alpha i} \times \vasub{\bv}{\alpha j}} \cdot \vasub{\bv}{\alpha k} \\
+= -\sum_{k=1}^{3} \crelprj{\rotax}{\alpha}{\beta}{\alpha}{k} \epsilon_{ijk} = \cmp{\vskew{\relprj{\rotax}{\alpha}{\beta}{\alpha}}}{i,j}
+\end{multline}
+
+Substituting \eqref{Eq.Deriv.RotMat.AxisAngle.USkew} into \eqref{Eq.Deriv.RotMat.AxisAngle.EBetaEAlpha} and rearranging leads to:
+\begin{equation}\label{Eq.Deriv.RotMat.AxisAngle.CAlphaBetaElem}
+\begin{split}
+\cRotM{\alpha}{\beta}{i,j} &= \delta_{ij} \cos \rel{\rotang}{\alpha}{\beta} + \cmp{\vskew{\relprj{\rotax}{\alpha}{\beta}{\alpha}}}{i,j} \sin \rel{\rotang}{\alpha}{\beta} + \rndp{1-\cos \rel{\rotang}{\alpha}{\beta}} \crelprj{\rotax}{\alpha}{\beta}{\alpha}{i} \crelprj{\rotax}{\alpha}{\beta}{\alpha}{j} \\
+&=\delta_{ij} + \cmp{\vskew{\relprj{\rotax}{\alpha}{\beta}{\alpha}}}{i,j} \sin \rel{\rotang}{\alpha}{\beta} + \rndp{1-\cos \rel{\rotang}{\alpha}{\beta}} \rndp{\crelprj{\rotax}{\alpha}{\beta}{\alpha}{i} \crelprj{\rotax}{\alpha}{\beta}{\alpha}{j} - \delta_{ij}}
+\end{split}
+\end{equation}
+
+Which can be written in matrix form as:
+\begin{equation}\label{Eq.Deriv.RotMat.AxisAngle.CAlphaBetaTmp}
+\RotM{\alpha}{\beta} = \IdM + \vskew{\vrelprj{\rotax}{\alpha}{\beta}{\alpha}} \sin \rel{\rotang}{\alpha}{\beta} + \rndp{\vrelprj{\rotax}{\alpha}{\beta}{\alpha} \trp{\vrelprj{\rotax}{\alpha}{\beta}{\alpha}} - \IdM} (1-\cos \rel{\rotang}{\alpha}{\beta})
+\end{equation}
+
+Drawing on \eqref{Eq.Res.RotMat.EulerAlias}, we can drop the superscript to write:
+\begin{equation}\label{Eq.Deriv.RotMat.AxisAngle.CAlphaBetaTmp2}
+\RotM{\alpha}{\beta} = \IdM + \vskew{\vrel{\rotax}{\alpha}{\beta}} \sin \rel{\rotang}{\alpha}{\beta} + \rndp{\vrel{\rotax}{\alpha}{\beta} \trp{\vrel{\rotax}{\alpha}{\beta}} - \IdM} (1-\cos \rel{\rotang}{\alpha}{\beta})
+\end{equation}
+
+Now, from \eqref{Eq.Res.V2Skew.Prod}:
+\begin{equation}\label{Eq.Deriv.RotMat.AxisAngle.ProdSkew}
+\vrel{\rotax}{\alpha}{\beta} \trp{\vrel{\rotax}{\alpha}{\beta}}  = \norm{\varel{\rotax}{\alpha}{\beta}}^{2} \IdM + {\vskew{\vrel{\rotax}{\alpha}{\beta}}}^2 = \IdM + {\vskew{\vrel{\rotax}{\alpha}{\beta}}}^2
+\end{equation}
+
+Substituting \eqref{Eq.Deriv.RotMat.AxisAngle.ProdSkew} into \eqref{Eq.Deriv.RotMat.AxisAngle.CAlphaBetaTmp} we finally get:
+\begin{equation} \label{Eq.Deriv.RotMat.AxisAngle.CAlphaBeta}
+\RotM{\alpha}{\beta} = \IdM + \vskew{\vrel{\rotax}{\alpha}{\beta}} \sin \rel{\rotang}{\alpha}{\beta} + {\vskew{\vrel{\rotax}{\alpha}{\beta}}}^2 (1-\cos \rel{\rotang}{\alpha}{\beta}) =  \RotMAxAng{\vrel{\rotax}{\alpha}{\beta}}{\rel{\rotang}{\alpha}{\beta}}
+\end{equation}
+
+Where we have defined the following operator, which maps the axis-angle representation onto the special orthogonal group $SO(3)$:
+\begin{equation}\label{Eq.Res.RotMat.AxisAngle.Operator}
+\RotMAxAng{\mcol{\rotax}}{\rotang} = \IdM + \sin \rotang \vskew{\mcol{\rotax}} + (1-\cos \rotang) {\vskew{\mcol{\rotax}}}^2
+\end{equation}
+
+\begin{subequations}
+The operator $\RotMAxAng{\mcol{\rotax}}{\rotang}$ has the following properties:
+\begin{gather}
+\RotMAxAng{\mcol{\rotax}}{0} = \IdM \label{E:AttRep.AxAng.Prop1}\\
+\RotMAxAng{\mcol{\rotax}}{\rotang} = \RotMAxAng{-\mcol{\rotax}}{-\rotang} \label{E:AttRep.AxAng.Prop2}\\
+\RotMAxAng{\mcol{\rotax}}{\pi} = \RotMAxAng{-\mcol{\rotax}}{\pi} \label{E:AttRep.AxAng.Prop3}\\
+\RotMAxAng{\mcol{\rotax}}{-\rotang} = \RotMAxAng{-\mcol{\rotax}}{\rotang} = \trp{\RotMAxAng{\mcol{\rotax}}{\rotang}} \label{E:AttRep.AxAng.Prop4}
+\end{gather}
+\end{subequations}
+
+Finally, note that the $i$-th element in the main diagonal of $\RotM{\alpha}{\beta}$ is:
+\begin{equation*}
+\cRotM{\alpha}{\beta}{i,i} = 1 + \rndp{ \rndp{\crelprj{\rotax}{\alpha}{\beta}{\alpha}{i}}^2 - 1} (1-\cos \rel{\rotang}{\alpha}{\beta}) = \rndp{\crelprj{\rotax}{\alpha}{\beta}{\alpha}{i}}^2 (1- \cos \rel{\rotang}{\alpha}{\beta}) + \cos \rel{\rotang}{\alpha}{\beta}
+\end{equation*}
+
+So the trace of the rotation matrix is simply:
+\begin{equation} \label{E:AttRep.AxAng.Res.Tr}
+\trace{\RotM{\alpha}{\beta}} = \sum^{3}_{i=1} \cRotM{\alpha}{\beta}{i,i}= \norm{\varel{\rotax}{\alpha}{\beta}}^2 (1-\cos \rel{\rotang}{\alpha}{\beta}) + 3 \cos \rel{\rotang}{\alpha}{\beta} = 1 + 2 \cos \rel{\rotang}{\alpha}{\beta}
+\end{equation}
+
+\begin{comment}
+We already know from Euler's Rotation Theorem that $\lambda = 1$ is an eigenvalue of $\RotM{\alpha}{\beta}$; the other two can be easily found from \eqref{Eq.Deriv.RotMat.AxisAngle.CAlphaBetaElem}.
+
+The $i$-th element in the main diagonal of $\RotM{\alpha}{\beta}$ is:
+\begin{equation*}
+\cRotM{\alpha}{\beta}{i,i} = 1 + \rndp{ \rndp{\crelprj{\rotax}{\alpha}{\beta}{\alpha}{i}}^2 - 1} (1-\cos \rel{\rotang}{\alpha}{\beta}) = \rndp{\crelprj{\rotax}{\alpha}{\beta}{\alpha}{i}}^2 (1- \cos \rel{\rotang}{\alpha}{\beta}) + \cos \rel{\rotang}{\alpha}{\beta}
+\end{equation*}
+
+So the trace is:
+\begin{equation} \label{E:AttRep.AxAng.Res.Tr}
+\trace{\RotM{\alpha}{\beta}} = \sum^{3}_{i=1} \cRotM{\alpha}{\beta}{i,i}= \norm{\varel{\rotax}{\alpha}{\beta}}^2 (1-\cos \rel{\rotang}{\alpha}{\beta}) + 3 \cos \rel{\rotang}{\alpha}{\beta} = 1 + 2 \cos \rel{\rotang}{\alpha}{\beta}
+\end{equation}
+
+Thus, from \eqref{Eq.Res.Mat.TrEig} we have that:
+\begin{equation}\label{Eq.Deriv.RotMat.TrEig1}
+\sum^{n}_{i=1} \lambda_{i} = 1 + 2 \cos \rel{\rotang}{\alpha}{\beta} \\
+\end{equation}
+
+And, recalling that $\RotM{\alpha}{\beta}$ is orthogonal, \eqref{Eq.Res.Mat.DetEig} becomes:
+\eql{Eq.Deriv.RotMat.DetEig1}
+{
+\prod^{n}_{i=1} \lambda_{i} = 1
+}
+
+Since $\lambda_1 = 1$ is an eigenvalue of $\RotM{\alpha}{\beta}$, we can write \eqref{Eq.Deriv.RotMat.TrEig1} and \eqref{Eq.Deriv.RotMat.DetEig1} as:
+\begin{gather}
+\lambda_{2} + \lambda_{3} = 2 \cos \rel{\rotang}{\alpha}{\beta} \label{Eq.Deriv.RotMat.TrEig2}\\
+\lambda_{2} \lambda_{3} = 1 \label{Eq.Deriv.RotMat.DetEig2}
+\end{gather}
+
+We can then solve \eqref{Eq.Deriv.RotMat.TrEig2} and \eqref{Eq.Deriv.RotMat.DetEig2} for the two remaining eigenvalues, which yields the following complex conjugate pair:
+\begin{gather*}
+\lambda_{2} = \cos \rel{\rotang}{\alpha}{\beta} + i \sin \rel{\rotang}{\alpha}{\beta} = e^{i \rel{\rotang}{\alpha}{\beta}}\\
+\lambda_{3} = \cos \rel{\rotang}{\alpha}{\beta} - i \sin \rel{\rotang}{\alpha}{\beta} = e^{-i \rel{\rotang}{\alpha}{\beta}}
+\end{gather*}
+
+This shows that not only is $\lambda_1 = 1$ an eigenvalue of $\RotM{\alpha}{\beta}$, but it is the only real one. The interpretation is straightforward: the axis of rotation is the only direction in space which remains invariant under the rotation. Other than that, there are no privileged directions along which the rotation acts as a simple scaling.
+\end{comment}
+
+\begin{comment}
+Note that the axis-angle representation consists of four scalar parameters (the three components of $\varel{\rotax}{\alpha}{\beta}$ and the angle $\rel{\rotang}{\alpha}{\beta}$), and therefore it is non-minimal. It is also ambiguous: from () we can easily see that there are multiple axis-angle combinations that correspond tothe same rotation matrix, and therefore encode the same actual rotation:
+\begin{gather*}
+\RotMAxAng{\mcol{\rotax}}{\rotang} = \RotMAxAng{-\mcol{\rotax}}{-\rotang}\\
+\RotMAxAng{\mcol{\rotax}}{\rotang + \pi} = \RotMAxAng{-\mcol{\rotax}}{\pi-\rotang}
+\end{gather*}
+Even if we restrict the rotation angle to the range [-pi,pi]
+ given an axis $\vabs{\rotax}$, rotation angles $\rotang + 2k\pi, \forall k\in \mathbb{Z}$ all yield the same rotation matrix, and therefore encode the same actual rotation. This ambiguity can be partially solved by restricting $\rotang$ to the range $\[0,2\pi\)$, but even then case n $\rotang and -n (2pi-rotax) Additionally, the axis-angle description does not provide a straightforward method for composing successive rotations.
+\begin{gather*}
+\RotMAxAng{\mcol{\rotax}}{0} = \IdM \\
+\RotMAxAng{\mcol{\rotax}}{\rotang} = \RotMAxAng{-\mcol{\rotax}}{-\rotang}\\
+\RotMAxAng{\mcol{\rotax}}{\rotang + \pi} = \RotMAxAng{-\mcol{\rotax}}{\pi-\rotang}
+\end{gather*}
+
+\end{comment}
+
+\subsection{Quaternion}
+\subsubsection{Introduction to Quaternions}
+Quaternions are a four-dimensional hypercomplex number system. Much like complex numbers extend real numbers by defining an imaginary unit $\qi$, quaternions can be regarded as an extension of complex numbers introducing two additional imaginary units, $\qj$ and $\qk$. The mathematical structure and properties of quaternions are, however, significantly different from those of two-dimensional complex numbers.
+
+A generic quaternion $\quat{q}$ is defined by an expression of the form:
+\begin{equation} \label{E:Quat:Def:Quat}
+\quat{q} = \qcmp{q}{0} + \qcmp{q}{1} \qi + \qcmp{q}{2} \qj + \qcmp{q}{3} \qk
+\end{equation}
+
+The coefficients $\qcmp{q}{i}$ are real numbers; $\qcmp{q}{0}$ is known as the \emph{real} or \emph{scalar} part of $\quat{q}$, and $\qcmp{q}{1}$, $\qcmp{q}{2}$ and $\qcmp{q}{3}$ comprise its \emph{imaginary} or \emph{vector} part.
+
+A quaternion with zero imaginary part is called a \emph{real quaternion}. Real numbers can be viewed as a subset of quaternions, so a real quaternion $\quat{q}$ directly identifies with its real part $\qcmp{q}{0}$, and it is typically denoted by it. A quaternion with zero real part is called a \emph{pure} or \emph{vector} quaternion.
+
+Quaternions form a $4$-dimensional vector space over the field of real numbers $\mathbb{R}$. The set $\basis=\left\{ 1,\qi,\qj,\qk \right\}$ is a basis for this vector space, and the coefficients $\qcmp{q}{i}$ are the coordinates of $\quat{q}$ in $\basis$. The two fundamental vector space operations are defined for quaternions and real numbers as follows:
+\begin{enumerate}
+	\item Quaternion addition:
+		\begin{equation*}
+		\quat{q} + \quat{p} = \left( \qcmp{q}{0}+\qcmp{p}{0} \right) + \left( \qcmp{q}{1}+\qcmp{p}{1} \right)\qi + \left( \qcmp{q}{2}+\qcmp{p}{2} \right)\qj + \left( \qcmp{q}{3}+\qcmp{p}{3} \right)\qk %\label{E:Quat:Def:Addition}
+		\end{equation*}
+	\item Multiplication by a scalar:
+		\begin{equation*}
+		a\quat{q} = a\qcmp{q}{0}+a\qcmp{q}{1}\qi + a\qcmp{q}{2}\qj + a\qcmp{q}{3} \qk %\label{E:Quat:Def:Addition}
+		\end{equation*}
+\end{enumerate}
+
+It is easily verified that these operations satisfy properties \eqref{Eq.Res.Vectors.Assoc} to \eqref{Eq.Res.Vectors.DistField}, as required of a vector space.
+
+However, the unique mathematical structure and properties of quaternions arise from the \emph{quaternion product} operation, which is built upon the following multiplicative identities between basis elements:
+%\begin{spreadlines}{6pt}
+\begin{equation} \label{E:Quat:Def:BasisMult}
+\begin{gathered}
+\qi \qprod \qi = \qj \qprod \qj = \qk \qprod \qk =-1 \\[6pt]
+\qi \qprod 1 = 1 \qprod \qi = \qi \\[6pt]
+\qj \qprod 1 = 1 \qprod \qj = \qj \\[6pt]
+\qk \qprod 1 = 1 \qprod \qk = \qk \\[6pt]
+\qi \qprod \qj = -\qj \qprod \qi = \qk \\[6pt]
+\qj \qprod \qk = -\qk \qprod \qj = \qi \\[6pt]
+\qk \qprod \qi = -\qi \qprod \qk = \qj
+\end{gathered}
+\end{equation}
+%\end{spreadlines}
+
+Given these identities, the product of two quaternions $\quat{q}$ and $\quat{p}$ is constructed through distribution as follows:
+\begin{equation} \label{E:Quat:Der:QuatProdBasis}
+\begin{aligned}
+\quat{q}\qprod\quat{p} &= \left( \qcmp{q}{0} + \qcmp{q}{1} \qi + \qcmp{q}{2} \qj + \qcmp{q}{3} \qk \right) \qprod \left( \qcmp{p}{0} + \qcmp{p}{1} \qi + \qcmp{p}{2} \qj + \qcmp{p}{3} \qk \right) \\
+&= \qcmp{q}{0} \qcmp{p}{0} + \qcmp{q}{0} \qcmp{p}{1} \qi + \qcmp{q}{0} \qcmp{p}{2} \qj + \qcmp{q}{0} \qcmp{p}{3} \qk \\
+&+ \qcmp{q}{1} \qcmp{p}{0} \qi + \qcmp{q}{1} \qcmp{p}{1} \qi \qprod \qi  + \qcmp{q}{1} \qcmp{p}{2} \qi \qprod \qj + \qcmp{q}{1} \qcmp{p}{3} \qi \qprod \qk \\
+&+ \qcmp{q}{2} \qcmp{p}{0} \qj + \qcmp{q}{2} \qcmp{p}{1} \qj \qprod \qi + \qcmp{q}{2} \qcmp{p}{2} \qj \qprod \qj + \qcmp{q}{2} \qcmp{p}{3} \qj \qprod \qk \\
+&+ \qcmp{q}{3} \qcmp{p}{0} \qk + \qcmp{q}{3} \qcmp{p}{1} \qk \qprod \qi + \qcmp{q}{3} \qcmp{p}{2} \qk \qprod \qj + \qcmp{q}{3} \qcmp{p}{3} \qk \qprod \qk
+\end{aligned}
+\end{equation}
+
+Applying identities \eqref{E:Quat:Def:BasisMult} in \eqref{E:Quat:Der:QuatProdBasis} and rearranging yields:
+\begin{equation} \label{E:Quat:Res:QuatProdBasis}
+\begin{aligned}
+\quat{q}\qprod\quat{p} &= \qcmp{q}{0} \qcmp{p}{0} - \left(\qcmp{q}{1} \qcmp{p}{1} +\qcmp{q}{2} \qcmp{p}{2} + \qcmp{q}{3} \qcmp{p}{3} \right) \\
+&+ \qcmp{q}{0} \left(\qcmp{p}{1}\qi + \qcmp{p}{2} \qj + \qcmp{p}{3} \qk \right)\\
+&+ \qcmp{p}{0} \left(\qcmp{q}{1}\qi + \qcmp{q}{2} \qj + \qcmp{q}{3} \qk \right) \\
+&+ \left(\qcmp{q}{2} \qcmp{p}{3} - \qcmp{q}{3} \qcmp{p}{2} \right) \qi \\
+&+ \left(\qcmp{q}{3} \qcmp{p}{1} - \qcmp{q}{1} \qcmp{p}{3} \right) \qj \\
+&+ \left(\qcmp{q}{1} \qcmp{p}{2} - \qcmp{q}{2} \qcmp{p}{1} \right) \qk \\
+\end{aligned}
+\end{equation}
+
+We now introduce the following notation:
+\begin{equation} \label{E:Quat:Def:QuatAlt}
+\quat{q} = \qcolcmp{\qcmp{q}{0}}{\qcmp{q}{1}}{\qcmp{q}{2}}{\qcmp{q}{3}} = \qcol{\qreal{q}}{\qvec{q}}
+\end{equation}
+
+Where $\qvec{q}$ is a column matrix holding the imaginary coefficients of $\quat{q}$:
+\begin{equation*} %\label{E:Quat:Def:QVec}
+\qvec{q} = \matenv{\qcmp{q}{1} \\ \qcmp{q}{2} \\ \qcmp{q}{3}}
+\end{equation*}
+
+If we interpret these coefficients as the coordinates of an Euclidean vector $\vabs{q}$ in some orthonormal basis, then $\qvec{q}$ is the column matrix representation of $\vabs{q}$, and expressions \eqref{Eq.Def.VectColMat.Add} to \eqref{Eq.Def.VectColMat.CrossProd} become applicable. Combined with notation \eqref{E:Quat:Def:QuatAlt}, this enables us to rewrite the quaternion product \eqref{E:Quat:Res:QuatProdBasis} more compactly as:
+\begin{equation} \label{E:Quat:Res:QuatProd}
+\quat{q} \qprod \quat{p} = \qcol{\qreal{q}\qreal{p} - \qvec{q} \cdot \qvec{p}}{\qreal{q}\qvec{p} + \qreal{p}\qvec{q} + \qvec{q} \times \qvec{p}}
+\end{equation}
+
+The cross product term in \eqref{E:Quat:Res:QuatProd} shows that quaternion product is generally \emph{non-commutative}. And, since this non-commutativity arises from the imaginary parts of the operands, it follows that the product by a real quaternion is always commutative. This is consistent with the interpretation of real quaternions as real numbers.
+
+\begin{subequations}
+It is not difficult to verify that the quaternion product is, however, \emph{associative} and \emph{distributive} over quaternion addition:
+\begin{gather}
+\left(\quat{q} \qprod \quat{p}\right) \qprod \quat{r} = \quat{q} \qprod \left(\quat{p}\qprod \quat{r} \right) = \quat{q} \qprod \quat{p} \qprod \quat{r} \label{E:Quat:Res:ProdAssoc}\\
+\left(\quat{q} + \quat{p}\right) \qprod \quat{r} = \quat{q} \qprod \quat{r} + \quat{p} \qprod \quat{r} \label{E:Quat:Res:ProdDist}
+\end{gather}
+\end{subequations}
+
+The \emph{identity element} for the quaternion product is the real quaternion $1$.
+
+\begin{comment}
+If $\quat{q}$ and $\quat{p}$ are two vector quaternions, the scalar and cross products of the Euclidean vectors represented by their vector parts $\qvec{q}$ and $\qvec{p}$ can be extracted from the quaternion product as:
+%\begin{spreadlines}{12pt}
+\begin{gather*}
+\qcol{\qvec{q} \cdot \qvec{p}}{\qvec{0}} = -\frac{1}{2} \left(\qcol{-\qvec{q} \cdot \qvec{p}}{\qvec{q} \times \qvec{p}} + \qcol{- \qvec{p} \cdot \qvec{q}}{\qvec{p} \times \qvec{q}} \right) = -\frac{1}{2} \left(\quat{q}\qprod \quat{p} + \quat{p}\qprod \quat{q}\right)\\
+\qcol{0}{\qvec{q} \times \qvec{p}} = \frac{1}{2} \left(\qcol{-\qvec{q} \cdot \qvec{p}}{\qvec{q} \times \qvec{p}} - \qcol{- \qvec{p} \cdot \qvec{q}}{\qvec{p} \times \qvec{q}} \right) = \frac{1}{2} \left(\quat{q}\qprod \quat{p} - \quat{p}\qprod \quat{q}\right)
+\end{gather*}
+%\end{spreadlines}
+\end{comment}
+
+The \emph{conjugate} of a quaternion $\quat{q}$ is obtained by negating its imaginary part:
+\begin{equation} \label{E:Quat:Def:Conj}
+\qcon{\quat{q}} = \qcol{\qreal{q}}{-\qvec{q}}
+\end{equation}
+
+Obviously:
+\begin{equation} \label{E:Quat:Res:ConjConj}
+\qconp{\qcon{\quat{q}}} = \quat{q} 
+\end{equation}
+
+The conjugate of a quaternion product satisfies:
+\begin{multline} \label{E:Quat:Res:ConjProd}
+\qconp{\quat{q} \qprod \quat{p}}
+= \qcol{\qreal{q}\qreal{p} - \qvec{q} \cdot \qvec{p}}{-\left(\qreal{q}\qvec{p} + \qreal{p}\qvec{q} + \qvec{q} \times \qvec{p}\right)} \\
+= \qcol{\qreal{p}\qreal{q} - (-\qvec{p}) \cdot (-\qvec{q})}{\qreal{p}\left(-\qvec{q}\right) + \qreal{q}\left(-\qvec{p}\right) + \left(-\qvec{p}\right) \times \left(-\qvec{q}\right)}
+= \qcon{\quat{p}} \qprod \qcon{\quat{q}}
+\end{multline}
+
+The \emph{norm} of a quaternion $\quat{q}$ is the real number defined as:
+\begin{multline} \label{E:Quat:Def:Norm}
+\qnorm{\quat{q}}^2 = \quat{q} \qprod \qcon{\quat{q}} = \qcon{\quat{q}} \qprod \quat{q} = \qcol{\qreal{q}\qreal{q} + \qvec{q} \cdot \qvec{q}}{\qreal{q}\qvec{q} - \qreal{q}\qvec{q} - \qvec{q} \times \qvec{q}} \\
+= \qcol{{\qreal{q}}^2 + \norm{\qvec{q}}^2}{\mcol{0}} = \qreal{q}^2 + \norm{\qvec{q}}^2 = \sum_{i=0}^{i=3}{\qcmp{q}{i}}^2
+\end{multline}
+
+The \emph{inverse} of a quaternion $\quat{q}$ is another quaternion $\inv{\quat{q}}$ such that:
+\begin{equation} \label{E:Quat:Def:Inv}
+\quat{q} \qprod \inv{\quat{q}} = \inv{\quat{q}} \qprod \quat{q} = 1
+\end{equation}
+
+It is straightforward to verify that:
+\begin{equation} \label{E:Quat:Res:Inv}
+\inv{\quat{q}} = \frac{\qcon{\quat{q}}}{\qnorm{\quat{q}}^2}
+\end{equation}
+
+Note that $\forall {\quat{q}} \neq 0, \qnorm{\quat{q}} > 0$, so the  inverse is well-defined except for the null quaternion.
+
+The derivative of a quaternion $\quat{q}$ with respect to a scalar variable $x$ is defined as:
+\begin{equation} \label{E:Quat:Def:Der}
+\frac{d\quat{q}}{dx}= \qcol[2ex]{\dfrac{d\qreal{q}}{dx}}{\dfrac{d\qvec{q}}{dx}}
+\end{equation}
+
+It is easy to see that:
+\begin{equation} \label{E:Quat:Res:DerConj}
+\frac{d\qcon{\quat{q}}}{dx}= \qconp{\frac{d\quat{q}}{dx}}
+\end{equation}
+
+And, since the quaternion product is a linear operation, its derivative satisfies:
+\begin{equation} \label{E:Quat:Res:DerProd}
+\frac{d}{dx}\left(\quat{q} \qprod \quat{p}\right) = \frac{d\quat{q}}{dx} \qprod \quat{p} + \quat{q} \qprod \frac{d\quat{p}}{dx}
+\end{equation}
+
+We have seen thus far that quaternions are a vector space equipped with an associative, non-commutative bilinear product operation, and a corresponding multiplicative inverse. This characterizes their mathematical structure as an \emph{associative, non-commutative division algebra}.
+
+A quaternion $\quat{q}$ with $\qnorm{\quat{q}}=1$ is called a \emph{unit quaternion}. For a unit quaternion, \eqref{E:Quat:Res:Inv} becomes:
+\begin{equation} \label{E:Quat:Res:UnitInv}
+\inv{\quat{q}} = \qcon{\quat{q}}
+\end{equation}
+
+The set of unit quaternions, together with the quaternion product, jointly satisfy the following properties:
+\begin{enumerate}
+\item Closure: The product of two unit quaternions $\quat{q}$ and $\quat{p}$ is also a unit quaternion:
+\begin{equation*}
+\begin{split}
+\qnorm{\quat{q} \qprod \quat{p}}^2 = \left(\quat{q} \qprod \quat{p}\right) \qprod \qconp{\quat{q} \qprod \quat{p}} &= \left(\quat{q} \qprod \quat{p}\right) \qprod \left(\qcon{\quat{p}} \qprod \qcon{\quat{q}}\right) \\
+&= \quat{q} \qprod \left(\quat{p} \qprod \qcon{\quat{p}} \right) \qprod \qcon{\quat{q}} = \quat{q} \qprod \qcon{\quat{q}} = 1
+\end{split}
+\end{equation*}
+\item Identity: The real quaternion $1$, which is the identity element for the quaternion product, is also a unit quaternion.
+\item Associativity: This follows directly from the associativity of quaternion product in general.
+\item Invertibility: The inverse of a quaternion exists as long as $\qnorm{\quat{q}} \neq 0$, so every unit quaternion has an inverse, given by \eqref{E:Quat:Res:UnitInv}.
+\end{enumerate}
+
+These properties characterize the set of unit quaternions as a \emph{group}.
+
+\subsubsection{Unit Quaternions As an Attitude Descriptor}
+Our goal here is to uncover the connection between unit quaternions and rotation matrices, and to show how unit quaternions can be used as an alternative attitude descriptor. %expose
+
+Let us begin by defining the following quaternion parameterization, where $\mcol{n}$ is the column matrix representation of some Euclidean unit vector $\vabs{n}$ and $\rotang \in \left[-\pi, \pi \right)$ is an arbitrary angle:
+\begin{equation} \label{E:AttRep:Quat:Def:RotQAxAng}
+\RotQAxAng{\mcol{\rotax}}{\rotang} = \qcol{\cos (\rotang/2)}{\mcol{\rotax} \sin (\rotang/2)}
+\end{equation}
+
+Note that, if $\vabs{n}$ is indeed a unit vector, $\RotQAxAng{\mcol{\rotax}}{\rotang}$ always yields a unit quaternion:
+\begin{equation} \label{E:AttRep:Quat:Res:RotQAxAngUnit}
+\begin{split}
+\qnorm{\RotQAxAng{\mcol{\rotax}}{\rotang}}^2 &= {\left(\cos (\rotang/2)\right)}^2 + \norm{\mcol{\rotax}}^2 {\left(\sin (\rotang/2)\right)}^2 \\
+&= {\left(\cos (\rotang/2)\right)}^2 + {\left(\sin (\rotang/2)\right)}^2 = 1
+\end{split}
+\end{equation}
+
+Since a proper rotation in Euclidean space is fully defined by a unit vector and an angle, it follows that any such rotation can be represented by a suitable unit quaternion, given by \eqref{E:AttRep:Quat:Def:RotQAxAng}. Conversely, any unit quaternion $\quat{\rotq}$ may be interpreted as a rotation in Euclidean space. Note, however, that:
+\begin{equation} \label{E:AttRep:Quat:Res:DoubleCover}
+\RotQAxAng{\mcol{\rotax}}{\rotang+2\pi} = \qcol{\cos (\rotang/2+\pi)}{\mcol{\rotax} \sin (\rotang/2+\pi)} = \qcol{-\cos (\rotang/2)}{-\mcol{\rotax} \sin (\rotang/2)} = -\RotQAxAng{\mcol{\rotax}}{\rotang}
+\end{equation}
+
+Because a rotation by an angle $\rotang + 2\pi$ yields the same end result as a rotation by $\rotang$, we must conclude that any two unit quaternions $\quat{\rotq}$ and $-\quat{\rotq}$ represent the same actual rotation.
+
+We now define the following matrix parameterization, where $\quat{\unitq}$ denotes an arbitrary unit quaternion:
+\begin{equation} \label{E:AttRep:Quat:Def:RotMQuat}
+\RotMQuat{\quat{\unitq}} = \IdM + 2 \qreal{\unitq} \vskew{\qvec{\unitq}} + 2\vskew{\qvec{\unitq}}^2
+\end{equation}
+
+Carrying out the matrix operations in \eqref{E:AttRep:Quat:Def:RotMQuat} yields:
+\begin{equation}\label{E:AttRep:Quat:Res:RotMQuatExp}
+\RotMQuat{\quat{\rotq}} = \matenv
+{
+1 - 2\qcmp{\rotq}{2}^{2} - 2\qcmp{\rotq}{3}^{2}						&2\qcmp{\rotq}{1}\qcmp{\rotq}{2}-2\qcmp{\rotq}{0}\qcmp{\rotq}{3}	&2\qcmp{\rotq}{1}\qcmp{\rotq}{3}+2\qcmp{\rotq}{0}\qcmp{\rotq}{2}\\
+2\qcmp{\rotq}{1}\qcmp{\rotq}{2}+2\qcmp{\rotq}{0}\qcmp{\rotq}{3}		&1 - 2\qcmp{\rotq}{1}^{2} - 2\qcmp{\rotq}{3}^{2}						&2\qcmp{\rotq}{2}\qcmp{\rotq}{3}-2\qcmp{\rotq}{0}\qcmp{\rotq}{1}\\
+2\qcmp{\rotq}{1}\qcmp{\rotq}{3}-2\qcmp{\rotq}{0}\qcmp{\rotq}{2}		&2\qcmp{\rotq}{2}\qcmp{\rotq}{3}+2\qcmp{\rotq}{0}\qcmp{\rotq}{1}	&1 - 2\qcmp{\rotq}{1}^{2} - 2\qcmp{\rotq}{2}^{2}
+}
+\end{equation}
+
+Now, setting $\quat{\unitq}=\RotQAxAng{\mcol{\rotax}}{\rotang}$ in \eqref{E:AttRep:Quat:Def:RotMQuat} leads to:
+\begin{equation} \label{E:AttRep:Quat:Der:RotMRotQAxAng}
+\begin{split}
+\RotMQuat{\RotQAxAng{\mcol{\rotax}}{\rotang}} &= \IdM + 2 \cos (\rotang/2) \vskew{(\mcol{\rotax} \sin (\rotang/2))} + 2\vskew{(\mcol{\rotax} \sin (\rotang/2))}^2\\
+&= \IdM + 2 \cos (\rotang/2) \sin (\rotang/2) \vskew{\mcol{\rotax}} + 2 {\left(\sin (\rotang/2)\right)}^2 \vskew{\mcol{\rotax}}^2\\
+&= \IdM + \sin \rotang \vskew{\mcol{\rotax}} +  (1-\cos \rotang) \vskew{\mcol{\rotax}}^2
+\end{split}
+\end{equation}
+
+Where we have made use of property \eqref{Eq.Res.V2Skew.Homog} and the trigonometric identities:
+\begin{gather*}
+\sin \rotang = 2 \sin \frac{\rotang}{2} \cos \frac{\rotang}{2} \\
+{\left(\sin \frac{\rotang}{2}\right)}^2 = \frac{1}{2} (1 - \cos \rotang)
+\end{gather*}
+
+By comparison with \eqref{Eq.Res.RotMat.AxisAngle.Operator}, we see that \eqref{E:AttRep:Quat:Der:RotMRotQAxAng} is precisely the axis angle parameterization of the rotation matrix:
+\begin{equation*}
+\RotMQuat{\RotQAxAng{\mcol{\rotax}}{\rotang}} = \RotMAxAng{\mcol{\rotax}}{\rotang}
+\end{equation*}
+
+Turning to \eqref{E:AttRep:Quat:Def:RotMQuat}, it is easy to see that $\RotMQuat{\quat{\unitq}}=\RotMQuat{-\quat{\unitq}}$, that is, both $\quat{\unitq}$ and $-\quat{\unitq}$ map into the same rotation matrix. Unit quaternions are thus said to provide a \emph{double cover} of the special orthogonal group $SO(3)$.
+%, as one should expect from \eqref{E:AttRep:Quat:Res:DoubleCover}
+
+Now, let $\basis[\alpha]$ and $\basis[\beta]$ be two orthonormal right-handed bases for the Euclidean vector space, with unit vector $\varel{\rotax}{\alpha}{\beta}$ and angle $\rel{\rotang}{\alpha}{\beta}$ defining the proper rotation that maps $\basis[\alpha]$ into $\basis[\beta]$. Recall that the components of $\varel{\rotax}{\alpha}{\beta}$ are the same in both bases and they are denoted simply by $\vrel{\rotax}{\alpha}{\beta}$. For convenience, we introduce the following notational convention:
+\begin{equation} \label{E:AttRep:Quat:Def:RotQ}
+\RotQ{\alpha}{\beta} = \RotQAxAng{\vrel{\rotax}{\alpha}{\beta}}{\rel{\rotang}{\alpha}{\beta}} = \qcol{\cos (\rel{\rotang}{\alpha}{\beta}/2)}{\sin (\rel{\rotang}{\alpha}{\beta}/2) \vrel{\rotax}{\alpha}{\beta}}
+\end{equation}
+
+So that:
+\begin{equation} \label{E:AttRep:Quat:Res:RotMQuatAlphaBeta}
+\RotM{\alpha}{\beta} = \RotMQuat{\RotQ{\alpha}{\beta}}=\RotMAxAng{\vrel{\rotax}{\alpha}{\beta}}{\rel{\rotang}{\alpha}{\beta}}
+\end{equation}
+
+At this point we have yet to see how this seemingly arbitrary quaternion representation of rotations may be useful at all. To find out, we begin by computing the following quaternion product, where $\quat{\rotq}$ is a unit quaternion and $\quat{p}$ is a pure quaternion:
+\begin{equation} \label{E:AttRep:Quat:Der:RotQ1}
+\quat{\rotq} \qprod \quat{p} \qprod \qcon{\quat{\rotq}} = \left(\quat{\rotq} \qprod \quat{p}\right) \qprod \qcon{\quat{\rotq}} = \qcol{ - \qvec{\rotq} \cdot \qvec{p}}{\qreal{\rotq}\qvec{p} + \qvec{\rotq} \times \qvec{p}} \qprod \qcol{\qreal{\rotq}}{-\qvec{\rotq}}
+\end{equation}
+
+Explicit computation of the rightmost term yields, after applying scalar and cross product properties:
+\begin{equation} \label{E:AttRep:Quat:Der:RotQ2}
+\quat{\rotq} \qprod \quat{p} \qprod \qcon{\quat{\rotq}} = \qcol{0} {\qreal{\rotq}^2 \qvec{p} + \qvec{\rotq}(\qvec{\rotq}\cdot\qvec{p}) + 2 \qreal{\rotq} \qvec{\rotq} \times \qvec{p} + \qvec{\rotq} \times (\qvec{\rotq} \times \qvec{p})}
+\end{equation}
+
+Using \eqref{Eq.Def.VectColMat.InnerProd} and \eqref{Eq.Def.VectColMat.CrossProd} we can rewrite the scalar and cross products in \eqref{E:AttRep:Quat:Der:RotQ2} as matrix operations:
+\begin{equation} \label{E:AttRep:Quat:Der:RotQ3}
+\quat{\rotq} \qprod \quat{p} \qprod \qcon{\quat{\rotq}} = \qcol{0} {\qreal{\rotq}^2 \qvec{p} + \qvec{\rotq}(\tr{\qvec{\rotq}}\qvec{p}) + 2 \qreal{\rotq} \vskew{\qvec{\rotq}} \qvec{p} + \vskew{\qvec{\rotq}} (\vskew{\qvec{\rotq}} \qvec{p})}
+\end{equation}
+
+Exploiting the associativity property of the matrix product:
+\begin{equation} \label{E:AttRep:Quat:Der:RotQ4}
+\quat{\rotq} \qprod \quat{p} \qprod \qcon{\quat{\rotq}} = \qcol{0} {\left(\qreal{\rotq}^2  \IdM + \qvec{\rotq} \tr{\qvec{\rotq}} + 2 \qreal{\rotq} \vskew{\qvec{\rotq}} + \vskew{\qvec{\rotq}}^2 \right) \qvec{p}}
+\end{equation}
+
+Turning now to \eqref{Eq.Res.V2Skew.Prod} and setting $\mcol{v}=\mcol{w}=\qvec{\rotq}$ gives:
+\begin{equation} \label{E:AttRep:Quat:Der:RotQ5}
+\qvec{\rotq} \tr{\qvec{\rotq}} = \vskew{\rotq}^2 + (\tr{\qvec{\rotq}} \qvec{\rotq}) \IdM = \vskew{\qvec{\rotq}}^2 + \norm{\qvec{\rotq}}^2 \IdM
+\end{equation}
+
+Inserting \eqref{E:AttRep:Quat:Der:RotQ5} into \eqref{E:AttRep:Quat:Der:RotQ4} we arrive at a remarkable result:
+%\begin{spreadlines}{12pt}
+\begin{equation} \label{E:AttRep:Quat:Der:RotQ6}
+\begin{split}
+\quat{\rotq} \qprod \quat{p} \qprod \qcon{\quat{\rotq}} &= \qcol{0} {\left( \qreal{\rotq}^2  \IdM + \norm{\qvec{\rotq}}^2 \IdM + \vskew{\qvec{\rotq}}^2 + 2 \qreal{\rotq} \vskew{\qvec{\rotq}} + \vskew{\qvec{\rotq}}^2 \right) \qvec{p}}\\[1ex]
+&= \qcol{0} {\left( \qnorm{\quat{\rotq}}^2 \IdM + 2 \qreal{\rotq} \vskew{\qvec{\rotq}} + 2\vskew{\qvec{\rotq}}^2 \right) \qvec{p}} \\[1ex]
+&= \qcol{0} {\left(\IdM + 2 \qreal{\rotq} \vskew{\qvec{\rotq}} + 2\vskew{\qvec{\rotq}}^2 \right) \qvec{p}} = \qcol{0} {\RotMQuat{\quat{\rotq}} \qvec{p}}
+\end{split}
+\end{equation}
+%\end{spreadlines}
+
+Now let $\vabs{x}$ be an arbitrary Euclidean vector with components $\vprj{x}{\alpha}$ in $\basis[\alpha]$ and $\vprj{x}{\beta}$ in $\basis[\beta]$, and let us define the pure quaternions:
+%\begin{spreadlines}{12pt}
+\begin{subequations}
+	\begin{gather}
+	\qprj{x}{\alpha} = \qcol{0}{\vprj{x}{\alpha}} \label{E:AttRep:Quat:Def:XAlpha} \\[1ex]
+	\qprj{x}{\beta} = \qcol{0}{\vprj{x}{\beta}}\label{E:AttRep:Quat:Def:XBeta} 
+	\end{gather}
+\end{subequations}
+%\end{spreadlines}
+
+Setting $\quat{\rotq}=\RotQ{\alpha}{\beta}$ and $\quat{p}=\qprj{x}{\beta}$ in \eqref{E:AttRep:Quat:Der:RotQ6} yields: 
+\begin{equation} \label{E:AttRep:Quat:Res:XAlphaBeta}
+\RotQ{\alpha}{\beta} \qprod \qprj{x}{\beta} \qprod \qconp{\RotQ{\alpha}{\beta}} = \qcol{0} {\RotMQuat{\RotQ{\alpha}{\beta}} \vprj{x}{\beta}} = \qcol{0} {\RotM{\alpha}{\beta} \vprj{x}{\beta}} = \qcol{0} {\vprj{x}{\alpha}} = \qprj{x}{\alpha}
+\end{equation}
+
+Equation \eqref{E:AttRep:Quat:Res:XAlphaBeta} shows how a change of basis can be carried out within the quaternion representation. It is analogous to \eqref{E:LinTr:Res:RotXAlphaFromBeta}.
+
+If we now consider a second proper rotation mapping the transformed basis $\basis[\beta]$ into another $\basis[\delta]$ and define the unit quaternion $\RotQ{\beta}{\delta}=\RotQAxAng{\vrel{\rotax}{\beta}{\delta}}{\rel{\rotang}{\beta}{\delta}}$, by analogy with \eqref{E:AttRep:Quat:Res:XAlphaBeta} we can write:
+\begin{equation} \label{E:AttRep:Quat:Res:XBetaDelta}
+\qprj{x}{\beta}   = \RotQ{\beta}{\delta} \qprod \qprj{x}{\delta} \qprod \qconp{\RotQ{\beta}{\delta}}
+\end{equation}
+
+Substituting \eqref{E:AttRep:Quat:Res:XBetaDelta} into \eqref{E:AttRep:Quat:Res:XAlphaBeta} and applying properties \eqref{E:Quat:Res:ProdAssoc} and \eqref{E:Quat:Res:ConjProd}:
+\begin{equation} \label{E:AttRep:Quat:Res:XAlphaDelta}
+\begin{split}
+\qprj{x}{\alpha}  &= \RotQ{\alpha}{\beta} \qprod \qprj{x}{\beta} \qprod \qconp{\RotQ{\alpha}{\beta}}  = \RotQ{\alpha}{\beta} \qprod \left(\RotQ{\beta}{\delta} \qprod \qprj{x}{\delta} \qprod \qconp{\RotQ{\beta}{\delta}}\right) \qprod \qconp{\RotQ{\alpha}{\beta}} \\
+&=\left(\RotQ{\alpha}{\beta} \qprod \RotQ{\beta}{\delta}\right) \qprod \qprj{x}{\delta} \qprod \left(\qconp{\RotQ{\beta}{\delta}} \qprod \qconp{\RotQ{\alpha}{\beta}}\right) \\
+&= \left(\RotQ{\alpha}{\beta} \qprod \RotQ{\beta}{\delta}\right) \qprod \qprj{x}{\delta} \qprod \qconp{\RotQ{\alpha}{\beta} \qprod \RotQ{\beta}{\delta}} = \RotQ{\alpha}{\delta} \qprod \qprj{x}{\delta} \qprod \qconp{\RotQ{\alpha}{\delta}}
+\end{split}
+\end{equation}
+
+Therefore, we have that:
+\begin{equation} \label{E:AttRep:Quat:Res:RotQComp}
+\RotQ{\alpha}{\delta} = \RotQ{\alpha}{\beta} \qprod \RotQ{\beta}{\delta}
+\end{equation}
+
+This result is analogous to \eqref{E:LinTr:Res:RotComp}. It shows how rotation composition is accomplished within the quaternion representation. Here, the closure property of the unit quaternion group guarantees that $\RotQ{\alpha}{\delta}$ is also a unit quaternion. This is to be expected, since the composition of proper rotations yields another proper rotation.
+
+Finally, multiplying \eqref{E:AttRep:Quat:Res:XAlphaBeta} by $\qconp{\RotQ{\alpha}{\beta}}$ on the left and by $\RotQ{\alpha}{\beta}$ on the right gives the reciprocal change of basis:
+\begin{equation} \label{E:AttRep:Quat:Res:XBetaAlpha}
+\qprj{x}{\beta}   = \qconp{\RotQ{\alpha}{\beta}} \qprod \qprj{x}{\alpha} \qprod \RotQ{\alpha}{\beta}
+\end{equation}
+
+From which we find the quaternion equivalent of \eqref{E:LinTr:Der:RotMOrth} to be:
+\begin{equation} \label{E:AttRep:Quat:Res:Inverse}
+\RotQ{\beta}{\alpha} = \qconp{\RotQ{\alpha}{\beta}}
+\end{equation}
+
+Equations \eqref{E:AttRep:Quat:Res:XAlphaBeta}, \eqref{E:AttRep:Quat:Res:RotQComp} and \eqref{E:AttRep:Quat:Res:Inverse} show that unit quaternions are indeed a valid alternative to rotation matrices for attitude representation. Within the quaternion representation, basis changes and rotation composition are realized through quaternion multiplication, instead of matrix multiplication. And reciprocal rotations correspond to quaternion conjugation, instead of matrix transposition. Like rotation matrices, unit quaternions are a non-minimal attitude descriptor, with their four coefficients bound by a unit norm constraint.
+
+% \begin{comment}
+% \end{comment}
+
+
+\subsection{Rotation Vector} %%%%%%%%
+
+For a rotation described by unit vector $\varel{\rotax}{\alpha}{\beta}$ and angle $\rel{\rotang}{\alpha}{\beta}$, the rotation vector is defined as:
+\begin{equation} \label{E:AttRep:RotVec:Def:RotVec}
+	\varel{\rotvecsymb}{\alpha}{\beta} = \rel{\rotang}{\alpha}{\beta} \varel{\rotax}{\alpha}{\beta}
+\end{equation}
+
+From \eqref{Eq.Res.RotMat.EulerAlias} we can write:
+\begin{equation} \label{Eq.Res.RotVec.RhoAlphaBeta}
+	\rotv[\alpha]{\alpha}{\beta} = \rotv[\beta]{\alpha}{\beta} = \rotv{\alpha}{\beta} = \rel{\rotang}{\alpha}{\beta} \vrel{\rotax}{\alpha}{\beta}
+\end{equation}
+
+Now, taking the norm of \eqref{E:AttRep:RotVec:Def:RotVec}:
+\begin{equation}
+	\norm{\varel{\rotvecsymb}{\alpha}{\beta}} = \norm{\rel{\rotang}{\alpha}{\beta} \varel{\rotax}{\alpha}{\beta}} = \norm{\rel{\rotang}{\alpha}{\beta}} \norm{\varel{\rotax}{\alpha}{\beta}} = \abs{\rel{\rotang}{\alpha}{\beta}} = \rel{\rotang}{\alpha}{\beta} \sign{\rel{\rotang}{\alpha}{\beta}}
+\end{equation}
+
+Thus, the axis and angle can be recovered from the rotation vector as:
+\begin{subequations}
+	\begin{gather}
+		\vrel{\rotax}{\alpha}{\beta} = \frac{\rotv{\alpha}{\beta}}{\rel{\rotang}{\alpha}{\beta}} =  \sign{\rel{\rotang}{\alpha}{\beta}} \frac{\rotv{\alpha}{\beta}}{\normrotv{\alpha}{\beta}} \label{E:AttRep:RotVec:Res:RotV2AxPrev} \\
+		\rel{\rotang}{\alpha}{\beta} = \sign{\rel{\rotang}{\alpha}{\beta}} \normrotv{\alpha}{\beta} \label{E:AttRep:RotVec:Res:RotV2AngPrev}
+	\end{gather}
+\end{subequations}
+
+Note that, on account of \eqref{E:AttRep.AxAng.Prop2}, the choice of sign is irrelevant as long as it is consistent between \eqref{E:AttRep:RotVec:Res:RotV2AxPrev} and \eqref{E:AttRep:RotVec:Res:RotV2AngPrev}. We shall choose $\sign{\rel{\rotang}{\alpha}{\beta}} = 1$:
+\begin{subequations}
+	\begin{gather}
+		\vrel{\rotax}{\alpha}{\beta} = \frac{\rotv{\alpha}{\beta}}{\normrotv{\alpha}{\beta}} \label{E:AttRep:RotVec:Res:RotV2Ax} \\
+		\rel{\rotang}{\alpha}{\beta} = \normrotv{\alpha}{\beta} \label{E:AttRep:RotVec:Res:RotV2Ang}
+	\end{gather}
+\end{subequations}
+
+To find the connection between rotation vector and rotation matrix, we substitute $\sin \rotang$ and $\cos \rotang$ in \eqref{Eq.Res.RotMat.AxisAngle.Operator} with their respective Taylor series:
+\begin{equation} \label{Eq.Deriv.RotVec.RotMAxAng}
+\begin{split}
+\RotMAxAng{\mcol{\rotax}}{\rotang}
+&= \IdM + \vskew{\mcol{\rotax}} \sum^{\infty}_{k=0} {\frac{(-1)^k \rotang^{2k+1}}{(2k+1)!}} + {\vskew{\mcol{\rotax}}}^2 \rndp{1-\sum^{\infty}_{k=0} {\frac{(-1)^k \rotang^{2k}}{(2k)!}} } \\
+&= \IdM + \sum^{\infty}_{k=0} \vskew{\mcol{\rotax}} {\frac{(-1)^k \rotang^{2k+1}}{(2k+1)!}} - \sum^{\infty}_{k=1} {\vskew{\mcol{\rotax}}}^2 {\frac{(-1)^k \rotang^{2k}}{(2k)!}} 
+\end{split}
+\end{equation}
+
+\begin{subequations}
+Applying \eqref{Eq.Res.RotVec.SkewEven} and \eqref{Eq.Res.RotVec.SkewOdd} with $\norm{\mcol{\rotax}}=1$ yields:
+\begin{gather}
+{\vskew{\mcol{\rotax}}}^{2k} = -(-1)^k {\vskew{\mcol{\rotax}}}^2, \forall k=1,2,\dots \label{Eq.Res.RotVec.SkewEvenRotax}\\
+{\vskew{\mcol{\rotax}}}^{2k+1} = (-1)^k \vskew{\mcol{\rotax}}, \forall k=0,1,\dots \label{Eq.Res.RotVec.SkewOddRotax}
+\end{gather}
+\end{subequations}
+
+Substituting \eqref{Eq.Res.RotVec.SkewEvenRotax} and \eqref{Eq.Res.RotVec.SkewOddRotax} into \eqref{Eq.Deriv.RotVec.RotMAxAng} yields:
+\begin{equation*}
+\begin{split}
+\RotMAxAng{\mcol{\rotax}}{\rotang}
+&= \IdM + \sum^{\infty}_{k=0} {\vskew{\mcol{\rotax}}}^{2k+1} {\frac{\rotang^{2k+1}}{(2k+1)!}} + \sum^{\infty}_{k=1} {\vskew{\mcol{\rotax}}}^{2k} {\frac{\rotang^{2k}}{(2k)!}} \\
+&= \IdM + \sum^{\infty}_{k=0} {\frac{{\vskew{\rndp{\rotang\mcol{\rotax}}}}^{2k+1}}{(2k+1)!}} + \sum^{\infty}_{k=1} {\frac{ {\vskew{\rndp{\rotang\mcol{\rotax}}}}^{2k}}{(2k)!}} \\
+&= \sum^{\infty}_{k=0} {\frac{{\vskew{\rndp{\rotang\mcol{\rotax}}}}^{2k+1}}{(2k+1)!}} + \sum^{\infty}_{k=0} {\frac{ {\vskew{\rndp{\rotang\mcol{\rotax}}}}^{2k}}{(2k)!}} \\
+&= \sum^{\infty}_{k=0} {\frac{{\vskew{\rndp{\rotang\mcol{\rotax}}}}^{k}}{k!}} = \exp \vskew{\rndp{\rotang\mcol{\rotax}}}
+\end{split}
+\end{equation*}
+
+Therefore:
+\begin{equation} \label{Eq.Res.RotMat.RotVec.Operator}
+	\RotM{\alpha}{\beta} = \RotMAxAng{\vrel{\rotax}{\alpha}{\beta}}{\rel{\rotang}{\alpha}{\beta}} = \exp \vskew{\rndp{\rel{\rotang}{\alpha}{\beta} \vrel{\rotax}{\alpha}{\beta}}} = \exp \vskew{\rotv{\alpha}{\beta}} = \RotMRotV{\rotv{\alpha}{\beta}}
+\end{equation}
+
+Where we have defined the following operator, which maps the rotation vector representation onto the special orthogonal group $SO(3)$:
+\begin{equation} \label{Eq.Def.RotVec.Operator}
+\RotMRotV{\mcol{\rotvecsymb}} = \exp \vskew{\mcol{\rotvecsymb}} = \sum^{\infty}_{k=0} \frac{1}{k!} \vskew{\mcol{\rotvecsymb}}^{k}
+\end{equation}
+
+Note the following properties:
+\begin{gather*}
+\RotMRotV{\mcol{0}} = \IdM \\
+\RotMRotV{-\mcol{\rotvecsymb}} = \trp{\RotMRotV{\mcol{\rotvecsymb}}}
+\end{gather*}
+
+A rotation vector parameterization of quaternion $\RotQ{\alpha}{\beta}$ is readily obtained from \eqref{E:AttRep:Quat:Def:RotQ}, \eqref{E:AttRep:RotVec:Res:RotV2Ang} and \eqref{E:AttRep:RotVec:Res:RotV2Ax}:
+\begin{equation} \label{E:AttRep:RotVec:Res:RotV2RotQ}
+	\begin{split}
+		\RotQ{\alpha}{\beta} &= \RotQAxAng{\sign{\rel{\rotang}{\alpha}{\beta}} \frac{\rotv{\alpha}{\beta}}{\normrotv{\alpha}{\beta}}} {\sign{\rel{\rotang}{\alpha}{\beta}} \normrotv{\alpha}{\beta}}
+		\\
+		&= \qcol[1ex] 
+		{\cos \left(\sign{\rel{\rotang}{\alpha}{\beta}} \normrotv{\alpha}{\beta} / 2 \right)}
+		{\left( \sign{\rel{\rotang}{\alpha}{\beta}} \rotv{\alpha}{\beta} / \normrotv{\alpha}{\beta}  \right) \sin \left(  \sign{\rel{\rotang}{\alpha}{\beta}} \normrotv{\alpha}{\beta} / 2 \right)}
+		\\
+		&= \qcol[1ex] 
+		{\cos \left( \normrotv{\alpha}{\beta} / 2 \right)}
+		{\left(  \rotv{\alpha}{\beta} / \normrotv{\alpha}{\beta}  \right) \sin \left(  \normrotv{\alpha}{\beta} / 2 \right)} = \RotQRotV{\rotv{\alpha}{\beta}}
+	\end{split}
+\end{equation}
+
+Where:
+\begin{equation} \label{E:AttRep:RotVec:Def:QuatRVec}
+	\RotQRotV{\mcol{\rotvecsymb}} = 
+	\qcol[1ex] 
+	{\cos \left( \norm{\mcol{\rotvecsymb}} / 2 \right)}
+	{\left(  \mcol{\rotvecsymb} / \norm{\mcol{\rotvecsymb}} \right) \sin \left(  \norm{\mcol{\rotvecsymb}} / 2 \right)}
+\end{equation}
+
+Parameterization \eqref{E:AttRep:RotVec:Def:QuatRVec} is ill-defined for $\norm{\mcol{\rotvecsymb}} \to 0$. An alternative form can be found by replacing $\cos \left( \norm{\mcol{\rotvecsymb}} / 2 \right)$ and $\sin \left( \norm{\mcol{\rotvecsymb}} / 2 \right)$ with their respective Taylor series. After some manipulation, this yields:
+\begin{equation} \label{E:AttRep:RotVec:Def:QuatRVecAlt}
+	\RotQRotV{\mcol{\rotvecsymb}} = \sum^{\infty}_{k=0} (-1)^{k} \left( {\frac{\norm{\mcol{\rotvecsymb}}}{2}} \right)^{2k}
+	\qcol[2ex]
+	{\dfrac{1}{(2k)!}}
+	{\dfrac{1}{(2k+1)!} \dfrac{\norm{\mcol{\rotvecsymb}}}{2}}
+\end{equation}
+
+
+The rotation vector condenses the axis-angle representation into three scalar parameters. Thus, it is a minimal attitude descriptor. 
+
+It must be emphasized that, in general, the addition of rotation vectors does not correspond to the composition of rotations (in fact, it is not even physically meaningful). This should not be surprising, given that vector addition is commutative and composition of rotations in general is not.
+
+\subsection{Euler Angles} \label{Euler Angles} %%%%%%%%
+A rotation around one of the three coordinate axes is called a \emph{basic} or \emph{elemental rotation}. Elemental rotations have the following matrix and quaternion representations:
+\begin{enumerate}
+\item Rotation around the $x$-axis:
+\begin{subequations}
+\begin{gather}
+	\mat{\rotm_{x}}(\rotang) = \RotMAxAng{\tr{\matenv{1 & 0 & 0}}}{\rotang} = 
+	\begin{pmatrix}
+		1		&0		&0	\\
+		0		&\cos \rotang	&-\sin \rotang\\
+		0		&\sin \rotang		&\cos \rotang
+	\end{pmatrix} \label{Eq:AttRep:ElemRot:X:RotM}
+	\\
+	\quat{\rotq}_{x}(\rotang) = \RotQAxAng{\tr{\matenv{1 & 0 & 0}}}{\rotang} = 
+	\qcolcmp{\cos \rotang / 2}{\sin \rotang /2}{0}{0} \label{Eq:AttRep:ElemRot:X:RotQ}
+\end{gather}
+\end{subequations}
+
+\item Rotation around the $y$-axis:
+\begin{subequations}
+\begin{gather}
+	\mat{\rotm_{y}}(\rotang) = \RotMAxAng{\tr{\matenv{0 & 1 & 0}}}{\rotang} = 
+	\begin{pmatrix}
+		\cos \rotang	&0		&\sin \rotang	\\
+		0		&1		&0\\
+		-\sin \rotang	&0		&\cos \rotang
+	\end{pmatrix} \label{Eq:AttRep:ElemRot:Y:RotM}
+	\\
+	\quat{\rotq}_{y}(\rotang) = \RotQAxAng{\tr{\matenv{0 & 1 & 0}}}{\rotang} = 
+	\qcolcmp{\cos \rotang / 2}{0}{\sin \rotang /2}{0} \label{Eq:AttRep:ElemRot:Y:RotQ}
+\end{gather}
+\end{subequations}
+
+\item Rotation around the $z$-axis:
+\begin{subequations}
+\begin{gather}
+	\mat{\rotm_{z}}(\rotang) = \RotMAxAng{\tr{\matenv{0 & 0 & 1}}}{\rotang} = 
+	\begin{pmatrix}
+		\cos \rotang	&-\sin \rotang	&0	\\
+		\sin \rotang	&\cos \rotang	&0\\
+		0		&0			&1
+	\end{pmatrix} \label{Eq:AttRep:ElemRot:Z:RotM}
+	\\
+	\quat{\rotq}_{z}(\rotang) = \RotQAxAng{\tr{\matenv{0 & 0 & 1}}}{\rotang} = 
+	\qcolcmp{\cos \rotang / 2}{0}{0}{\sin \rotang /2} \label{Eq:AttRep:ElemRot:Z:RotQ}
+\end{gather}
+\end{subequations}
+
+\end{enumerate}
+
+The rotation matrices above can be obtained from \eqref{Eq.Deriv.RotMat.AxisAngle.CAlphaBeta}, but they are more easily constructed from \eqref{E:LinTr:Res:RotMeAlphaeBeta} by applying simple trigonometry in the plane of rotation.
+
+Any proper rotation in three-dimensional space can be expressed a sequence of three elemental rotations such that no consecutive rotations are about the same axis. This fact was originally shown by Euler, and the angles corresponding to these elemental rotations are commonly known as \emph{Euler angles}.
+
+The restriction that successive rotation axes be distinct allows for twelve possible sequences to describe an arbitrary rotation:
+\begin{align*}
+	x-y-x &&x-z-x &&y-x-y &&y-z-y &&z-x-z &&z-y-z\\ 
+	x-y-z &&x-z-y &&y-x-z &&y-z-x &&z-x-y &&z-y-x 
+\end{align*}
+
+The sequence most frequently used in aerospace is $z-y-x$, for which the steps rotating an orthonormal basis $\basis[\alpha]$ into another $\basis[\beta]$ are:
+\begin{enumerate}[1)]
+
+	\item $\basis[\alpha]$ rotates around its $z$ axis by an angle $\rel{\psi}{\alpha}{\beta}$ to yield intermediate basis $\basis[\delta]$
+	\item $\basis[\delta]$ rotates around its $y$ axis by an angle $\rel{\theta}{\alpha}{\beta}$ to yield intermediate basis $\basis[\gamma]$
+	\item $\basis[\gamma]$ rotates around its $x$ axis by an angle $\rel{\phi}{\alpha}{\beta}$ to yield $\basis[\beta]$
+	
+\end{enumerate}
+
+Euler angles $\rel{\psi}{\alpha}{\beta}$, $\rel{\theta}{\alpha}{\beta}$, $\rel{\psi}{\alpha}{\beta}$ are called respectively \emph{azimuth}, \emph{inclination} and \emph{bank}.
+
+Rotation matrix $\RotM{\alpha}{\beta}$ can be computed through composition as:
+\begin{equation*}
+	\RotM{\alpha}{\beta} = \RotM{\alpha}{\delta} \RotM{\delta}{\gamma} \RotM{\gamma}{\beta} = \mat{\rotm_{z}}(\rel{\psi}{\alpha}{\beta}) \mat{\rotm_{y}}(\rel{\theta}{\alpha}{\beta}) \mat{\rotm_{x}}(\rel{\phi}{\alpha}{\beta})
+\end{equation*}
+
+We now define the following parameterization:
+\begin{equation} \label{E:AttRep:Euler:RotMParam}
+	\RotMEuler{\psi}{\theta}{\phi} = \mat{\rotm_{z}}(\psi) \mat{\rotm_{y}}(\theta) \mat{\rotm_{x}}(\phi)  
+\end{equation}
+
+So that:
+\begin{equation} \label{E:AttRep:Euler:RotMAlphaBeta}
+	\RotM{\alpha}{\beta} = \RotMEuler{\rel{\psi}{\alpha}{\beta}}{\rel{\theta}{\alpha}{\beta}}{\rel{\psi}{\alpha}{\beta}}
+\end{equation}
+
+Substituting \eqref{Eq:AttRep:ElemRot:X:RotM}, \eqref{Eq:AttRep:ElemRot:Y:RotM} and \eqref{Eq:AttRep:ElemRot:Z:RotM} into \eqref{E:AttRep:Euler:RotMParam} and carrying out the matrix products yields:
+\begin{equation} \label{E:AttRep:Euler:RotMParamElem}
+	\RotMEuler{\psi}{\theta}{\phi} =  
+	\begin{pmatrix}
+		c_{\psi} c_{\theta}	&	c_{\psi} s_{\theta} s_{\phi} - s_{\psi} c_{\phi}	&	c_{\psi} s_{\theta} c_{\phi} + s_{\psi} s_{\phi}\\
+		s_{\psi} c_{\theta}	&	s_{\psi} s_{\theta} s_{\phi} + c_{\psi} c_{\phi}	&	s_{\psi} s_{\theta} c_{\phi} - c_{\psi} s_{\phi}\\
+		-s_{\theta}			&	c_{\theta} s_{\phi}									&	c_{\theta} c_{\phi}	
+	\end{pmatrix}	
+\end{equation}
+
+Where $s_\rotang$ and $c_\rotang$ are shorthands for $\sin \rotang$ and $\cos \rotang$, respectively.
+
+The quaternion equivalents of \eqref{E:AttRep:Euler:RotMParam} and \eqref{E:AttRep:Euler:RotMAlphaBeta} are:
+\begin{gather}
+	\RotQEuler{\psi}{\theta}{\phi} = \quat{\rotq}_{z}(\psi) \qprod \quat{\rotq}_{y}(\theta) \qprod \quat{\rotq}_{x}(\phi)
+	\label{E:AttRep:Euler:RotQParam}\\	
+	\RotQ{\alpha}{\beta} = \RotQEuler{\rel{\psi}{\alpha}{\beta}} {\rel{\theta}{\alpha}{\beta}} {\rel{\psi}{\alpha}{\beta}}
+	\label{E:AttRep:Euler:RotQAlphaBeta}
+\end{gather}
+
+Substituting \eqref{Eq:AttRep:ElemRot:X:RotQ}, \eqref{Eq:AttRep:ElemRot:Y:RotQ} and \eqref{Eq:AttRep:ElemRot:Z:RotQ} into \eqref{E:AttRep:Euler:RotQParam} and carrying out the quaternion products yields:
+\begin{equation}
+	\RotQEuler{\psi}{\theta}{\phi} =
+	\qcolcmp[1ex]
+	{\cos (\psi/2) \cos (\theta/2) \cos (\phi/2) + \sin (\psi/2) \sin (\theta/2) \sin (\phi/2)}
+	{\cos (\psi/2) \cos (\theta/2) \sin (\phi/2) - \sin (\psi/2) \sin (\theta/2) \cos (\phi/2)}
+	{\cos (\psi/2) \sin (\theta/2) \cos (\phi/2) + \sin (\psi/2) \cos (\theta/2) \sin (\phi/2)}
+	{\sin (\psi/2) \cos (\theta/2) \cos (\phi/2) - \cos (\psi/2) \sin (\theta/2) \sin (\phi/2)}
+\end{equation}
+
+\begin{comment}
+
+\begin{equation}
+	\RotQEuler{\psi}{\theta}{\phi} =
+	\qcolcmp[1ex]
+	{\cos \frac{\psi}{2} \cos \frac{\theta}{2} \cos \frac{\phi}{2} + \sin \frac{\psi}{2} \sin \frac{\theta}{2} \sin\frac{\phi}{2}} 
+	{\cos \frac{\psi}{2} \cos \frac{\theta}{2} \sin \frac{\phi}{2} - \sin \frac{\psi}{2} \sin \frac{\theta}{2} \cos\frac{\phi}{2}}
+	{\cos \frac{\psi}{2} \sin \frac{\theta}{2} \cos \frac{\phi}{2} + \sin \frac{\psi}{2} \cos \frac{\theta}{2} \sin\frac{\phi}{2}}
+	{\sin \frac{\psi}{2} \cos \frac{\theta}{2} \cos \frac{\phi}{2} - \cos \frac{\psi}{2} \sin \frac{\theta}{2} \sin\frac{\phi}{2}} 
+\end{equation}
+\begin{equation}
+	\RotQEuler{\psi}{\theta}{\phi} =
+	\qcolcmp[2ex]
+	{\cos \dfrac{\psi}{2} \cos \dfrac{\theta}{2} \cos \dfrac{\phi}{2} + \sin \dfrac{\psi}{2} \sin \dfrac{\theta}{2} \sin\dfrac{\phi}{2}} 
+	{\cos \dfrac{\psi}{2} \cos \dfrac{\theta}{2} \sin \dfrac{\phi}{2} - \sin \dfrac{\psi}{2} \sin \dfrac{\theta}{2} \cos\dfrac{\phi}{2}}
+	{\cos \dfrac{\psi}{2} \sin \dfrac{\theta}{2} \cos \dfrac{\phi}{2} + \sin \dfrac{\psi}{2} \cos \dfrac{\theta}{2} \sin\dfrac{\phi}{2}}
+	{\sin \dfrac{\psi}{2} \cos \dfrac{\theta}{2} \cos \dfrac{\phi}{2} - \cos \dfrac{\psi}{2} \sin \dfrac{\theta}{2} \sin\dfrac{\phi}{2}} 
+\end{equation}
+\end{comment}
+
+\section{Infinitesimal Rotations} \label{InfRot}
+If $|\mcol{\rotvecsymb}| \to 0$, then $|\cmp{\rotvecsymb}{i}| \to 0, \forall i \in \{1,2,3\}$, and all powers of $\vskew{\mcol{\rotvecsymb}}$ beyond $k=1$ in \eqref{Eq.Def.RotVec.Operator} can be neglected, which gives:
+\begin{equation}
+	\RotMRotV{\mcol{\rotvecsymb}} \approx \IdM + \vskew{\mcol{\rotvecsymb}} \label{Eq.Res.InfRot.Approx}
+\end{equation}
+
+Using \eqref{Eq.Res.MatTransSum} and \eqref{Eq.Res.V2Skew.Transp}:
+\begin{equation} \label{Eq.Res.InfRot.ApproxTr}
+	\trp{\RotMRotV{\mcol{\rotvecsymb}}} \approx \trp{\IdM + \vskew{\mcol{\rotvecsymb}}} = \IdM -  \vskew{\mcol{\rotvecsymb}}
+\end{equation}
+
+The orthogonality of $\RotMRotV{\mcol{\rotvecsymb}}$ is preserved to first order by these approximations:
+\begin{equation*}
+	\rndp{\RotMRotV{\mcol{\rotvecsymb}}} \trp{\RotMRotV{\mcol{\rotvecsymb}}} = \rndp{\IdM + \vskew{\mcol{\rotvecsymb}}} \rndp{\IdM - \vskew{\mcol{\rotvecsymb}}} = \IdM - {\vskew{\mcol{\rotvecsymb}}}^2 \approx \IdM
+\end{equation*}
+
+Now let matrices $\RotM{\alpha}{\delta}$ and $\RotM{\delta}{\beta}$ represent two infinitesimal rotations, so that $|\rel{\rotang}{\alpha}{\delta}| = \normrotv{\alpha}{\delta} \to 0$ and $|\rel{\rotang}{\delta}{\beta}| = \normrotv{\delta}{\beta} \to 0$. Then:
+\begin{gather*}
+	\RotM{\alpha}{\delta} \approx \IdM + \vskew{\rotv{\alpha}{\delta}} \\
+	\RotM{\delta}{\beta} \approx \IdM + \vskew{\rotv{\alpha}{\beta}}
+\end{gather*}
+
+Applying \eqref{E:LinTr:Res:RotComp} and neglecting higher order terms:
+\begin{multline}
+	\RotM{\alpha}{\beta} = \RotM{\alpha}{\delta} \RotM{\delta}{\beta} = \left( \IdM + \vskew{\rotv{\alpha}{\delta}} \right) \left( \IdM + \vskew{\rotv{\delta}{\beta}} \right)
+	\\= \IdM + \vskew{\rotv{\alpha}{\delta}} + \vskew{\rotv{\delta}{\beta}} + \vskew{\rotv{\alpha}{\delta}} \vskew{\rotv{\delta}{\beta}} \approx \IdM + \vskew{\rotv{\alpha}{\delta}} + \vskew{\rotv{\delta}{\beta}} \label{Eq.Res.InfRot.Comp}
+\end{multline}
+
+Since the rotation represented by $\RotM{\alpha}{\beta}$ is a composition of infinitesimal rotations, it must be an infinitesimal rotation itself. Therefore, we can write:
+\begin{equation} \label{Eq.Res.InfRot.ApproxAlphaBeta}
+	\RotM{\alpha}{\beta} \approx \IdM + \vskew{\rotv{\alpha}{\beta}}
+\end{equation}
+
+Comparing \eqref{Eq.Res.InfRot.ApproxAlphaBeta} and \eqref{Eq.Res.InfRot.Comp} we see that:
+\begin{equation*}
+	\rotv{\alpha}{\beta} = \rotv{\alpha}{\delta} + \rotv{\delta}{\beta}
+\end{equation*}
+
+Thus, while rotations in general do not commute, \emph{infinitesimal rotations commute}, and they can be composed through addition of their respective rotation vectors.
+
+For $|\mcol{\rotvecsymb}| \to 0$, retaining the first order term in \eqref{E:AttRep:RotVec:Def:QuatRVecAlt} yields the quaternion equivalents of \eqref{Eq.Res.InfRot.Approx} and \eqref{Eq.Res.InfRot.ApproxTr}:
+\begin{gather}
+	\RotQRotV{\mcol{\rotvecsymb}} = \qcol{1}{\mcol{\rotvecsymb} / 2} \label{Eq:AttRep:InfRot:Res:RotQRotV}\\
+	\qconp{\RotQRotV{\mcol{\rotvecsymb}}} = \qcol{1}{-\mcol{\rotvecsymb} / 2}	
+\end{gather}
+
+The linearity of the above approximations presents a significant advantage in many scenarios, and they are often applied in the context of small (rather than strictly infinitesimal) rotations.
+
+%Add here the first order approx for Euler angle parameterizations of rotm and rotq, such that cross(Euler_col) = cross(rho)
+
+\section{Conversions}
+\subsection{Rotation Matrix to Quaternion}
+From \eqref{E:AttRep:Quat:Res:RotMQuatExp}, the following identities can be obtained:
+\begin{align*}
+	\qcolcmp
+	{1 + \trace{\RotM{\alpha}{\beta}}}
+	{\cRotM{\alpha}{\beta}{3,2} - \cRotM{\alpha}{\beta}{2,3}}
+	{\cRotM{\alpha}{\beta}{1,3} - \cRotM{\alpha}{\beta}{3,1}}
+	{\cRotM{\alpha}{\beta}{2,1} - \cRotM{\alpha}{\beta}{1,2}}
+	&= 4 \cRotQ{\alpha}{\beta}{0} \RotQ{\alpha}{\beta}
+	&
+	\qcolcmp
+	{\cRotM{\alpha}{\beta}{3,2} - \cRotM{\alpha}{\beta}{2,3}}
+	{1 + 2 \cRotM{\alpha}{\beta}{1,1} - \trace{\RotM{\alpha}{\beta}}}
+	{\cRotM{\alpha}{\beta}{1,2} + \cRotM{\alpha}{\beta}{2,1}}
+	{\cRotM{\alpha}{\beta}{1,3} + \cRotM{\alpha}{\beta}{3,1}}
+	&= 4\cRotQ{\alpha}{\beta}{1} \RotQ{\alpha}{\beta}
+	\\[10pt]
+	\qcolcmp
+	{\cRotM{\alpha}{\beta}{1,3} - \cRotM{\alpha}{\beta}{3,1}}
+	{\cRotM{\alpha}{\beta}{1,2} + \cRotM{\alpha}{\beta}{2,1}}
+	{1 + 2 \cRotM{\alpha}{\beta}{2,2} - \trace{\RotM{\alpha}{\beta}}}
+	{\cRotM{\alpha}{\beta}{2,3} + \cRotM{\alpha}{\beta}{3,2}}
+	&= 4\cRotQ{\alpha}{\beta}{2} \RotQ{\alpha}{\beta}
+	&
+	\qcolcmp
+	{\cRotM{\alpha}{\beta}{2,1} - \cRotM{\alpha}{\beta}{1,2}}
+	{\cRotM{\alpha}{\beta}{1,3} + \cRotM{\alpha}{\beta}{3,1}}
+	{\cRotM{\alpha}{\beta}{2,3} + \cRotM{\alpha}{\beta}{3,2}}
+	{1 + 2 \cRotM{\alpha}{\beta}{3,3} - \trace{\RotM{\alpha}{\beta}}}
+	&= 4\cRotQ{\alpha}{\beta}{3} \RotQ{\alpha}{\beta}
+\end{align*}
+
+Given $\RotM{\alpha}{\beta}$, $\RotQ{\alpha}{\beta}$ is found by computing and normalizing any one of the above quaternions. Numerical errors are minimized by choosing the one with the greatest norm, that is, the one for which $|\cRotQ{\alpha}{\beta}{i}|$ is largest. The best candidate can be determined beforehand from $\RotM{\alpha}{\beta}$ as follows:
+\begin{alignat*}{2}
+	\max \left\{ \trace{\RotM{\alpha}{\beta}}, \cRotM{\alpha}{\beta}{1,1}, \cRotM{\alpha}{\beta}{2,2}, \cRotM{\alpha}{\beta}{3,3}  \right\} &= \trace{\RotM{\alpha}{\beta}} & \implies |\cRotQ{\alpha}{\beta}{i}|_{max} &= |\cRotQ{\alpha}{\beta}{0}| \\
+	\max \left\{ \trace{\RotM{\alpha}{\beta}}, \cRotM{\alpha}{\beta}{1,1}, \cRotM{\alpha}{\beta}{2,2}, \cRotM{\alpha}{\beta}{3,3}  \right\} &= \cRotM{\alpha}{\beta}{i,i} & \implies |\cRotQ{\alpha}{\beta}{i}|_{max} &= |\cRotQ{\alpha}{\beta}{i}|, \forall i \in \left\{ 1,2,3\right\}
+\end{alignat*}
+
+The above criterion is easily derived from the following set of equalities:
+\begin{align*}
+	\trace{\RotM{\alpha}{\beta}} - \cRotM{\alpha}{\beta}{i,i} &= 2 \left( {\cRotQ{\alpha}{\beta}{0}}^2 - {\cRotQ{\alpha}{\beta}{i}}^2 \right), \forall i \in \left\{ 1,2,3\right\} \\
+	\cRotM{\alpha}{\beta}{1,1} - \cRotM{\alpha}{\beta}{2,2}   &= 2 \left( {\cRotQ{\alpha}{\beta}{1}}^2 - {\cRotQ{\alpha}{\beta}{2}}^2 \right)\\
+	\cRotM{\alpha}{\beta}{1,1} - \cRotM{\alpha}{\beta}{3,3}   &= 2 \left( {\cRotQ{\alpha}{\beta}{1}}^2 - {\cRotQ{\alpha}{\beta}{2}}^2 \right) \\
+	\cRotM{\alpha}{\beta}{2,2} - \cRotM{\alpha}{\beta}{3,3}   &= 2 \left( {\cRotQ{\alpha}{\beta}{2}}^2 - {\cRotQ{\alpha}{\beta}{3}}^2 \right)
+\end{align*}
+
+\begin{comment}
+\begin{equation*}
+	\renewcommand{\arraystretch}{2}
+	\begin{array}{||c|c||}
+		\hline
+		\hline
+		\max \left\{ \trace{\RotM{\alpha}{\beta}}, \cRotM{\alpha}{\beta}{1,1}, \cRotM{\alpha}{\beta}{2,2}, \cRotM{\alpha}{\beta}{3,3}  \right\}	&
+		\max \left\{ \abs{\cRotQ{\alpha}{\beta}{0}}, \abs{\cRotQ{\alpha}{\beta}{1}}, \abs{\cRotQ{\alpha}{\beta}{2}}, \abs{\cRotQ{\alpha}{\beta}{3}}\right\}\\[5pt]
+		\hline
+		\hline
+		\trace{\RotM{\alpha}{\beta}} 	& \abs{\cRotQ{\alpha}{\beta}{0}} \\
+		\hline
+		\cRotM{\alpha}{\beta}{1,1} 		& \abs{\cRotQ{\alpha}{\beta}{1}} \\
+		\hline
+		\cRotM{\alpha}{\beta}{2,2} 		& \abs{\cRotQ{\alpha}{\beta}{2}} \\
+		\hline
+		\cRotM{\alpha}{\beta}{3,3}		& \abs{\cRotQ{\alpha}{\beta}{3}} \\
+		\hline
+		\hline
+	\end{array}
+\end{equation*}
+
+\begin{equation*}
+	\renewcommand{\arraystretch}{2}
+	\begin{array}{||r||c|c|c|c||}
+		\hline
+		\hline
+		\max \left\{ \trace{\RotM{\alpha}{\beta}}, \cRotM{\alpha}{\beta}{1,1}, \cRotM{\alpha}{\beta}{2,2}, \cRotM{\alpha}{\beta}{3,3}  \right\}	&
+		\trace{\RotM{\alpha}{\beta}} &	
+		\cRotM{\alpha}{\beta}{1,1} 	 &	
+		\cRotM{\alpha}{\beta}{2,2} 	 &	
+		\cRotM{\alpha}{\beta}{3,3}
+		\\
+		\hline
+		\max \left\{ \abs{\cRotQ{\alpha}{\beta}{0}}, \abs{\cRotQ{\alpha}{\beta}{1}}, \abs{\cRotQ{\alpha}{\beta}{2}}, \abs{\cRotQ{\alpha}{\beta}{3}}\right\} &
+		\abs{\cRotQ{\alpha}{\beta}{0}} &
+		\abs{\cRotQ{\alpha}{\beta}{1}} &
+		\abs{\cRotQ{\alpha}{\beta}{2}} &
+		\abs{\cRotQ{\alpha}{\beta}{3}}
+		\\
+		\hline
+		\hline
+	\end{array}
+\end{equation*}
+\end{comment}
+
+\subsection{Rotation Matrix from Euler Angles}
+Given $\rel{\psi}{\alpha}{\beta}$, $\rel{\theta}{\alpha}{\beta}$, $\rel{\phi}{\alpha}{\beta}$, $\RotM{\alpha}{\beta}$ can be computed directly from \eqref{E:AttRep:Euler:RotMAlphaBeta} and \eqref{E:AttRep:Euler:RotMParamElem}.
+
+\subsection{Rotation Matrix to Euler Angles} \label{S:AttRep:Conv:RotM2Euler}
+Given $\RotM{\alpha}{\beta}$, $\rel{\theta}{\alpha}{\beta}$ is first extracted from \eqref{E:AttRep:Euler:RotMParamElem} as:
+\begin{equation*}
+	\rel{\theta}{\alpha}{\beta} = \atan2 \left( -\cRotM{\alpha}{\beta}{3,1}, \sqrt{{\cRotM{\alpha}{\beta}{3,2}}^2 + \cRotM{\alpha}{\beta}{3,3}^2} \right) 
+\end{equation*}
+
+If $|\rel{\theta}{\alpha}{\beta}| \neq \pi/2$, $\rel{\psi}{\alpha}{\beta}$ and $\rel{\phi}{\alpha}{\beta}$ are given by:
+\begin{gather*}
+	\rel{\psi}{\alpha}{\beta} = \atan2 \left( \cRotM{\alpha}{\beta}{2,1}, \cRotM{\alpha}{\beta}{1,1} \right) \\
+	\rel{\phi}{\alpha}{\beta} = \atan2 \left( \cRotM{\alpha}{\beta}{3,2}, \cRotM{\alpha}{\beta}{3,3} \right)
+\end{gather*}
+
+Otherwise, $\rel{\psi}{\alpha}{\beta}$ and $\rel{\phi}{\alpha}{\beta}$ cannot be independently determined:
+ \begin{itemize}
+	
+	\item For $\theta = \pi/2$, \eqref{E:AttRep:Euler:RotMParamElem} becomes:
+	\begin{equation*}
+		\begin{split}
+			\RotMEuler{\psi}{\pi/2}{\phi}
+			&=
+			\begin{pmatrix}
+				0	&	c_{\psi} s_{\phi} - s_{\psi} c_{\phi}	&	c_{\psi} c_{\phi} + s_{\psi} s_{\phi}\\
+				0	&	s_{\psi} s_{\phi} + c_{\psi} c_{\phi}	&	s_{\psi} c_{\phi} - c_{\psi} s_{\phi}\\
+				-1	&	0										&	0	
+			\end{pmatrix}\\
+			&=	
+			\begin{pmatrix}
+				0	&	-\sin(\psi - \phi) 	&	\cos(\psi - \phi)  \\
+				0	&	\cos(\psi - \phi) 	&	\sin(\psi - \phi) \\
+				-1	&	0					&	0	
+			\end{pmatrix}
+		\end{split}
+	\end{equation*}
+	In this case, $\rel{\psi}{\alpha}{\beta} - \rel{\psi}{\alpha}{\beta}$ can be extracted as:
+	\begin{equation*}
+		\rel{\psi}{\alpha}{\beta} - \rel{\phi}{\alpha}{\beta} = \atan2 \left( \cRotM{\alpha}{\beta}{2,3}\cRotM{\alpha}{\beta}{2,2}  \right)
+	\end{equation*}
+
+	\item For $\theta = -\pi/2$, \eqref{E:AttRep:Euler:RotMParamElem} becomes:
+	\begin{equation*}
+		\begin{split}
+			\RotMEuler{\psi}{-\pi/2}{\phi}
+			&=
+			\begin{pmatrix}
+				0	&	- c_{\psi} s_{\phi} - s_{\psi} c_{\phi}	&	- c_{\psi} c_{\phi} + s_{\psi} s_{\phi}\\
+				0	&	- s_{\psi} s_{\phi} + c_{\psi} c_{\phi}	&	- s_{\psi} c_{\phi} - c_{\psi} s_{\phi}\\
+				1	&	0										&	0	
+			\end{pmatrix}\\
+			&=	
+			\begin{pmatrix}
+				0	&	-\sin(\psi + \phi) 	&	-\cos(\psi + \phi) \\
+				0	&	\cos(\psi + \phi) 	&	-\sin(\psi + \phi) \\
+				1	&	0					&	0	
+			\end{pmatrix}
+		\end{split}
+	\end{equation*}
+	In this case, $\rel{\psi}{\alpha}{\beta} + \rel{\phi}{\alpha}{\beta}$ can be extracted as:
+	\begin{equation*}
+		\rel{\psi}{\alpha}{\beta} + \rel{\phi}{\alpha}{\beta} = \atan2 \left( \cRotM{\alpha}{\beta}{1,2}\cRotM{\alpha}{\beta}{1,3}  \right)
+	\end{equation*}
+ \end{itemize}
+
+\subsection{Rotation Matrix from Axis-Angle}
+Given $\vrel{\rotax}{\alpha}{\beta}$ and $\rel{\rotang}{\alpha}{\beta}$, $\RotM{\alpha}{\beta}$ can be computed directly from \eqref{Eq.Deriv.RotMat.AxisAngle.CAlphaBeta}.
+
+\subsection{Rotation Matrix to Axis-Angle}
+First, let us define:
+\begin{equation}
+	\vrel{m}{\alpha}{\beta} = 2 \sin \rel{\rotang}{\alpha}{\beta} \vrel{\rotax}{\alpha}{\beta} \label{E:AttRep:Conv:RotM2AA:Der1}
+\end{equation}
+
+So that:
+\begin{equation} \label{E:AttRep:Conv:RotM2AA:Der2}
+	\norm{\vrel{m}{\alpha}{\beta}} = 2 \abs{\sin \rel{\rotang}{\alpha}{\beta}} = 2 \sign{\rel{\rotang}{\alpha}{\beta}} \sin \rel{\rotang}{\alpha}{\beta}	
+\end{equation}
+
+Turning now to \eqref{Eq.Deriv.RotMat.AxisAngle.CAlphaBeta} and applying property \eqref{E:AttRep.AxAng.Prop4}, we can derive the following equality:
+\begin{equation*}
+\begin{split}
+	\RotM{\alpha}{\beta} - \trp{\RotM{\alpha}{\beta}}
+	&= \RotMAxAng{\vrel{\rotax}{\alpha}{\beta}}{\rel{\rotang}{\alpha}{\beta}} - \trp{\RotMAxAng{\vrel{\rotax}{\alpha}{\beta}}{\rel{\rotang}{\alpha}{\beta}}}
+	\\
+	&= \RotMAxAng{\vrel{\rotax}{\alpha}{\beta}}{\rel{\rotang}{\alpha}{\beta}} - \RotMAxAng{\vrel{\rotax}{\alpha}{\beta}}{-\rel{\rotang}{\alpha}{\beta}} = 2 \sin \rel{\rotang}{\alpha}{\beta} \vskew{\vrel{\rotax}{\alpha}{\beta}} = \vskew{\vrel{m}{\alpha}{\beta}}
+\end{split}
+\end{equation*}
+
+Using \eqref{Eq.Def.V2Skew}, the above can be written element-wise as:
+\begin{equation*}
+	\begin{split}
+		\vskew{\vrel{m}{\alpha}{\beta}} &=
+		\begin{pmatrix}
+			0							&-\crel{m}{\alpha}{\beta}{3}	&\crel{m}{\alpha}{\beta}{2}	\\
+			\crel{m}{\alpha}{\beta}{3}	&0								&-\crel{m}{\alpha}{\beta}{1} \\
+			-\crel{m}{\alpha}{\beta}{2}	&\crel{m}{\alpha}{\beta}{1}		&0
+		\end{pmatrix} \\
+		&= 
+		\begin{pmatrix}
+			0	&\cRotM{\alpha}{\beta}{1,2} - \cRotM{\alpha}{\beta}{2,1}	&\cRotM{\alpha}{\beta}{1,3} - \cRotM{\alpha}{\beta}{3,1} \\
+			\cRotM{\alpha}{\beta}{2,1} - \cRotM{\alpha}{\beta}{1,2}		&0	&\cRotM{\alpha}{\beta}{2,3} - \cRotM{\alpha}{\beta}{3,2} \\
+			\cRotM{\alpha}{\beta}{3,1} - \cRotM{\alpha}{\beta}{1,3}		&\cRotM{\alpha}{\beta}{3,2} - \cRotM{\alpha}{\beta}{2,3}	&0
+		\end{pmatrix}
+	\end{split}
+\end{equation*}
+
+Therefore, given $\RotM{\alpha}{\beta}$, we can compute $\vrel{m}{\alpha}{\beta}$ as:
+\begin{equation} \label{E:AttRep:Conv:RotM2AA:Der0}
+	\vrel{m}{\alpha}{\beta} = 
+		\begin{pmatrix}
+			\crel{m}{\alpha}{\beta}{1}	\\	\crel{m}{\alpha}{\beta}{2}	\\	\crel{m}{\alpha}{\beta}{3}
+		\end{pmatrix} =
+		\\
+		\begin{pmatrix}
+			\cRotM{\alpha}{\beta}{3,2} -\cRotM{\alpha}{\beta}{3,2} \\
+			\cRotM{\alpha}{\beta}{1,3} -\cRotM{\alpha}{\beta}{3,1} \\
+			\cRotM{\alpha}{\beta}{2,1} -\cRotM{\alpha}{\beta}{1,2}
+		\end{pmatrix}
+\end{equation}
+
+With $\vrel{m}{\alpha}{\beta}$, from \eqref{E:AttRep:Conv:RotM2AA:Der1} and \eqref{E:AttRep:Conv:RotM2AA:Der2}:
+\begin{gather*}
+	\rel{\rotang}{\alpha}{\beta}= \arcsin \left( \sign{\rel{\rotang}{\alpha}{\beta}} \frac{\norm{\vrel{m}{\alpha}{\beta}}}{2} \right) =
+	\sign{\rel{\rotang}{\alpha}{\beta}} \arcsin \left( \frac{\norm{\vrel{m}{\alpha}{\beta}}}{2} \right)
+	\\
+	\vrel{\rotax}{\alpha}{\beta} = \frac{\vrel{m}{\alpha}{\beta}}{2 \sin \rel{\rotang}{\alpha}{\beta}} =
+	\sign{\rel{\rotang}{\alpha}{\beta}} \frac{\vrel{m}{\alpha}{\beta}}{\norm{\vrel{m}{\alpha}{\beta}}}
+\end{gather*}
+
+Since $\RotMAxAng{-\mcol{\rotax}}{-\rotang} = \RotMAxAng{\mcol{\rotax}}{\rotang}$, $\sign{\rel{\rotang}{\alpha}{\beta}}$ is irrelevant and it can be chosen arbitrarily. Let $\sign{\rel{\rotang}{\alpha}{\beta}} = 1$, so that:
+\begin{subequations}
+\begin{gather}
+	2 \sin \rel{\rotang}{\alpha}{\beta} = \norm{\vrel{m}{\alpha}{\beta}} \label{E:AttRep:Conv:RotM2AA:Angle}\\
+	\vrel{\rotax}{\alpha}{\beta} = \frac{\vrel{m}{\alpha}{\beta}}{\norm{\vrel{m}{\alpha}{\beta}}} \label{E:AttRep:Conv:RotM2AA:Axis}
+\end{gather}
+\end{subequations}
+
+From \eqref{E:AttRep.AxAng.Res.Tr} we also have:
+\begin{equation} \label{E:AttRep:Conv:RotM2AA:Der3}	
+	2 \cos \rel{\rotang}{\alpha}{\beta} = \trace{\RotM{\alpha}{\beta}} - 1
+\end{equation}
+
+With \eqref{E:AttRep:Conv:RotM2AA:Angle} and \eqref{E:AttRep:Conv:RotM2AA:Der3}, the rotation angle can be computed robustly as:
+\begin{equation} \label{E:AttRep:Conv:RotM2AA:AngleFinal}
+	\rel{\rotang}{\alpha}{\beta} = \atan2( 2 \sin \rel{\rotang}{\alpha}{\beta}, 2 \cos \rel{\rotang}{\alpha}{\beta} ) = \atan2 \left( \norm{\vrel{m}{\alpha}{\beta}}, \trace{\RotM{\alpha}{\beta}} \right)
+\end{equation} 
+
+If $\norm{\vrel{m}{\alpha}{\beta}} \neq 0$, then $\vrel{\rotax}{\alpha}{\beta}$ is found from \eqref{E:AttRep:Conv:RotM2AA:Axis}. Otherwise it is a null rotation, and the axis is undefined.
+
+\subsection{Rotation Matrix from Rotation Vector}
+To compute $\RotM{\alpha}{\beta}$ from $\rotv[]{\alpha}{\beta}$, we first extract $\rel{\rotang}{\alpha}{\beta}$ from \eqref{E:AttRep:RotVec:Res:RotV2Ang}.
+
+If $\norm{\rotv[]{\alpha}{\beta}} > \varepsilon$, $\vrel{\rotax}{\alpha}{\beta}$ can be safely computed from \eqref{E:AttRep:RotVec:Res:RotV2Ax}. $\RotM{\alpha}{\beta}$ is then found from \eqref{Eq.Deriv.RotMat.AxisAngle.CAlphaBeta}.
+
+If $\norm{\rotv[]{\alpha}{\beta}} < \varepsilon$, to avoid numerical issues, exponential series \eqref{Eq.Res.InfRot.Approx} should be used instead, retaining the desired number of terms.
+
+\subsection{Rotation Matrix to Rotation Vector}
+To compute $\rotv[]{\alpha}{\beta}$ from $\RotM{\alpha}{\beta}$, we first extract $\rel{\rotang}{\alpha}{\beta}$ using \eqref{E:AttRep:Conv:RotM2AA:AngleFinal}.
+
+If $|\rel{\rotang}{\alpha}{\beta}| > \varepsilon$, then $\vrel{\rotax}{\alpha}{\beta}$ can be safely computed from \eqref{E:AttRep:Conv:RotM2AA:Axis} and $\RotM{\alpha}{\beta}$ can then be found from \eqref{Eq.Res.RotVec.RhoAlphaBeta}.
+
+If $|\rel{\rotang}{\alpha}{\beta}| < \varepsilon$, to avoid numerical issues we should turn to first order approximation \eqref{Eq.Res.InfRot.Approx}, from which $\rotv[]{\alpha}{\beta}$ can be extracted using \eqref{LinAlg.Eq.Def.V2Skew}:
+\begin{equation*}
+	\vskew{\rotv[]{\alpha}{\beta}} = \RotM{\alpha}{\beta} - \IdM \\
+\end{equation*}
+
+\subsection{Quaternion to Rotation Matrix}
+Given $\RotQ{\alpha}{\beta}$, $\RotM{\alpha}{\beta}$ can be computed directly from \eqref{E:AttRep:Quat:Res:RotMQuatAlphaBeta} and \eqref{E:AttRep:Quat:Res:RotMQuatExp}.
+
+\subsection{Quaternion from Euler Angles}
+Given $\rel{\psi}{\alpha}{\beta}$, $\rel{\theta}{\alpha}{\beta}$, $\rel{\phi}{\alpha}{\beta}$, $\RotQ{\alpha}{\beta}$ can be computed directly from \eqref{E:AttRep:Euler:RotQAlphaBeta} and \eqref{E:AttRep:Euler:RotQParam}.
+
+\subsection{Quaternion to Euler Angles}
+The procedure outlined in section \ref{S:AttRep:Conv:RotM2Euler} can also be applied to extract $\rel{\psi}{\alpha}{\beta}$, $\rel{\theta}{\alpha}{\beta}$ and $\rel{\phi}{\alpha}{\beta}$ from $\RotQ{\alpha}{\beta}$ by using \eqref{E:AttRep:Quat:Res:RotMQuatExp} to compute the required elements of $\RotM{\alpha}{\beta}$.
+
+\subsection{Quaternion from Axis-Angle}
+Given $\vrel{\rotax}{\alpha}{\beta}$ and $\rel{\rotang}{\alpha}{\beta}$, $\RotQ{\alpha}{\beta}$ can be computed directly from \eqref{E:AttRep:Quat:Def:RotQ}. 
+
+\subsection{Quaternion to Axis-Angle}
+From \eqref{E:AttRep:Quat:Def:RotQ} we have:
+\begin{equation*}
+	\norm{\imRotQ{\alpha}{\beta}} = \norm{\sin (\rel{\rotang}{\alpha}{\beta} / 2) \vrel{\rotax}{\alpha}{\beta}} =
+	\abs{\sin (\rel{\rotang}{\alpha}{\beta} / 2)} \norm{\vrel{\rotax}{\alpha}{\beta}} =\abs{\sin (\rel{\rotang}{\alpha}{\beta} / 2)}=
+	\sign{\rel{\rotang}{\alpha}{\beta}} \sin (\rel{\rotang}{\alpha}{\beta} / 2)
+\end{equation*}
+
+Therefore:
+\begin{gather*}
+	\rel{\rotang}{\alpha}{\beta} = 2 \arcsin \left( \sign{\rel{\rotang}{\alpha}{\beta}} \norm{\imRotQ{\alpha}{\beta}} \right) =
+	2 \sign{\rel{\rotang}{\alpha}{\beta}} \arcsin \left( \norm{\imRotQ{\alpha}{\beta}} \right)
+	\\
+	\vrel{\rotax}{\alpha}{\beta} = \frac{\imRotQ{\alpha}{\beta}}{\sin (\rel{\rotang}{\alpha}{\beta} / 2)} =
+	\sign{\rel{\rotang}{\alpha}{\beta}} \frac{\imRotQ{\alpha}{\beta}}{\norm{\imRotQ{\alpha}{\beta}}}
+\end{gather*}
+
+Since $\RotQAxAng{-\vrel{\rotax}{\alpha}{\beta}}{-\rel{\rotang}{\alpha}{\beta}} = \RotQAxAng{\vrel{\rotax}{\alpha}{\beta}}{\rel{\rotang}{\alpha}{\beta}}$, $\sign{\rel{\rotang}{\alpha}{\beta}}$ is irrelevant and can be chosen arbitrarily. Let $\sign{\rel{\rotang}{\alpha}{\beta}} = 1$, so that:
+\begin{subequations}
+\begin{gather}
+	\sin (\rel{\rotang}{\alpha}{\beta} / 2) = \norm{\imRotQ{\alpha}{\beta}} \label{E:AttRep:Conv:Quat2AA:SinAngle}\\
+	\vrel{\rotax}{\alpha}{\beta} = \frac{\imRotQ{\alpha}{\beta}}{\norm{\imRotQ{\alpha}{\beta}}} \label{E:AttRep:Conv:Quat2AA:Axis}
+\end{gather}
+\end{subequations}
+
+The rotation angle can always be computed robustly as: 
+\begin{equation} \label{E:AttRep:Conv:Quat2AA:Angle}
+	\rel{\rotang}{\alpha}{\beta} = 2 \atan2( \sin(\rel{\rotang}{\alpha}{\beta} / 2), \cos(\rel{\rotang}{\alpha}{\beta} / 2)) = 2 \atan2 \left( \norm{\imRotQ{\alpha}{\beta}}, \reRotQ{\alpha}{\beta} \right)
+\end{equation}
+
+If $\norm{\imRotQ{\alpha}{\beta}} \neq 0$, then $\vrel{\rotax}{\alpha}{\beta}$ is found from \eqref{E:AttRep:Conv:Quat2AA:Axis}. Otherwise it is a null rotation, and the axis is undefined.
+
+%\label{E:AttRep:Conv:Q2AA:Der1}
+\subsection{Quaternion from Rotation Vector}
+Given $\rotv[]{\alpha}{\beta}$, $\RotQ{\alpha}{\beta}$ may be found either from \eqref{E:AttRep:RotVec:Def:QuatRVec} or \eqref{E:AttRep:RotVec:Def:QuatRVecAlt}.
+
+If $|\rotv[]{\alpha}{\beta}| > \varepsilon$, where $\varepsilon$ is some (very small) threshold, then $\RotQ{\alpha}{\beta}$ can be computed exactly from \eqref{E:AttRep:RotVec:Def:QuatRVec}.
+
+If $|\rotv[]{\alpha}{\beta}| < \varepsilon$, to avoid numerical issues, alternative parameterization \eqref{E:AttRep:RotVec:Def:QuatRVecAlt} should be used instead, retaining the desired number of terms.
+
+\subsection{Quaternion to Rotation Vector}
+To compute $\rotv[]{\alpha}{\beta}$ from $\RotQ{\alpha}{\beta}$, first extract $\rel{\rotang}{\alpha}{\beta}$ from \eqref{E:AttRep:Conv:Quat2AA:Angle}.
+
+If $|\rel{\rotang}{\alpha}{\beta}| > \varepsilon$, then $\vrel{\rotax}{\alpha}{\beta}$ can be safely extracted from \eqref{E:AttRep:Conv:Quat2AA:Axis} and $\rotv[]{\alpha}{\beta}$ is found directly from \eqref{Eq.Res.RotVec.RhoAlphaBeta}.
+
+If $|\rel{\rotang}{\alpha}{\beta}| > \varepsilon$, to avoid numerical issues, we can proceed as follows. From \eqref{Eq.Res.RotVec.RhoAlphaBeta}, \eqref{E:AttRep:Conv:Quat2AA:SinAngle} and \eqref{E:AttRep:Conv:Quat2AA:Axis}:
+\begin{equation*}
+	\rotv[]{\alpha}{\beta} = 2 \arcsin \norm{\imRotQ{\alpha}{\beta}} \frac{\imRotQ{\alpha}{\beta}}{\norm{\imRotQ{\alpha}{\beta}}}	
+\end{equation*}
+
+Substituting $\arcsin \norm{\imRotQ{\alpha}{\beta}}$ with its Taylor series yields, after some manipulation:
+\begin{equation}
+	\rotv[]{\alpha}{\beta} = 2 \imRotQ{\alpha}{\beta} \sum^{\infty}_{k=0} {\frac{(2k)! {\norm{\imRotQ{\alpha}{\beta}}}^{2k}}
+	{4^k (k!)^2 (2k+1)}}
+\end{equation}
+
+From which $\rotv[]{\alpha}{\beta}$ can be computed by retaining the desired number of terms.
+
+\begin{comment}
+\subsection{Rotation Matrix to Axis-Angle}
+Given a rotation matrix $\RotM{\alpha}{\beta}$, to extract the rotation axis $\vrel{\rotax}{\alpha}{\beta}$ and rotation angle $\rel{\rotang}{\alpha}{\beta}$, we proceed as follows. First, we compute  $\trace{\RotM{\alpha}{\beta}}$. Then:
+
+\begin{itemize}
+\item
+If $\trace{\RotM{\alpha}{\beta}}=3$, from \eqref{E:AttRep.AxAng.Res.Tr} we see that $\cos \rel{\rotang}{\alpha}{\beta} = 1$ and therefore $\rel{\rotang}{\alpha}{\beta}=0$. This corresponds to a null rotation, so $\vrel{\rotax}{\alpha}{\beta}$ is undefined. 
+\item
+If $\trace{\RotM{\alpha}{\beta}}=-1$, $\cos \rel{\rotang}{\alpha}{\beta}= 0$ and therefore $\rel{\rotang}{\alpha}{\beta}=\pm \pi$ (for any given axis, $\rel{\rotang}{\alpha}{\beta}=\pi$ and $\rel{\rotang}{\alpha}{\beta}=-\pi$ both correspond to the same rotation).
+
+Applying property \eqref{Eq.Res.V2Skew.Prod} with $\mcol{x}=\mcol{y}=\vrel{\rotax}{\alpha}{\beta}$ gives:
+\begin{equation}\label{E:AttRep.AxAng.Der.RotM2AxAng1}
+\vskew{\vrel{\rotax}{\alpha}{\beta}}^{2}=-\norm{\vrel{\rotax}{\alpha}{\beta}}^{2} \IdM + \vrel{\rotax}{\alpha}{\beta} \tr{\vrel{\rotax}{\alpha}{\beta}}=- \IdM + \vrel{\rotax}{\alpha}{\beta} \tr{\vrel{\rotax}{\alpha}{\beta}}
+\end{equation}
+
+Setting $\rel{\rotang}{\alpha}{\beta}=\pm \pi$ in \eqref{Eq.Res.RotMat.AxisAngle.Operator} and inserting \eqref{E:AttRep.AxAng.Der.RotM2AxAng1} yields:
+\begin{equation}\label{E:AttRep.AxAng.Der.RotM2AxAng2}
+\RotM{\alpha}{\beta} + \IdM = 2 \vrel{\rotax}{\alpha}{\beta} \tr{\vrel{\rotax}{\alpha}{\beta}} = 2 \matenv
+{
+{\crel{\rotax}{\alpha}{\beta}{1}}^2 								& \crel{\rotax}{\alpha}{\beta}{1} \crel{\rotax}{\alpha}{\beta}{2} 	& {\crel{\rotax}{\alpha}{\beta}{1}} \crel{\rotax}{\alpha}{\beta}{3} \\ 
+\crel{\rotax}{\alpha}{\beta}{1} \crel{\rotax}{\alpha}{\beta}{2} 	& {\crel{\rotax}{\alpha}{\beta}{2}}^2 								& \crel{\rotax}{\alpha}{\beta}{2} \crel{\rotax}{\alpha}{\beta}{3} \\ 
+\crel{\rotax}{\alpha}{\beta}{1} \crel{\rotax}{\alpha}{\beta}{3} 	& \crel{\rotax}{\alpha}{\beta}{2} \crel{\rotax}{\alpha}{\beta}{3} 	& {\crel{\rotax}{\alpha}{\beta}{3}}^2
+}
+\end{equation}
+
+Note that every column and row of $\RotM{\alpha}{\beta}+\IdM$ is proportional to $\vrel{\rotax}{\alpha}{\beta}$. Thus, if we have $\trace{\RotM{\alpha}{\beta}}=-1$, we can find $\vrel{\rotax}{\alpha}{\beta}$ by computing $\RotM{\alpha}{\beta}+\IdM$ and normalizing any non-zero column (or row).
+
+\item
+For any other value of $\trace{\RotM{\alpha}{\beta}}$, we compute the rotation angle as:
+\begin{equation} \label{E:AttRep.AxAng.Res.RotAngFromRotM}
+\rel{\rotang}{\alpha}{\beta} = \arccos \frac{\trace{\RotM{\alpha}{\beta}}-1}{2}
+\end{equation}
+
+The rotation axis can then be determined using \eqref{Eq.Res.RotMat.AxisAngle.Operator} and property \eqref{E:AttRep.AxAng.Prop4}:
+\begin{equation*}
+\begin{split}
+\RotM{\alpha}{\beta}-\trp{\RotM{\alpha}{\beta}} &= \RotMAxAng{\vrel{\rotax}{\alpha}{\beta}}{\rel{\rotang}{\alpha}{\beta}} - \trp{\RotMAxAng{\vrel{\rotax}{\alpha}{\beta}}{\rel{\rotang}{\alpha}{\beta}}} \\
+&= \RotMAxAng{\vrel{\rotax}{\alpha}{\beta}}{\rel{\rotang}{\alpha}{\beta}} - \RotMAxAng{\vrel{\rotax}{\alpha}{\beta}}{-\rel{\rotang}{\alpha}{\beta}} = 2 \sin \rel{\rotang}{\alpha}{\beta} \vskew{\vrel{\rotax}{\alpha}{\beta}}
+\end{split}
+\end{equation*}
+
+From which:
+\begin{equation} \label{E:AttRep.AxAng.Deriv.RotAxFromRotM}
+\vskew{\vrel{\rotax}{\alpha}{\beta}} = \frac{1}{2 \sin \rel{\rotang}{\alpha}{\beta}}\left(\RotM{\alpha}{\beta}-\tr{\RotM{\alpha}{\beta}}\right)
+\end{equation}
+
+%\matenv{\crel{\rotax}{\alpha}{\beta}{1} \\ \crel{\rotax}{\alpha}{\beta}{2} \\ \crel{\rotax}{\alpha}{\beta}{3}} =
+From \eqref{E:AttRep.AxAng.Deriv.RotAxFromRotM} and the definition of the cross product operator \eqref{Eq.Def.V2Skew}:
+\begin{equation} \label{E:AttRep.AxAng.Res.RotAxFromRotM}
+\vrel{\rotax}{\alpha}{\beta} = \matenv{-\cmp{\vskew{\rel\rotax{\alpha}{\beta}}}{2,3} \\ \cmp{\vskew{\rel\rotax{\alpha}{\beta}}}{1,3} \\ -\cmp{\vskew{\rel\rotax{\alpha}{\beta}}}{1,2}}
+= \frac{1}{2 \sin \rel{\rotang}{\alpha}{\beta}} \matenv{-\rndp{\cRotM{\alpha}{\beta}{2,3}-\cRotM{\alpha}{\beta}{3,2}} \\ \cRotM{\alpha}{\beta}{1,3}-\cRotM{\alpha}{\beta}{3,1} \\ -\rndp{\cRotM{\alpha}{\beta}{1,2}-\cRotM{\alpha}{\beta}{2,1}}}
+\end{equation}
+
+\end{itemize}
+
+Equation \eqref{E:AttRep.AxAng.Res.RotAxFromRotM} shows why the cases $\rel{\rotang}{\alpha}{\beta}=0$ and $\rel{\rotang}{\alpha}{\beta}=\pm \pi$ must be handled separately in numerical implementations.
+\end{comment}
+
+\endinput

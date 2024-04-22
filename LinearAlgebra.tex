@@ -1,0 +1,788 @@
+\chapter[Linear Algebra]{Linear Algebra}
+\section{Vectors} %%%%%%%%
+\subsection{Vector Spaces} %%%%%%%%
+\label{Subsec.VectorSpaces}
+A \emph{field} is a mathematical structure consisting of a set $\mathcal{F}=\{a,b,c,\dots\}$ and the two following operations:
+\begin{enumerate}
+\item \emph{Addition}, which takes two elements $a,b \in \mathcal{F}$ and yields another element $c=a+b \in \mathcal{F}$. The addition operation must satisfy the following properties: %%%%%%%HASTA AQUI
+\begin{enumerate}
+	\item Associativity:
+		\begin{equation*}
+		a+(b+c) = (a+b)+c
+		\end{equation*}
+	\item Commutativity:
+		\begin{equation*}
+		a+b=b+a
+		\end{equation*}
+	\item Existence of an identity element:
+		\begin{equation*}
+		\exists \left\{0 \in\mathcal{F} \medspace \vert \medspace \forall a\in\mathcal{F}, a+0=a\right\}
+		\end{equation*}
+	\item Existence of an inverse element:
+		\begin{equation*}
+		\forall a \in\mathcal{F}, \medspace \exists \left\{-a \in \mathcal{F} \medspace \vert \medspace a+(-a)=0 \right\}
+		\end{equation*}
+\end{enumerate}
+\item \emph{Multiplication}, which takes two elements $a,b \in \mathcal{F}$ and yields another element $c=ab \in \mathcal{F}$. The multiplication operation must satisfy the following properties:
+\begin{enumerate}
+	\item Associativity:
+		\begin{equation*}
+		a(bc)=(ab)c
+		\end{equation*}
+	\item Commutativity:
+		\begin{equation*}
+		ab=ba
+		\end{equation*}
+	\item Existence of an identity element:
+		\begin{equation*}
+		\exists \left\{1 \in\mathcal{F} \medspace \vert \medspace \forall a\in\mathcal{F}, (a)(1)=a\right\}
+		\end{equation*}
+	\item Existence of an inverse element:
+		\begin{equation*}
+		\forall a \in\mathcal{F}, \medspace \exists \left\{a^{-1} \in \mathcal{F} \medspace \vert \medspace aa^{-1}=1 \right\}
+		\end{equation*}
+	\item Distributivity over addition:
+		\begin{equation*}
+		(a+b)c = ac+bc
+		\end{equation*}
+\end{enumerate}
+\end{enumerate}
+
+Some familiar examples of fields are those of rational numbers ($\mathbb{Q}$), real numbers ($\mathbb{R}$) and complex numbers ($\mathbb{C}$).
+
+A \emph{vector space} is a mathematical structure consisting of a set $\mathcal{V}=\{\vabs{v},\vabs{w},\vabs{z},\dots\}$, whose members are called \emph{vectors}, a field $\mathcal{F}=\{a,b,c,\dots\}$, whose members are called \emph{scalars}, and the two following operations:
+\begin{enumerate}
+\item \emph{Vector addition}, which takes two vectors $\vabs{v}, \vabs{w} \in \mathcal{V}$ and produces another vector $\vabs{z}=\vabs{v}+\vabs{w} \in \mathcal{V}$. The vector addition operation must satisfy the following properties:
+\begin{enumerate}
+	\item Associativity:
+		\begin{equation} \label{Eq.Res.Vectors.Assoc}
+		\vabs{v}+(\vabs{w}+\vabs{z})=(\vabs{v}+\vabs{w})+\vabs{z}
+		\end{equation}
+	\item Commutativity:
+		\begin{equation} \label{Eq.Res.Vectors.Commut}
+		\vabs{v}+\vabs{w}=\vabs{w}+\vabs{v}
+		\end{equation}
+	\item Existence of an identity element:
+		\begin{equation} \label{Eq.Res.Vectors.AdditionId}
+		\exists \left\{\vabs{0}\in\mathcal{V} \medspace \vert \medspace \forall \vabs{v}\in\mathcal{V}, \vabs{v}+\vabs{0}=\vabs{v}\right\}
+		\end{equation}
+	\item Existence of an inverse element:
+		\begin{equation} \label{Eq.Res.Vectors.AdditionInv}
+		\forall\vabs{v}\in\mathcal{V}, \medspace \exists \left\{-\vabs{v}\in\mathcal{V} \medspace \vert \medspace \vabs{v}+(-\vabs{v})=\vabs{0}\right\}
+		\end{equation}
+\end{enumerate}
+\item \emph{Scalar multiplication}, which takes a scalar $a \in \mathcal{F}$ and a vector $\vabs{v} \in \mathcal{V}$, and produces another vector $\vabs{w}=a\vabs{v} \in \mathcal{V}$. The scalar multiplication operation must satisfy the following properties:
+\begin{enumerate}
+	\item Compatibility with field multiplication:
+		\begin{equation} \label{Eq.Res.Vectors.Compatibility}
+		a(b\vabs{v})=(ab)\vabs{v}
+		\end{equation}
+	\item Existence of an identity element:
+		\begin{equation} \label{Eq.Res.Vectors.MultId}
+		1\vabs{v}=\vabs{v} \text{, where $1$ denotes the multiplicative identity in $\mathcal{F}$}
+		\end{equation}
+	\item Distributivity with respect to vector addition
+		\begin{equation} \label{Eq.Res.Vectors.DistVect}
+		a(\vabs{v}+\vabs{w})=a\vabs{v}+a\vabs{w}
+		\end{equation}
+	\item Distributivity with respect to field addition
+		\begin{equation} \label{Eq.Res.Vectors.DistField}
+		(a+b)\vabs{v}=a\vabs{v}+b\vabs{v}
+		\end{equation}
+\end{enumerate}
+\end{enumerate}
+
+A set of vectors $\{\vasub{v}{1},\vasub{v}{2},\dots,\vasub{v}{n}\} \in \mathcal{V}$ is said to be \emph{linearly independent} if the following equation is only satisfied by $a_i=0$ for $i=1,2,\dots,n$:
+\begin{equation} \label{Eq.Def.Vectors.LinInd}
+\sum_{i=1}^{n}{a_i \vasub{v}{i}} = \vabs{0}
+\end{equation}
+
+An ordered set of linearly independent vectors $\basis = \{\vasub{e}{1},\vasub{e}{2},\dots,\vasub{e}{n}\} \in \mathcal{V}$ is a \emph{basis} of $\mathcal{V}$ if it \emph{spans} $\mathcal{V}$, that is, if every vector $\vabs{v} \in \mathcal{V}$ can be written as a linear combination of the elements in $\basis$:
+\begin{equation} \label{Eq.Def.Vectors.Spanning}
+\vabs{v} = \sum_{i=1}^{n}{\cmp{v}{i} \vasub{e}{i}}
+\end{equation}
+
+Where the ordered set $\left\{\cmp{v}{1}, \cmp{v}{2},\dots \cmp{v}{n}\right\}$ is unique and its elements are called the \emph{components} or \emph{coordinates} of $\vabs{v}$ in~$\basis$. When we specify $\vabs{v}$ in terms of its components in basis~$\basis$, we say $\vabs{v}$ is \emph{projected} or \emph{resolved} in~$\basis$.
+
+A vector space $\mathcal{V}$ can generally have multiple bases, all of which have the same number of elements. This number is the \emph{dimension} of $\mathcal{V}$. When the need arises to work with multiple bases, vector components will be superscripted to identify the basis to which they correspond. For instance, the components of $\vabs{v}$ in basis $\basis[\alpha]$ will be written $\{\cprj{v}{\alpha}{1}, \cprj{v}{\alpha}{2}, \dots, \cprj{v}{\alpha}{n}\}$.
+
+For most practical applications, the scalar field $\mathcal{F}$ is the field of real numbers $\mathbb{R}$, in which case the vector space is called a \emph{real vector space}. In a real vector space, an \emph{inner} or \emph{scalar} product can be defined, which takes two vectors $\vabs{v},\vabs{w} \in\mathcal{V}$ and produces a scalar $a=\vabs{v}\cdot\vabs{w}$. The scalar product allows to introduce additional notions such as the norm of a vector or the angle between two vectors. A vector space with a scalar product operation is called an \emph{inner product space}.
+
+The scalar product must satisfy the following properties:
+\begin{enumerate}[1)]
+	\item Commutativity:
+	\begin{equation} \label{Eq.Res.Inner.Sym}
+	\vabs{v}\cdot\vabs{w}=\vabs{w}\cdot\vabs{v}
+	\end{equation}
+	\item Distributivity with respect to vector addition:
+	\begin{equation} \label{Eq.Res.Inner.Dist}
+	(\vabs{v}+\vabs{w})\cdot\vabs{z}=\vabs{v}\cdot\vabs{z}+\vabs{w}\cdot\vabs{z}
+	\end{equation}
+	\item Linearity with respect to scalar multiplication:
+	\begin{equation} \label{Eq.Res.Inner.Lin}
+	(a\vabs{v})\cdot\vabs{w}=a(\vabs{v}\cdot\vabs{w})
+	\end{equation}
+	\item Positive-definiteness:
+	\begin{equation} \label{Eq.Res.Inner.PosDef}
+	\vabs{v}\cdot\vabs{v} \ge 0 \text{, with } \vabs{v}\cdot\vabs{v} = 0 \iff \vabs{v} = \vabs{0}
+	\end{equation}
+\end{enumerate}
+
+The norm of a vector is defined as:
+\begin{equation} \label{Eq.Def.Norm}
+\norm{\vabs{v}}=\sqrt{\vabs{v}\cdot\vabs{v}}
+\end{equation}
+
+If $\norm{\vabs{v}}=1$, $\vabs{v}$ is called a \emph{unit vector}.
+
+The angle between two vectors $\vabs{v}$ and $\vabs{w}$ is defined as:
+\begin{equation} \label{Eq.Def.Angle}
+\theta_{\vabs{v},  \vabs{w}} = \arccos \frac{\vabs{v}\cdot\vabs{w}}{\norm{\vabs{v}}\norm{\vabs{w}}}
+\end{equation}
+
+When $\vabs{v}\cdot\vabs{w}=\vabs{0}$, $\vabs{v}$ and $\vabs{w}$ are said to be \emph{orthogonal}. Hence, $\vabs{v}$ and $\vabs{w}$ are orthogonal if and only if $\left|\theta_{\vabs{v},  \vabs{w}}\right|=\pi/2$.
+
+A basis is said to be orthogonal if its vectors are mutually orthogonal, that is:
+\begin{equation} \label{Eq.Def.Basis.Orthogonal}
+\vasub{\bv}{i} \cdot \vasub{\bv}{j} = 0, \forall i \neq j
+\end{equation}
+
+An orthogonal basis is also \emph{orthonormal} if all its vectors are unit vectors, that is:
+\begin{equation} \label{Eq.Def.Basis.Orthonormal}
+\vasub{\bv}{i} \cdot \vasub{\bv}{i} = 1, \forall i \in \{1,\dots,n\}
+\end{equation}
+
+Taking the scalar product of \eqref{Eq.Def.Vectors.Spanning} with basis element $\vasub{\bv}{j}$ and using properties \eqref{Eq.Res.Inner.Dist} and \eqref{Eq.Res.Inner.Lin}:
+\begin{equation*}
+	\vabs{v}\cdot\vasub{\bv}{j}= \rndp{\sum_{i=1}^{n}\cmp{v}{i}\vasub{\bv}{i}} \cdot \vasub{\bv}{j} = \sum_{i=1}^{n}\cmp{v}{i}\rndp{\vasub{\bv}{i} \cdot \vasub{\bv}{j}}
+\end{equation*}
+
+If $\basis$ is an orthonormal basis, \eqref{Eq.Def.Basis.Orthogonal} and \eqref{Eq.Def.Basis.Orthonormal} can be applied to yield:
+\begin{equation} \label{Eq.Res.ComponentsOrth}
+\vabs{v}\cdot\vasub{\bv}{j} = \sum_{i=1}^{n}\cmp{v}{i}\rndp{\vasub{\bv}{i} \cdot \vasub{\bv}{j}} = \cmp{v}{j}
+\end{equation}
+
+Thus, the $j$-th component of a vector in an orthonormal basis is simply its scalar product with the $j$-th basis vector.
+
+Applying \eqref{Eq.Def.Vectors.Spanning}, together with \eqref{Eq.Res.Inner.Dist}, \eqref{Eq.Res.Inner.Lin} and \eqref{Eq.Res.ComponentsOrth}, the essential operations for an inner product space can be expressed in terms of components in an arbitrary orthonormal basis:
+
+\begin{enumerate}
+\item Vector addition:%($\vabs{z}=\vabs{v}+\vabs{w}$):
+\begin{equation} \label{Eq.Def.AdditionComp}
+\cmp{z}{i}=\vabs{z}\cdot\vasub{\bv}{i}=(\vabs{v}+\vabs{w}) \cdot \vasub{\bv}{i} = \vabs{v} \cdot \vasub{\bv}{i} + \vabs{w} \cdot \vasub{\bv}{i} = \cmp{v}{i}+\cmp{w}{i}
+\end{equation}
+
+\item Scalar multiplication:% ($\vabs{z}=a\vabs{v}$):
+\begin{equation} \label{Eq.Def.MultComp}
+\cmp{z}{i}=\vabs{z} \cdot \vasub{\bv}{i} = (a\vabs{v}) \cdot \vasub{\bv}{i} = a(\vabs{v} \cdot \vasub{\bv}{i}) = a\cmp{v}{i}
+\end{equation}
+
+\item Inner product:% ($a=\vabs{v}\cdot\vabs{w}$):
+\begin{equation} \label{Eq.Def.ScalarProdComp}
+\begin{split}
+a &= \rndp{\sum_{i=1}^{n}\cmp{v}{i}\vasub{\bv}{i}} \cdot \rndp{\sum_{j=1}^{n}\cmp{w}{j}\vasub{\bv}{j}} = \sum_{i=1}^{n} \sum_{j=1}^{n} \cmp{v}{i} \cmp{w}{j} \rndp{\vasub{\bv}{i} \cdot \vasub{\bv}{j} } \\
+&=  \sum_{k=1}^{n}\cmp{v}{k}\cmp{w}{k}
+\end{split}
+\end{equation}
+
+\end{enumerate}
+
+\subsection{Euclidean Vectors}
+An \emph{Euclidean vector} is typically defined as a geometric object that has both length and direction. Two-dimensional and three-dimensional Euclidean vectors are often used as abstract representations of physical quantities that are fully defined by their magnitude and direction. Throughout this document, whenever we talk about the Euclidean vector space without any additional qualifiers, we will be referring specifically to the three-dimensional Euclidean vector space.%Therefore, we shall refer to them as \emph{physical vectors}.
+
+The essential vector operations introduced in section \ref{Subsec.VectorSpaces} can be defined for Euclidean vectors and real numbers as purely geometrical constructions, without the need for additional mathematical formalisms. Hence, Euclidean vectors comprise, in and of themselves, an inner product space.
+
+However, for Euclidean vectors to be useful in practice, we need to connect them to a systematic mathematical description. To this end, we may introduce a basis $\basis = \{\vasub{e}{1},\vasub{e}{2},\vasub{e}{3}\}$, which enables us to represent any Euclidean vector by a unique set of three components. For such a basis, the orthonormality conditions \eqref{Eq.Def.Basis.Orthogonal} and \eqref{Eq.Def.Basis.Orthonormal} can be written more compactly~as:
+\begin{equation} \label{Eq.Res.Basis.OrthKronecker}
+\vasub{\bv}{i} \cdot \vasub{\bv}{j}=\delta_{ij}, \forall i,j\in\{1,2,3\}
+\end{equation}
+
+Where $\delta_{ij}$ is the \emph{Kronecker delta}, defined as:
+\begin{equation} \label{Eq.Def.Kronecker}
+\delta_{ij}=
+\begin{cases}
+1, &\text{if $i=j$;}\\
+0, &\text{if $i\neq j$}
+\end{cases}
+\end{equation}
+
+Expressions \eqref{Eq.Def.AdditionComp}, \eqref{Eq.Def.MultComp} and \eqref{Eq.Def.ScalarProdComp}, which were obtained for any inner product space using an orthonormal basis, are directly applicable to the Euclidean vector space.
+
+In the Euclidean vector space, an additional \emph{cross product} or \emph{vector product} operation can be constructed. The cross product takes two vectors $\vabs{v}$ and $\vabs{w}$ and produces another vector $\vabs{z}=\vabs{v}\times\vabs{w}$, which is orthogonal to both $\vabs{v}$ and $\vabs{w}$. The direction of $\vabs{v}\times\vabs{w}$ is given by the right hand rule, and its norm is:
+\begin{equation} \label{Eq.Def.CrossProdNorm}
+\norm{\vabs{v}\times\vabs{w}}=\norm{\vabs{v}}\norm{\vabs{w}}\sin\theta_{xy}
+\end{equation}
+
+\begin{subequations}
+The cross product satisfies the following properties:
+\begin{gather}
+\vabs{v} \times \vabs{w} = -\vabs{w} \times \vabs{v} \label{Eq.Res.CrossProd.Anti} \\%this implies that the cross product with self is zero
+(a\vabs{v}) \times \vabs{w} = a(\vabs{v} \times \vabs{w}) \label{Eq.Res.CrossProd.ScalarLin} \\
+(\vabs{v} + \vabs{w}) \times \vabs{z} = \vabs{v} \times \vabs{z} + \vabs{w} \times \vabs{z} \label{Eq.Res.CrossProd.Dist} \\
+\vabs{v} \times (\vabs{w} \times \vabs{z}) = (\vabs{v} \cdot \vabs{z})\vabs{w} - (\vabs{v} \cdot \vabs{w})\vabs{z} \label{Eq.Res.CrossProd.Grassman} \\
+\vabs{v} \times (\vabs{w} \times \vabs{z}) + \vabs{w} \times (\vabs{z} \times \vabs{v}) + \vabs{z} \times (\vabs{v} \times \vabs{w}) = \vabs{0} \label{Eq.Res.CrossProd.Jacobi} \\
+\vabs{v} \cdot (\vabs{w} \times \vabs{z}) = \vabs{z} \cdot (\vabs{v} \times \vabs{w}) = \vabs{w} \cdot (\vabs{z} \times \vabs{v}) \label{Eq.Res.TripleProdCircShift}
+%\vabs{v} \cdot (\vabs{w} \times \vabs{z}) = (\vabs{v} \times \vabs{w}) \cdot \vabs{z} \label{Eq.Res.TripleProdOpSwitch} %redundant with the previous one
+\end{gather}
+\end{subequations}
+
+The cross product allows us to define the \emph{orientation} or \emph{handedness} of an Euclidean vector basis.
+
+An orthonormal basis is called \emph{right-handed} if its vectors further satisfy:
+\begin{equation} \label{Eq.Def.Basis.RightHanded}
+\rndp{\vasub{\bv}{1} \times \vasub{\bv}{2}} \cdot \vasub{\bv}{3} =1
+\end{equation}
+
+Conversely, a \emph{left-handed} orthonormal basis satisfies:
+\begin{equation} \label{Eq.Def.Basis.LeftHanded}
+\rndp{\vasub{\bv}{1} \times \vasub{\bv}{2}} \cdot \vasub{\bv}{3} =-1
+\end{equation}
+
+Note that, due to the invariance of the triple product under cyclic permutations (property \eqref{Eq.Res.TripleProdCircShift}):
+\begin{equation} \label{Eq.Res.Basis.Cyclic}
+\rndp{\vasub{\bv}{1} \times \vasub{\bv}{2}} \cdot \vasub{\bv}{3} = \rndp{\vasub{\bv}{2} \times \vasub{\bv}{3}} \cdot \vasub{\bv}{1} = \rndp{\vasub{\bv}{3} \times \vasub{\bv}{1}} \cdot \vasub{\bv}{2}
+\end{equation}
+
+The orthonormality and right-handedness conditions \eqref{Eq.Res.Basis.OrthKronecker} and \eqref{Eq.Def.Basis.RightHanded}, together with the invariance property \eqref{Eq.Res.Basis.Cyclic}, can be combined as:
+\begin{equation} \label{Eq.Res.Basis.OrthRHLeviCivita}
+\rndp{\vasub{\bv}{i} \times \vasub{\bv}{j}} \cdot \vasub{\bv}{k} = \epsilon_{ijk}
+\end{equation}
+
+Where the $n$-dimensional \emph{Levi-Civita symbol} is defined as:
+\begin{equation} \label{Eq.Def.LeviCivitaND}
+\epsilon_{i_1 \dots i_n} = \prod_{1 \leq j \leq k \leq n} \sgn(i_k-i_j)
+\end{equation}
+
+In particular, the three-dimensional the Levi-Civita $\epsilon_{ijk}$ is given by:
+\begin{equation} \label{Eq.Def.LeviCivita3D}
+\epsilon_{ijk}=
+\begin{cases}
++1, &\text{if $(i,j,k)\in\{(1,2,3), (2,3,1), (3,1,2)\}$;}\\
+-1, &\text{if  $(i,j,k)\in\{(1,3,2), (2,1,3), (3,2,1)\}$;}\\
+0, &\text{otherwise}
+\end{cases}
+\end{equation}
+
+For an orthonormal right-handed basis, using \eqref{Eq.Def.Vectors.Spanning}, \eqref{Eq.Res.CrossProd.Dist} and \eqref{Eq.Res.CrossProd.ScalarLin} the cross product can be expressed as:
+\begin{equation} \label{Eq.Def.CrossProdComp0}
+\vabs{z}=\vabs{v} \times \vabs{w}=\rndp{\sum_{i=1}^{3}\cmp{v}{i}\vasub{\bv}{i}}\times\rndp{\sum_{j=1}^{3}\cmp{w}{j}\vasub{\bv}{j}} =\sum_{i=1}^{3}\sum_{j=1}^{3} \cmp{v}{i} \cmp{w}{j} \vasub{\bv}{i} \times \vasub{\bv}{j}
+\end{equation}
+
+Its $k$-th component is found by applying \eqref{Eq.Res.ComponentsOrth} and \eqref{Eq.Res.Basis.OrthRHLeviCivita}:
+\begin{equation} \label{Eq.Def.CrossProdComp1}
+\begin{split}
+\cmp{z}{k}
+= \vabs{z} \cdot \vasub{\bv}{k} = (\vabs{v} \times \vabs{w}) \cdot \vasub{\bv}{k}
+&=\sum_{i=1}^{3}\sum_{j=1}^{3} \cmp{v}{i} \cmp{w}{j} \rndp{\vasub{\bv}{i} \times \vasub{\bv}{j}} \cdot \vasub{\bv}{k}\\
+&=\sum_{i=1}^{3}\sum_{j=1}^{3} \cmp{v}{i} \cmp{w}{j} \epsilon_{ijk}, \forall k\in\{1,2,3\} 
+\end{split}
+\end{equation}
+
+Using \eqref{Eq.Def.LeviCivita3D}, \eqref{Eq.Def.CrossProdComp1} can be expanded as:
+\begin{equation} \label{Eq.Def.CrossProdComp2}
+\begin{split}
+\cmp{z}{1} = \cmp{v}{2} \cmp{w}{3} - \cmp{v}{3} \cmp{w}{2} \\
+\cmp{z}{2} = \cmp{v}{3} \cmp{w}{1} - \cmp{v}{1} \cmp{w}{3} \\
+\cmp{z}{3} = \cmp{v}{1} \cmp{w}{2} - \cmp{v}{2} \cmp{w}{1}
+\end{split}
+\end{equation}
+
+The triple product $(\vabs{v}\times\vabs{w})\cdot\vabs{z}$ can be computed as follows:
+\begin{equation} \label{Eq.Def.TripleProdComp}
+\begin{split}
+(\vabs{v} \times \vabs{w})\cdot\vabs{z} &=\sum_{i=1}^{3}\sum_{j=1}^{3}\sum_{k=1}^{3} \cmp{v}{i} \cmp{w}{j} \cmp{z}{k} \rndp{\vasub{\bv}{i} \times \vasub{\bv}{j}} \cdot \vasub{\bv}{k} \\
+&=\sum_{i=1}^{3}\sum_{j=1}^{3}\sum_{k=1}^{3} \cmp{v}{i} \cmp{w}{j} \cmp{z}{k} \epsilon_{ijk}
+\end{split}
+\end{equation}
+
+%MATRICES
+\section{Matrices} %%%%%%%%
+\subsection{Definitions and Properties} %%%%%%%%
+A \emph{matrix} $\mat{A}$ of size $n \times m$ is a set of $nm$ scalar values $\ind{A}{i,j}\text{, with } (i,j)\in\{1,\dotsc,n\}\times\{1,\dotsc,m\}$. It is typically represented as a two-dimensional array with $n$ rows and $m$ columns:
+\begin{equation} \label{Eq.Def.Matrix}
+\mat{A}=
+\matenv
+{
+\ind{A}{1,1} 	&\ind{A}{1,2}	&\cdots 	&\ind{A}{1,m}\\
+\ind{A}{2,1} 	&\ind{A}{2,2}	&\cdots 	&\ind{A}{2,m}\\
+\vdots 			&\vdots 		&\ddots 	&\vdots\\
+\ind{A}{n,1} 	&\ind{A}{n,2}	&\cdots 	&\ind{A}{n,m}\\
+}
+\end{equation}
+
+$\mat{A}$ is said to be \emph{square} if $m=n$. If $n=1$, it is called a \emph{row matrix}, and if $m=1$, a \emph{column matrix}. Row and column matrices will be written in lowercase.
+
+A \emph{diagonal} matrix $\mat{A}$ is a square matrix with $\ind{A}{i,j}=0, \forall i\ne j$.
+
+An $n \times n$ \emph{identity matrix} is a diagonal matrix with $\ind{A}{i,i}=1, \forall i \in \{1,\dotsc,n\}$. An identity matrix will be written as $\IdM_{n}$ or, wherever it does not result in ambiguity, simply as $\IdM$.
+
+An $n \times m$ matrix whose entries are all equal to zero is called a \emph{null matrix}. A null matrix will be written as $\NullM_{n \times m}$ or, wherever it does not result in ambiguity, simply as $\NullM$.
+
+Given a scalar $b$ and a matrix $\mat{C}$ of size $n\times m$ , their \emph{product} $\mat{A}=b\mat{C}$ is a matrix of size $n \times m$ with $\ind{A}{i,j}=b\ind{C}{i,j}, \forall (i,j)\in\{1,\dotsc,n\} \times \{1,\dotsc,m\}$.
+
+Given two matrices $\mat{B}$ and $\mat{C}$ of size $n \times m$, their \emph{sum} is another matrix $\mat{A}=\mat{B}+\mat{C}$ with $\ind{A}{i,j}=\ind{B}{i,j}+\ind{C}{i,j}, \forall (i,j)\in\{1,\dotsc,n\} \times \{1,\dotsc,m\}$.
+
+Given two matrices $\mat{B}$ of sizes $n \times l$ and $l \times m$, their \emph{product} is a matrix $\mat{A}=\mat{B}\mat{C}$ of size $n \times m$ with:
+\begin{equation*}
+\ind{A}{i,j}=\sum_{k=1}^{k=l}\ind{B}{i,k}\ind{C}{k,j}, \forall (i,j)\in\{1,\dotsc,n\} \times \{1,\dotsc,m\}.
+\end{equation*}
+
+\begin{subequations}
+The matrix product satisfies:
+\begin{gather}
+\mat{A}\IdM = \mat{A} \label{Eq.Res.MatProdIdent} \\
+(\mat{A}\mat{B})\mat{C} = \mat{A}(\mat{B}\mat{C}) \label{Eq.Res.MatProdAssoc} \\
+(\mat{A}+\mat{B})\mat{C} = \mat{A}\mat{C} + \mat{B}\mat{C} \label{Eq.Res.MatProdDist}
+\end{gather}
+\end{subequations}
+
+The matrix product is non-commutative in general:
+\begin{equation*}
+	\mat{A}\mat{B} \ne \mat{B}\mat{A}
+\end{equation*}
+
+Given a matrix $\mat{A}$ of size $n\times m$ , its \emph{transpose} $\mat{B}=\tr{\mat{A}}$ is a matrix of size $m \times n$ with $\ind{B}{j,i}=\ind{A}{i,j}, \forall (j,i)\in\{1,\dotsc,m\} \times \{1,\dotsc,n\}$.
+
+\begin{subequations}
+The transpose operation satisfies:
+\begin{gather}
+\trp{\tr{\mat{A}}} = \mat{A} \label{Eq.Res.MatTransSelf}\\
+\tr{(\mat{A}+\mat{B})}=\tr{\mat{A}} + \tr{\mat{B}} \label{Eq.Res.MatTransSum}\\
+\tr{(\mat{A}\mat{B})}=\tr{\mat{B}} \tr{\mat{A}} \label{Eq.Res.MatTransProd}
+\end{gather}
+\end{subequations}
+
+If $\tr{\mat{A}}=\mat{A}$, then $\mat{A}$ is a \emph{symmetric matrix}. If $\tr{\mat{A}}=-\mat{A}$, then $\mat{A}$ is a \emph{skew-symmetric matrix}. Note that symmetric and skew-symmetric matrices are necessarily square. A skew-symmetric matrix $\mat{A}$ of size $n \times n$ must have $\ind{A}{i,i}=0, \forall i \in \{1,\dotsc,n\}$.
+
+%Trace
+The trace of a $n \times n$ matrix is defined as:
+\begin{equation} \label{Eq.Def.Trace}
+\trace{\mat{A}} = \sum^{n}_{i=1} \ind{A}{i,i}
+\end{equation}
+
+\begin{subequations}
+The trace satisfies:
+\begin{gather}
+\trace{\left( \mat{A} + \mat{B} \right)} = \trace{\mat{A}} + \trace{\mat{B}} \label{Eq.Res.TrSum}\\
+\trace{\left(  a \mat{B}\right)} = a \trace{\mat{B}} \label{Eq.Res.TrScalar}\\
+\trace{\left( \mat{A}\mat{B}\right)} = \trace{\left(\mat{B} \mat{A}\right)} \label{Eq.Res.TrProd}
+\end{gather}
+\end{subequations}
+
+%Determinant
+The determinant of a $n \times n$ matrix $\mat{A}$ is a scalar defined by either of the following recursive expressions:
+\begin{equation} \label{Eq.Def.Determinant}
+\det\mat{A} = \sum^{n}_{k=1}(-1)^{i+k}\ind{A}{i,k}m_{ik} = \sum^{n}_{k=1}(-1)^{k+j}\ind{A}{k,j}m_{kj}
+\end{equation}
+
+Where $m_{ij}$, called the $(i,j)$ minor of $\mat{A}$, is the determinant of the $(n-1) \times (n-1)$ matrix resulting from deleting row $i$ and column $j$ of $\mat{A}$.
+
+An equivalent definition for the determinant is:
+\begin{equation} \label{Eq.Def.DetLCND}
+\det\mat{A} = \sum_{i_1=1}^{n} \ldots \sum_{i_n=1}^{n} \epsilon_{i_1 \dots i_n} \ind{A}{i_1,1} \dots \ind{A}{i_n,n}
+\end{equation}
+
+Where the Levi-Civita symbol $\epsilon_{i_1 \dots i_n}$ was defined in \eqref{Eq.Def.LeviCivitaND}.
+
+For $n=3$, \eqref{Eq.Def.DetLCND} reduces to:
+\begin{equation} \label{Eq.Def.DetLC3D}
+\det\mat{A} = \sum_{i=1}^{n}\sum_{j=1}^{n}\sum_{k=1}^{n} \epsilon_{ijk} \ind{A}{i,1} \ind{A}{j,2}\ind{A}{k,3}
+\end{equation}
+
+If we arrange the components of three vectors $\vabs{v}$, $\vabs{w}$ and $\vabs{z}$ in an orthonormal right-handed basis along the columns of a matrix $\mat{A}$, so that $\ind{A}{i,1}=\ind{v}{i}$, $\ind{A}{j,2}=\ind{w}{j}$, $\ind{A}{k,3}=\ind{z}{k}$, then from \eqref{Eq.Def.TripleProdComp} and \eqref{Eq.Def.DetLC3D}:
+\begin{equation} \label{Eq.Res.TripleProdDet1}
+(\vabs{v} \times \vabs{w})\cdot\vabs{z} = \det \mat{A}
+\end{equation}
+
+\begin{subequations}
+The determinant satisfies the following properties:
+\begin{gather}
+\det \IdM = 1 \label{Eq.Res.DetId}\\
+\det \tr{\mat{A}} = \det \mat{A} \label{Eq.Res.DetTransp}\\
+\det(\mat{A}\mat{B})=\det\mat{A}\det\mat{B} \label{Eq.Res.DetProd}\\
+\det(a\mat{B})=a^{n}\det \mat{B} \label{Eq.Res.DetScalar}
+\end{gather}
+\end{subequations}
+
+Given a $n \times n$ matrix $\mat{A}$, the scalar $\lambda$ and the column matrix $\mcol{v}$ are respectively an \emph{eigenvalue} and a \emph{right eigenvector} of $\mat{A}$ if they satisfy:
+\begin{equation} \label{Eq.Def.Mat.Eigen0}
+\mat{A} \mcol{v} = \lambda \mcol{v}
+\end{equation}
+
+Since this condition is equally satisfied by $\lambda$ and $k\mcol{v}$ for any nonzero scalar $k$, eigenvectors are usually specified as unit vectors.
+
+Equation \eqref{Eq.Def.Mat.Eigen0} can also be written as:
+\begin{equation} \label{Eq.Def.Mat.Eigen}
+\rndp{\mat{A} - \lambda \IdM} \mcol{v} = \NullM
+\end{equation}
+
+For \eqref{Eq.Def.Mat.Eigen} to have a nontrivial solution, $\mat{A} - \lambda \IdM$ must be singular, that is:
+\begin{equation} \label{Eq.Def.Mat.CharEq}
+\det \rndp{\mat{A} - \lambda \IdM} = 0
+\end{equation}
+
+Equation \eqref{Eq.Def.Mat.CharEq} is a polynomial equation of degree $n$ in $\lambda$. It is known as the \emph{characteristic equation} of $\mat{A}$. Its solutions are the eigenvalues of $\mat{A}$, which may be real or complex.
+
+The trace and determinant of $\mat{A}$ are given in terms of its eigenvalues as:
+\begin{equation} \label{Eq.Res.Mat.TrEig}
+\trace{\mat{A}} = \sum^{n}_{i=1} \lambda_{i}
+\end{equation}
+
+\begin{equation} \label{Eq.Res.Mat.DetEig}
+\det \mat{A} = \prod^{n}_{i=1} \lambda_{i}
+\end{equation}
+
+%esto es fácil de demostrar cuando la matriz es diagonalizable. introducimos el concepto de similaridad y demostramos que matrices similares comparten autovalores, traza y determinante. después mostramos que en la forma diagonalizada la traza y el determinante son justo esos. ahora bien, esto es cierto incluso cuando la matriz no es diagonalizable. pero para demostrarlo en ese caso hace falta introducir la Jordan form. como en nuestro caso sólo vamos a tratar con matrices ortogonales, se puede explicar que una matriz ortogonal es siempre diagonalizable y luego usar la demostración anterior, pero de todas formas eso requiere introducir mucho material. mejor simplemente usar la propiedad anterior.
+
+The exponential of a square matrix $\mat{A}$ is defined as:
+\begin{equation} \label{Eq.Def.MatExp}
+\exp(\mat{A}) = \sum^{\infty}_{i=0} \frac{1}{i!} \mat{A}^i
+\end{equation}
+
+Where, by definition, $\mat{A}^0=\IdM$.
+
+The matrix exponential satisfies:
+\begin{equation} \label{Eq.Res.MatExpTrans}
+\exp\rndp{\tr{\mat{A}}} = \trp{\exp\rndp{\mat{A}}}
+\end{equation}
+
+An $n \times n$ matrix $\mat{A}$ is said to be \emph{nonsingular} or \emph{invertible} if there exists an $n \times n$ matrix $\inv{\mat{A}}$ such that:
+\begin{equation} \label{Eq.Def.MatInv}
+\mat{A} \inv{\mat{A}} = \inv{\mat{A}} \mat{A} = \IdM_{n}
+\end{equation}
+
+\begin{subequations}
+The matrix inverse satisfies:
+\begin{gather}
+\tr{(\inv{\mat{A}})}=\inv{(\tr{\mat{A}})} \label{Eq.Res.MatInvTrans} \\
+\inv{(\mat{A}\mat{B})}=\inv{\mat{B}} \inv{\mat{A}} \label{Eq.Res.MatInvProd}
+\end{gather}
+\end{subequations}
+
+A matrix is invertible if and only if its determinant is nonzero.
+
+A matrix is invertible if and only if its columns are linearly independent. %PROOF: https://math.stackexchange.com/questions/1925062/proof-that-columns-of-an-invertible-matrix-are-linearly-independent
+
+%Orthogonal
+A matrix for which $\inv{\mat{A}}=\tr{\mat{A}}$ is called \emph{orthogonal} (or sometimes \emph{orthonormal}). 
+
+The set of $n\times n$ orthogonal matrices, together with the matrix product, jointly satisfy the following properties:
+\begin{enumerate}
+\item Closure: The product of two orthogonal matrices $\mat{A}$ and $\mat{B}$ is also an orthogonal matrix:
+	\begin{equation*}
+	(\mat{A}\mat{B})\tr{(\mat{A}\mat{B})}=\mat{A}\mat{B}\tr{\mat{B}}\tr{\mat{A}}=\mat{A}\tr{\mat{A}}=\IdM	
+	\end{equation*}
+\item Identity: The identity matrix $\IdM_{n}$, which is the identity element for the matrix product, is also an orthogonal matrix.
+\item Associativity: This follows directly from the associativity of the general matrix product.
+\item Invertibility: For an orthogonal matrix, the existence of an inverse is guaranteed, since by definition its inverse is equal to its transpose, and the transpose always exists.
+\end{enumerate}
+
+These properties characterize the set of $n \times n$ orthogonal matrices as a \emph{group}, known as the \emph{orthogonal group} and denoted by $O(n)$.
+
+If $\mat{A}$ is an orthogonal matrix, from \eqref{Eq.Res.DetProd} and \eqref{Eq.Res.DetTransp}:
+\begin{equation*}
+	(\det\mat{A})^{2}=\det\mat{A}\det\tr{\mat{A}}=\det(\mat{A}\tr{\mat{A}})=\det\IdM=1
+\end{equation*}
+
+Hence, an orthogonal matrix $\mat{A}$ has $\det\mat{A}=\pm 1$.
+
+The subset of $n\times n$ orthogonal matrices whose determinant is $+1$ are called \emph{proper}. They form themselves a group, called the \emph{special orthogonal group} and denoted by $SO(n)$. Orthogonal matrices whose determinant is $-1$ are called \emph{improper}.
+
+The derivative of a matrix $\mat{A}$ with respect to some scalar variable $v$ is another matrix $\mat{A}^{\prime}$ defined as:
+\begin{equation*}
+	\ind{A'}{i,j} = \frac{d\ind{A}{i,j}}{dx}
+\end{equation*}
+
+\begin{subequations}
+The matrix derivative satisfies:
+\begin{gather}
+\rndp{\tr{\mat{A}}}' = \trp{\mat{A}'} \label{Eq.Res.MatDerTrans} \\
+(\mat{A}\mat{B})'=\mat{A}'\mat{B} + \mat{A}\mat{B}' \label{Eq.Res.MatDerProd}
+\end{gather}
+\end{subequations}
+
+\subsection{Matrix Representation of Vectors} %%%%%%%%
+Let $\mathcal{V}$ be an $n$-dimensional vector space with a basis $\basis$. The coordinates of an arbitrary vector $\vabs{v} \in \mathcal{V}$ in $\basis$ may be arranged in a column matrix $\mcol{v}$ as follows:
+\begin{equation*}
+\mcol{v} = 
+\matenv{\cmp{v}{1} \\ dots \\ \cmp{v}{n}}
+=
+\tr{\matenv{\cmp{v}{1} & \dots & \cmp{v}{n}}}
+\end{equation*}
+
+If $\mathcal{V}$ is an inner product space, and $\basis$ is an orthonormal basis, then the component-wise expressions \eqref{Eq.Def.AdditionComp}, \eqref{Eq.Def.MultComp} and \eqref{Eq.Def.ScalarProdComp} apply, and they can be written in terms of matrix operations as:
+
+\begin{enumerate}
+\item Vector addition ($\vabs{z}=\vabs{v}+\vabs{w}$):
+\begin{equation} \label{Eq.Def.VectColMat.Add}
+\mcol{z}=\mcol{v}+\mcol{w}
+\end{equation}
+\item Scalar multiplication ($\vabs{z}=a\vabs{v}$):
+\begin{equation} \label{Eq.Def.VectColMat.ScalMult}
+\mcol{z}= a\mcol{v}
+\end{equation}
+\item Inner product ($a=\vabs{v}\cdot\vabs{w}$):
+\begin{equation} \label{Eq.Def.VectColMat.InnerProd}
+a = \mcol{v} \cdot \mcol{w} = \tr{\mcol{v}}\mcol{w}
+\end{equation}
+\end{enumerate}
+
+If $\mathcal{V}$ is the three-dimensional Euclidean space, and the orthonormal basis $\basis$ is also right-handed, the component-wise expressions \eqref{Eq.Def.CrossProdComp2} for the cross product apply, and they can be written in matrix form as:
+\begin{equation} \label{Eq.Def.VectColMat.CrossProd}
+\mcol{z}= \mcol{v} \times \mcol{w} = \vskew{\mcol{v}} \mcol{w}
+\end{equation}
+
+Where the \emph{cross product operator} $\vskew{{}}$ takes column matrix $\mcol{v}$ as an input and outputs the skew-symmetric \emph{cross product matrix}:
+\begin{equation} \label{Eq.Def.V2Skew}
+\vskew{\mcol{v}}=
+\matenv
+{
+0				&-\cmp{v}{3}	&\cmp{v}{2}	\\
+\cmp{v}{3}	&0				&-\cmp{v}{1}	\\
+-\cmp{v}{2}	&\cmp{v}{1}	&0
+}
+\end{equation}
+
+The cross product matrix can be written element-wise in terms of the Levi-Civita symbol:
+\begin{equation} \label{Eq.Def.VectColMat.CrossProdLeviCivita}
+\cmp{\vskew{v}}{i,j}=-\sum_{k=1}^{3}\cmp{v}{k} \epsilon_{ijk}
+\end{equation}
+
+\begin{subequations}
+The cross product matrix satisfies the following properties:
+\begin{gather}
+\vskew{a\mcol{v}}= a\vskew{\mcol{v}} \label{Eq.Res.V2Skew.Homog}\\
+\vskew{\mcol{v}}\mcol{v}=\nullv \label{Eq.Res.V2Skew.Self}\\
+\vskew{\mcol{v}}\mcol{w}=-\vskew{\mcol{w}}\mcol{v} \label{Eq.Res.V2Skew.Rec} \\
+\tr{\vskew{\mcol{v}}}=-\vskew{\mcol{v}} \label{Eq.Res.V2Skew.Transp} \\
+\vskew{\mcol{v}}\vskew{\mcol{w}}=-\left(\tr{\mcol{v}}\mcol{w}\right)\IdM_{3}+\mcol{w}\tr{\mcol{v}} \label{Eq.Res.V2Skew.Prod} \\
+\vskew{\mcol{v}}\vskew{\mcol{w}}-\vskew{\mcol{w}}\vskew{\mcol{v}}=\vskew{(\mcol{v}\times\mcol{w})} \label{Eq.Res.V2Skew.Cross}\\
+\vskew{\mcol{v}}^3=-\norm{\mcol{v}}^2 \vskew{\mcol{v}} \label{Eq.Res.V2Skew.Cube}
+\end{gather}
+\end{subequations}
+
+\begin{subequations}
+Applying \eqref{Eq.Res.V2Skew.Cube} recursively, it is easy to verify that:
+\begin{gather}
+{\vskew{\mcol{v}}}^{2k} = -(-1)^k \norm{\mcol{v}}^{2(k-1)} {\vskew{\mcol{v}}}^2, \forall k=1,2,\dots \label{Eq.Res.RotVec.SkewEven}\\
+{\vskew{\mcol{v}}}^{2k+1} = (-1)^k \norm{\mcol{v}}^{2k} \vskew{\mcol{v}}, \forall k=0,1,\dots \label{Eq.Res.RotVec.SkewOdd}
+\end{gather}
+\end{subequations}
+
+The cross product matrix also satisfies the following identity, where $\mat{A}$ is any nonsingular $3 \times 3$ matrix:
+\begin{equation} \label{Eq.Res.V2Skew}
+\mat{A} \vskew{\mcol{v}} \tr{\mat{A}} = (\det \mat{A}) \vskew{\rndp{\inv{(\tr{\mat{A}})}\mcol{v}}}
+\end{equation}
+
+Finally, the linear independence condition \eqref{Eq.Def.Vectors.LinInd} translates directly into the matrix representation: the set of vectors $\{\vasub{v}{1},\vasub{v}{2},\dots,\vasub{v}{n}\}$ is linearly independent if and only if the following equation is satisfied only by $a_i=0$ for $i=1,2,\dots,n$:
+\begin{equation} \label{Eq.Res.VectColMat.LinInd}
+\sum_{i=1}^{n}{a_i \vsub{v}{i}} = \mcol{0}
+\end{equation}
+
+Whenever we need to emphasize that $\mcol{v}$ holds the coordinates of $\vabs{v}$ in a specific basis $\basis[\alpha]$, we shall superscript it as $\vprj{v}{\alpha}$, following the same convention as for individual coordinates.
+
+\section{Linear Transformations}
+
+\subsection{Definitions and Properties} \label{S:LinTr:DefProp}
+Given two vector spaces $\mathcal{V}$ and $\mathcal{W}$ over a scalar field $\mathcal{F}$, a function $f:\mathcal{V}\rightarrow\mathcal{W}$ is said to be a \emph{linear map} or a \emph{linear transformation} if, for any two vectors $\vasub{v}{1}, \vasub{v}{2} \in \mathcal{V}$ and any scalar $a\in\mathcal{F}$, the following two conditions are satisfied:
+
+\begin{enumerate}
+\item Additivity:
+	\begin{equation} \label{E:LinTr:Prop:Add}
+	f\rndp{\vasub{v}{1}+\vasub{v}{2}}=f\rndp{\vasub{v}{1}}+f\rndp{\vasub{v}{2}} 
+	\end{equation}
+\item Homogeinity:
+	\begin{equation} \label{E:LinTr:Prop:Hom}
+	f\rndp{a\vasub{v}{1}}=af\rndp{\vasub{v}{1}}
+	\end{equation}
+\end{enumerate}
+
+Let $\mathcal{V}$ and $\mathcal{W}$ be two vector spaces with respective dimensions $n_{\mathcal{V}}$ and $n_{\mathcal{W}}$ and bases $\basis[\mathcal{V}]$ and $\basis[\mathcal{W}]$. Let $f:\mathcal{V}\rightarrow\mathcal{W}$ be a linear transformation that maps basis vectors $\vasub{\bv}{\mathcal{V} i}$ into another set of vectors $\vasub{\gamma}{i}\in\mathcal{W}$, that is,  $\vasub{\gamma}{i}=f\rndp{\vasub{\bv}{\mathcal{V} i}}, \forall i\in\left\{1,\dots, n_{\mathcal{V}}\right\}$.
+
+Each $\vasub{\gamma}{i}\in\mathcal{W}$ can be expressed in terms of its coordinates in basis $\basis[\mathcal{W}]$ as:
+\begin{equation} \label{E:LinTr:Der:GammaV}
+\vasub{\gamma}{i}=\sum_{j=1}^{n_{\mathcal{W}}} \cmpsub{\gamma}{i}{j} \vasub{\bv}{\mathcal{W} j}
+\end{equation}
+
+Now, consider an arbitrary vector $\vabs{v}\in\mathcal{V}$ and its transformed counterpart $\vabs{w}=f\rndp{\vabs{v}}\in\mathcal{W}$, which we can express respectively in terms of their $\basis[\mathcal{V}]$ and $\basis[\mathcal{W}]$ coordinates as:
+\begin{gather}
+\vabs{v}=\sum_{i=1}^{n_{\mathcal{V}}} \cmp{v}{i} \vasub{\bv}{\mathcal{V} i} \label{E:LinTr:Der:XinU} \\
+\vabs{w}=\sum_{j=1}^{n_{\mathcal{W}}}\cmp{w}{j} \vasub{\bv}{\mathcal{W} j} \label{E:LinTr:Der:YinV}
+\end{gather}
+
+The components of $\vabs{w}$ can be found from \eqref{E:LinTr:Der:XinU} and \eqref{E:LinTr:Der:YinV} by applying the linearity properties \eqref{E:LinTr:Prop:Add} and \eqref{E:LinTr:Prop:Hom}:
+\begin{equation} \label{E:LinTr:Der:YinV2}
+\begin{split}
+\vabs{w}	&=f\rndp{\vabs{v}}= f\rndp{\sum_{i=1}^{n_{\mathcal{V}}} \cmp{v}{i} \vasub{\bv}{\mathcal{V} i}}=\sum_{i=1}^{n_{\mathcal{V}}}\cmp{v}{i} f \rndp{\vasub{\bv}{\mathcal{V} i}}= \sum_{i=1}^{n_{\mathcal{V}}}\cmp{v}{i} \vasub{\gamma}{i} \\
+		&=\sum_{i=1}^{n_{\mathcal{V}}}{\cmp{v}{i} \rndp{\sum_{j=1}^{n_{\mathcal{W}}} \cmpsub{\gamma}{i}{j} \vasub{\bv}{\mathcal{W} j}}} = \sum_{i=1}^{n_{\mathcal{V}}}\sum_{j=1}^{n_{\mathcal{W}}} {\cmpsub{\gamma}{i}{j} \cmp{v}{i} \vasub{\bv}{\mathcal{W} j}} \\
+		&=\sum_{j=1}^{n_{\mathcal{W}}}\sum_{i=1}^{n_{\mathcal{V}}} {\cmpsub{\gamma}{i}{j} \cmp{v}{i} \vasub{\bv}{\mathcal{W} j}} =\sum_{j=1}^{n_{\mathcal{W}}} \rndp{\sum_{i=1}^{n_{\mathcal{V}}} {\cmpsub{\gamma}{i}{j} \cmp{v}{i}}} \vasub{\bv}{\mathcal{W} j}
+\end{split}
+\end{equation}
+
+Equating \eqref{E:LinTr:Der:YinV} and \eqref{E:LinTr:Der:YinV2} gives:
+\begin{equation} \label{E:LinTr:Res:YComp}
+\cmp{w}{j} = \sum_{i=1}^{n_{\mathcal{V}}} {\cmpsub{\gamma}{j}{i} \cmp{v}{j}}, \forall j \in \{1,\dots,n_{\mathcal{W}}\}
+\end{equation}
+
+This can be written in matrix form as:
+\begin{equation} \label{E:LinTr:Res:TrMatYX}
+\mcol{w}=\mat{\Gamma} \mcol{v} 
+\end{equation}
+
+Where:
+\begin{itemize}
+\item $\mcol{v}$ is the $n_{\mathcal{V}}\times 1$ column matrix containing the coordinates of $\vabs{v}$ in $\basis[\mathcal{V}]$
+\item $\mcol{w}$ is the $n_{\mathcal{W}}\times 1$ column matrix containing the coordinates of $\vabs{w}$ in $\basis[\mathcal{W}]$
+\item $\mat{\Gamma}$ is a $n_{\mathcal{W}} \times n_{\mathcal{V}}$ transformation matrix, defined by:
+\begin{equation} \label{E:LinTr:Def:TrMatXYComp}
+\cmp{\Gamma}{i,j}=\cmpsub{\gamma}{j}{i}
+\end{equation}
+\end{itemize}
+
+Given the coordinates of an arbitrary vector $\vabs{v}$ in $\basis[\mathcal{V}]$, transformation matrix $\mat{\Gamma}$ allows us to compute the coordinates of $\vabs{w}=f\rndp{\vabs{v}}$ in basis $\basis[\mathcal{W}]$. Therefore, the linear transformation $f$ is fully defined by $\mat{\Gamma}$. Conversely, any $n_{\mathcal{W}}\times n_{\mathcal{V}}$ matrix can be interpreted as the representation of a linear transformation between two vector spaces of dimensions $n_{\mathcal{V}}$ and $n_{\mathcal{W}}$.
+
+From \eqref{E:LinTr:Def:TrMatXYComp} we can see that the $j$-th column of $\mat{\Gamma}$ holds the coordinates of the transformed basis vector $\vasub{\gamma}{j}=f\rndp{\vasub{\bv}{\mathcal{V} j}}$ in basis $\basis[\mathcal{W}]$:
+\begin{equation} \label{E:LinTr:Res:TrMatCols}
+	\mat{\Gamma} =  \matenv{
+		\vsub{\gamma}{1} &
+		\dots &
+		\vsub{\gamma}{n_{\mathcal{V}}}
+		}
+\end{equation}
+
+Note that $\mat{\Gamma}$ clearly depends on the choice of bases $\basis[\mathcal{V}]$ and $\basis[\mathcal{W}]$, and this is not made explicit by the notation. However, since so far we have defined only one basis for each vector space, no confusion should arise from this fact.
+
+Now let $\mathcal{Z}$ be a third vector space with dimension $n_{\mathcal{Z}}$ and basis $\basis[\mathcal{Z}]$, and let $g:\mathcal{W}\rightarrow\mathcal{Z}$ be another linear transformation that maps basis vectors $\vasub{\bv}{\mathcal{W} j}$ into a set of vectors $\vasub{\sigma}{j}\in\mathcal{Z}$, that is,  $\vasub{\sigma}{j}=g\rndp{\vasub{\bv}{\mathcal{W} j}}, \forall j \in\left\{1,\dots, n_{\mathcal{W}}\right\}$. This new transformation will be described by a $n_{\mathcal{Z}} \times n_{\mathcal{W}}$ matrix $\mat{\Sigma}$.
+
+Applying $f$ and $g$ consecutively to an arbitrary vector $\vabs{v} \in \mathcal{V}$ yields another vector $\vabs{z}=g\left(\vabs{w}\right)=g\left(f\left(\vabs{v}\right)\right)=g \circ f\left(\vabs{v}\right) \in \mathcal{Z}$ whose coordinates in basis $\basis[\mathcal{Z}]$ are given by:
+\begin{equation} \label{E:LinTr:Res:TrMatZX}
+\mcol{z}=\mat{\Sigma} \mcol{w} =\mat{\Sigma} \mat{\Gamma} \mcol{v}
+\end{equation}
+
+It follows that the composition of linear transformations $g \circ f:\mathcal{V}\rightarrow\mathcal{Z}$ is another linear transformation with transformation matrix $\mat{\Sigma}\mat{\Gamma}$. Thus, the composition of linear transformations corresponds to matrix multiplication. This implies that it is generally non-commutative.
+
+A linear transformation $f:\mathcal{V}\rightarrow\mathcal{V}$, that is, one which  maps a vector space $\mathcal{V}$ onto itself, is called an \emph{endomorphism}. The transformation matrix for an endomorphism is necessarily square. Conversely, any $n \times n$ matrix can be interpreted as an endomorphism within a vector space of dimension $n$.
+
+Note that, for an endomorphism, both $\mcol{v}$ and $\mcol{w}$ in \eqref{E:LinTr:Res:TrMatYX}, as well as the columns $\mcol{\gamma}_i$ in \eqref{E:LinTr:Res:TrMatCols}, represent coordinates in the same basis (whichever we have chosen for $\mathcal{V}$).
+
+A column matrix $\mcol{v}$ is a right eigenvector of a square matrix $\mat{\Gamma}$ with eigenvalue $\lambda$ if it satisfies:
+\begin{equation} \label{E:LinTr:Res:Eigen}
+\mat{\Gamma} \mcol{v}=\lambda \mcol{v}
+\end{equation}
+
+Thus, if we interpret $\mat{\Gamma}$ as an endomorphism $f:\mathcal{V}\rightarrow\mathcal{V}$, then $\mcol{v}$ represents the coordinates of a vector $\vabs{v} \in \mathcal{V}$ along which the effect of $f$ is simply a scaling by a factor $\lambda$.
+
+\subsection{Invertible Transformations and Basis Changes}
+Let $\mathcal{V}$ be a vector space of dimension $n$ and let $\basis[\alpha]$ denote our basis for $\mathcal{V}$. Consider an endomorphism $f:\mathcal{V}\rightarrow\mathcal{V}$, defined by a matrix $\mat{\Gamma}$, that transforms the basis vectors $\vasub{\bv}{\mathcal{\alpha} i}$ into a set of \emph{linearly independent} vectors $\vasub{\gamma}{i}\in\mathcal{V}$.
+
+Since $\vasub{\gamma}{i}$ are linearly independent, so are their respective coordinates $\vsub{\gamma}{i}$, which make up the columns of $\mat{\Gamma}$. Thus, $\mat{\Gamma}$ is nonsingular. This means we can premultiply \eqref{E:LinTr:Res:TrMatYX} by $\invp{\mat{\Gamma}}$ to recover the $\basis[\alpha]$ coordinates of the original vector $\vabs{v}$ from those of its transformed counterpart $\vabs{w}$:
+\begin{equation} \label{E:LinTr:Res:TrMatXY}
+\mcol{v}=\invp{\mat{\Gamma}} \mcol{w}
+\end{equation}
+
+Therefore, if the above holds, the inverse endomorphism $\inv{f}:\mathcal{V}\rightarrow\mathcal{V}$ exists, and its transformation matrix is $\invp{\mat{\Gamma}}$.
+
+Being a set of $n$ linearly independent vectors, the transformed vectors $\vasub{\gamma}{i}$ can be used to construct another basis for $\mathcal{V}$. Let this basis be $\basis[\beta]$, with basis vectors $\vasub{\bv}{\beta i} = \vasub{\gamma}{i} = f\left(\vasub{\bv}{\alpha i}\right)$.
+
+Since we are now considering two bases for the same vector space, we should make our notation more precise to avoid confusion. From now on, we shall superscript both scalar components and column matrices to indicate whether they correspond to basis $\basis[\alpha]$ or basis $\basis[\beta]$. Furthermore, to emphasize the fact that $f$ maps the original basis $\basis[\alpha]$ into $\basis[\beta]$, we shall denote its transformation matrix $\AutM{\alpha}{\beta}$.
+
+The original and transformed vectors $\vabs{v}$ and $\vabs{w}=f\left(\vabs{v}\right)$ are expressed in terms of their $\basis[\alpha]$ components as:
+\begin{gather}
+\vabs{v}=\sum_{i=1}^{n} \cprj{v}{\alpha}{i} \vasub{\bv}{\alpha i} \label{E:LinTr:Res:VInAlpha} \\
+\vabs{w}=\sum_{i=1}^{n} \cprj{w}{\alpha}{i} \vasub{\bv}{\alpha i} \label{E:LinTr:Res:WInAlpha}
+\end{gather}
+
+The same goes for the $\basis[\beta]$ basis vectors:
+\begin{equation} \label{E:LinTr:Res:BetaInAlpha}
+\vasub{\bv}{\beta j}=\sum_{i=1}^{n} \csubprj{\bv}{\beta j}{\alpha}{i} \vasub{\bv}{\alpha i}
+\end{equation}
+
+With these notational conventions, \eqref{E:LinTr:Def:TrMatXYComp}, \eqref{E:LinTr:Res:TrMatCols} and \eqref{E:LinTr:Res:TrMatYX} become:
+\begin{gather}
+\cAut{\alpha}{\beta}{i,j}= \csubprj{\bv}{\beta j}{\alpha}{i} \label{E:LinTr:Res:TrMatAutXYComp} \\
+\AutM{\alpha}{\beta} =  \matenv{\vsubprj{\bv}{\beta 1}{\alpha} & \dots & \vsubprj{\bv}{\beta n}{\alpha}} \label{E:LinTr:Res:TrMatAutCols} \\
+\vprj{w}{\alpha} = \AutM{\alpha}{\beta} \vprj{v}{\alpha} \label{E:LinTr:Res:TrMatAutYX}
+\end{gather}
+
+Because the inverse endomorphism $\inv{f}$ maps $\basis[\beta]$ back into $\basis[\alpha]$, we shall denote its matrix $\invp{\AutM{\alpha}{\beta}}$ by $\AutM{\beta}{\alpha}$.  Then, by analogy with \eqref{E:LinTr:Res:TrMatAutXYComp}, \eqref{E:LinTr:Res:TrMatAutCols} and \eqref{E:LinTr:Res:TrMatAutYX}
+\begin{gather}
+\cAut{\beta}{\alpha}{i,j}= \csubprj{\bv}{\alpha j}{\beta}{i} \label{E:LinTr:Res:TrMatInvAutXYComp} \\
+\AutM{\beta}{\alpha} =  \matenv{\vsubprj{\bv}{\alpha 1}{\beta} & \dots & \vsubprj{\bv}{\alpha n}{\beta}} \label{E:LinTr:Res:TrMatInvAutCols} \\
+\vprj{v}{\alpha} = \invp{\AutM{\alpha}{\beta}} \vprj{w}{\alpha} = \AutM{\beta}{\alpha} \vprj{w}{\alpha} \label{E:LinTr:Res:TrMatInvAutXY}
+\end{gather}
+
+Now that we can express any vector in both bases $\basis[\alpha]$ and $\basis[\beta]$, we may ask ourselves about the connection between the $\basis[\alpha]$ and $\basis[\beta]$ coordinates of an arbitrary vector $\vabs{x}$. Applying \eqref{E:LinTr:Res:VInAlpha} to $\vabs{x}$ for both $\basis[\alpha]$ and $\basis[\beta]$:
+\begin{gather} 
+\vabs{x}=\sum_{j=1}^{n} \cprj{x}{\alpha}{j} \vasub{\bv}{\alpha j} \label{E:LinTr:Res:XInAlpha} \\
+\vabs{x}=\sum_{j=1}^{n} \cprj{x}{\beta}{j} \vasub{\bv}{\beta j} \label{E:LinTr:Res:XInBeta}
+\end{gather}
+
+Substituting \eqref{E:LinTr:Res:BetaInAlpha} into \eqref{E:LinTr:Res:XInBeta}:
+\begin{equation}
+\begin{split}
+\vabs{x} 	&=\sum_{j=1}^{n} \cprj{x}{\beta}{j} \rndp{\sum_{i=1}^{n} \csubprj{\bv}{\beta j}{\alpha}{i} \vasub{\bv}{\alpha j} } = \sum_{j=1}^{n} \sum_{i=1}^{n}  \cprj{x}{\beta}{j} \csubprj{\bv}{\beta j}{\alpha}{i} \vasub{\bv}{\alpha i} \\
+		&=\sum_{i=1}^{n} \sum_{j=1}^{n}  \cprj{x}{\beta}{j} \csubprj{\bv}{\beta j}{\alpha}{i} \vasub{\bv}{\alpha i}  = \sum_{i=1}^{n} \rndp{\sum_{j=1}^{n}  \csubprj{\bv}{\beta j}{\alpha}{i} \cprj{x}{\beta}{j} } \vasub{\bv}{\alpha i}
+\end{split}
+\end{equation}
+
+By comparison with \eqref{E:LinTr:Res:XInAlpha} and \eqref{E:LinTr:Res:TrMatAutXYComp} we see that:
+\begin{equation*}
+\cprj{x}{\alpha}{i} = \sum_{j=1}^{3} \csubprj{\bv}{\beta j}{\alpha}{i}  \cprj{x}{\beta}{j} = \sum_{j=1}^{3} \cAut{\alpha}{\beta}{i,j} \cprj{x}{\beta}{j} 
+\end{equation*}
+
+Which can be writen in matrix form as:
+\begin{equation} \label{E:LinTr:Res:XAlphaFromBeta}
+\vprj{x}{\alpha} = \AutM{\alpha}{\beta} \vprj{x}{\beta}
+\end{equation}
+
+And, reciprocally:
+\begin{equation} \label{E:LinTr:Res:XBetaFromAlpha}
+\vprj{x}{\beta} = \invp{\AutM{\alpha}{\beta}} \vprj{x}{\alpha} = \AutM{\beta}{\alpha} \vprj{x}{\alpha}
+\end{equation}
+
+An important insight follows from the above results: for an invertible endomorphism $f$ that maps basis $\basis[\alpha]$ into another basis $\basis[\beta]$, the transformation matrix $\AutM{\alpha}{\beta}$, as defined by \eqref{E:LinTr:Res:TrMatAutXYComp}, has a dual interpretation:
+\begin{itemize}
+\item When used to relate the $\basis[\alpha]$ and $\basis[\beta]$ components of the same vector $\vabs{x}$, as in \eqref{E:LinTr:Res:XAlphaFromBeta}, $\AutM{\alpha}{\beta}$ is said to represent a \emph{passive} or \emph{alias} (Latin for \dq{also known as}) transformation.
+\item When used to relate the components of a vector $\vabs{v}$ and its transformed counterpart $\vabs{w}=f\rndp{\vabs{v}}$ in the same basis, as in \eqref{E:LinTr:Res:TrMatAutYX}, $\AutM{\alpha}{\beta}$ is said to represent an \emph{active} or \emph{alibi} (Latin for \dq{elsewhere}) transformation.
+\end{itemize}
+
+Since \eqref{E:LinTr:Res:XBetaFromAlpha} holds for any vector, we can write:
+\begin{equation} \label{E:LinTr:Der:YBetaFromAlpha}
+\vprj{w}{\beta} = \invp{\AutM{\alpha}{\beta}} \vprj{w}{\alpha}
+\end{equation}
+
+Inserting \eqref{E:LinTr:Res:TrMatAutYX} into \eqref{E:LinTr:Der:YBetaFromAlpha}:
+\begin{equation} \label{E:LinTr:Res:YBetaXAlpha}
+\vprj{w}{\beta} = \invp{\AutM{\alpha}{\beta}} \vprj{w}{\alpha} = \invp{\AutM{\alpha}{\beta}} \AutM{\alpha}{\beta} \vprj{v}{\alpha} = \vprj{v}{\alpha}
+\end{equation}
+
+Equation \eqref{E:LinTr:Res:YBetaXAlpha} shows that the coordinates of the transformed vector in the transformed basis equal those of the original vector in the original basis, as one would intuitively expect.
+
+Substituting \eqref{E:LinTr:Res:XAlphaFromBeta} into \eqref{E:LinTr:Res:YBetaXAlpha}:
+\begin{equation} \label{E:LinTr:Res:TrMatAutYXBeta}
+\vprj{w}{\beta} = \AutM{\alpha}{\beta} \vprj{v}{\beta}
+\end{equation}
+
+Thus, $\AutM{\alpha}{\beta}$ relates not only the $\basis[\alpha]$ components of $\vabs{v}$ and $\vabs{w}$, as seen in \eqref{E:LinTr:Res:TrMatAutYX}, but also their $\basis[\beta]$ components.
+
+Finally, consider another invertible endomorphism $g:\mathcal{V}\rightarrow\mathcal{V}$, which maps $\basis[\beta]$ into a third basis $\basis[\delta]$, and whose transformation matrix can be therefore denoted by $\AutM{\beta}{\delta}$.
+
+The composition of invertible endomorphisms $g \circ f: \mathcal{V} \rightarrow \mathcal{V}$ is also an invertible endomorphism that maps basis $\basis[\alpha]$ directly into basis $\basis[\delta]$. As a particular case of the general composition of linear transformations, the transformation matrix $\AutM{\alpha}{\delta}$ for $g \circ f$ is found through matrix multiplication:
+\begin{equation*}
+\AutM{\alpha}{\delta} = \AutM{\alpha}{\beta} \AutM{\beta}{\delta}
+\end{equation*}
+
+\begin{comment}
+\quat{q}=0
+\qvec{q}=\mcol{0}
+\qcmp{q}{0}
+\qreal{q}
+\begin{equation}
+\quat{q}=\qcol{\qreal{q}}{\qvec{q}}
+\end{equation}
+\qi
+\qj
+\qk
+\end{comment}
+
+\endinput

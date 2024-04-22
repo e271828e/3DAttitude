@@ -1,0 +1,171 @@
+\ProvidesPackage{CustomMath}
+\RequirePackage{amsmath}
+\RequirePackage{amssymb}
+\RequirePackage{latexsym}
+\RequirePackage{verbatim}
+
+%useful packages:
+%dcolumn
+%enumerate
+%paralist
+%multicol
+%xspace
+
+\DeclareMathOperator{\sgn}{sgn}
+\DeclareMathOperator{\traceop}{tr}
+\DeclareMathOperator{\atan2}{atan2}
+
+%general purpose
+\newcommand{\dq}[1]{``#1''}
+\newcommand{\eql}[2]{\begin{equation} \label{#1} {#2} \end{equation}}
+\newcommand{\eqnl}[1]{\begin{equation*} {#1} \end{equation*}}
+\newcommand{\matenv}[1]{\begin{pmatrix} #1 \end{pmatrix}} %for whatever reason, the content of a matrix environment cannot be enclosed in braces
+
+%basic objects
+\newcommand{\basisopt}[1][ ]{\mathcal{E}_{#1}} %basis
+\newcommand{\basis}[1][ ]{\mathcal{E}_{#1}} %basis
+\newcommand{\vabs}[1]{\vec{\symbf{#1}}} %abstract vector
+\newcommand{\mat}[1]{\symbf{#1}} %generic matrix
+\newcommand{\mcol}[1]{\symbf{#1}} %matrix column (usually representation of a vector)
+\newcommand{\comp}[1]{\symit{#1}} %matrix component (column or otherwise)
+
+%aliases
+\newcommand{\bv}{e} %basis vector
+\newcommand{\orthm}{R} %generic orthogonal matrix symbol
+\newcommand{\aut}{\Gamma} %generic automorphism symbol
+\newcommand{\rotm}{\orthm} %generic rotation matrix symbol
+\newcommand{\rotax}{n} %rotation axis
+\newcommand{\rotang}{\vartheta} %rotation angle
+\newcommand{\rotvecsymb}{\rho} %rotation vector symbol
+\newcommand{\Eulersymb}{\Psi} %rotation vector symbol
+\newcommand{\angvelsymb}{\omega} %angular velocity symbol
+\newcommand{\angaccsymb}{\alpha} %angular acceleration symbol
+\newcommand{\unitq}{r} %generic unit quaternion symbol
+\newcommand{\rotq}{\unitq} %generic rotation quaternion symbol
+
+%notation for indexing, resolving and subscripting vector and matrix quantities and combinations thereof
+\newcommand{\ind}[2]{#1_{(#2)}}
+\newcommand{\prj}[2]{#1^{#2}} %1: magnitude, 2: resolving frame
+\newcommand{\sub}[2]{#1_{#2}} %defines a subscripted magnitude (1:magnitude, 2: subscript)
+\newcommand{\rel}[3]{#1_{#2 #3}} %defines a relative magnitude (1: magnitude, 2: reference, 3: target)
+\newcommand{\subprj}[3]{\prj{\sub{#1}{#2}}{#3}} %defines the scalar representation of a subscripted magnitude projected on a certain resolving frame (1: magnitude, 2: subscript, 3: resolving frame)
+\newcommand{\relprj}[4]{\prj{\rel{#1}{#2}{#3}}{#4}} %defines the scalar representation of a relative magnitude projected on a certain resolving frame (1: magnitude, 2: reference, 3: target, 4: resolving frame)
+
+%indexed, resolved, subscripted and relative vectors
+\newcommand{\vasub}[2]{\sub{\vabs{#1}}{#2}} %subscripted abstract vector
+\newcommand{\varel}[3]{\rel{\vabs{#1}}{#2}{#3}} %relative abstract vector
+\newcommand{\vprj}[2]{\prj{\mcol{#1}}{#2}} %column matrix representation of a vector magnitude with explicit resolving basis
+\newcommand{\vsub}[2]{\sub{\mcol{#1}}{#2}} %column matrix representation of a subscripted vector magnitude
+\newcommand{\vrel}[3]{\rel{\mcol{#1}}{#2}{#3}} %column matrix representation of a relative vector magnitude
+\newcommand{\vsubprj}[3]{\subprj{\mcol{#1}}{#2}{#3}} %column matrix representation of a subscripted relative vector magnitude
+\newcommand{\vrelprj}[4]{\relprj{\mcol{#1}}{#2}{#3}{#4}} %column matrix representation of a relative vector magnitude with explicit resolving basis
+\newcommand{\vprjdot}[2]{\prj{\dot{\mcol{#1}}}{#2}} %time derivative of a column matrix representation of a vector magnitude with explicit resolving basis
+\newcommand{\vrelprjdot}[4]{\relprj{\dot{\mcol{#1}}}{#2}{#3}{#4}} %time derivative of column matrix representation of a relative vector magnitude with explicit resolving basis
+
+%matrix representations
+\newcommand{\AutM}[2]{\mat{\aut}^{#1}_{#2}} %matrix representation of an automorphism (1:reference, 2: target)
+\newcommand{\RotM}[2]{\mat{\rotm}^{#1}_{#2}} %matrix representation of a rotation (1:reference, 2: target)
+\newcommand{\RotMDot}[2]{\dot{\mat{\rotm}}^{#1}_{#2}} %matrix representation of a rotation (1:reference, 2: target)
+
+%component representations
+\newcommand{\cmp}[2]{\comp{#1}_{(#2)}} %vector component
+\newcommand{\cmpsub}[3]{\comp{#1}_{{#2}({#3})}} %component of a subscripted vector magnitude
+\newcommand{\cprj}[3]{\comp{#1}^{#2}_{({#3})}} %component of a vector magnitude with explicit resolving basis
+\newcommand{\crel}[4]{\comp{#1}_{{#2}{#3}(#4)}} %component of a relative vector magnitude
+\newcommand{\csubprj}[4]{{\comp{#1}^{#3}_{{#2}(#4)}}} %component of a subscripted vector magnitude with explicit resolving basis
+\newcommand{\crelprj}[5]{\comp{#1}^{#4}_{{#2}{#3}(#5)}} %component of a relative vector magnitude with explicit resolving basis
+\newcommand{\cAut}[3]{\csubprj{\aut}{#2}{#1}{#3}} %component representation of an automorphism (1: original, 2: target)
+\newcommand{\cRotM}[3]{\csubprj{\rotm}{#2}{#1}{#3}} %component representation of a rotation (1: original, 2: target)
+
+%basic operators
+\newcommand{\rndp}[1]{\left({#1}\right)}
+\newcommand{\vskew}[1]{\left[{#1}^{\times}\right]}
+\newcommand{\norm}[1]{\left|{#1}\right|}
+\newcommand{\abs}[1]{\left|{#1}\right|}
+\newcommand{\tr}[1]{{#1}^{T}}
+\newcommand{\trp}[1]{\tr{\rndp{{#1}}}}
+\newcommand{\inv}[1]{{#1}^{-1}}
+\newcommand{\invp}[1]{\inv{\rndp{{#1}}}}
+\newcommand{\trace}[1]{\traceop {#1}}
+\newcommand{\sign}[1]{\sgn \left({#1}\right)}
+
+%specific vectors
+\newcommand{\nullv}{\mcol{0}}
+\newcommand{\rotv}[3][ ]{\vrelprj{\rotvecsymb}{#2}{#3}{#1}}
+\newcommand{\normrotv}[2]{\norm{\vrel{\rotvecsymb}{#1}{#2}}}
+\newcommand{\angacc}[3]{\vrelprj{\angaccsymb}{#1}{#2}{#3}}
+\newcommand{\angvel}[3]{\vrelprj{\angvelsymb}{#1}{#2}{#3}}
+\newcommand{\angveldot}[3]{\vrelprjdot{\angvelsymb}{#1}{#2}{#3}}
+\newcommand{\rotvdot}[3]{{\dot{\mcol{\rotvecsymb}}}_{{#1}{#2}}^{#3}}
+\newcommand{\cangvel}[4]{{\angvelsymb}^{#3}_{{#1}{#2}(#4)}}
+\newcommand{\cangacc}[4]{{\angaccsymb}^{#3}_{{#1}{#2}(#4)}}
+
+%specific matrices
+\newcommand{\NullM}{\mat{0}}
+\newcommand{\IdM}{\mat{I}}
+\newcommand{\RotMAxAng}[2]{\mat{\rotm}_{\rotax\rotang}\rndp{{{#1}}, {{#2}}}}
+\newcommand{\RotMRotV}[1]{\mat{\rotm}_{\rotvecsymb}\rndp{{#1}}}
+\newcommand{\RotMQuat}[1]{\mat{\rotm}_{\quat{\rotq}}\rndp{{#1}}}
+\newcommand{\RotMEuler}[3]{\mat{\rotm}_{\Eulersymb}\rndp{{{#1}}, {{#2}}, {{#3}}}}
+\newcommand{\AngVelSkew}[3]{\vrelprj{\Omega}{#1}{#2}{#3}}
+\newcommand{\RotEuler}[2]{\vrel{\Eulersymb}{#1}{#2}}
+
+%quaternions
+\newcommand{\quat}[1]{\symbfup{#1}} %quaternion font
+\newcommand{\qcmp}[2]{{#1}_{(#2)}}
+\newcommand{\qreal}[1]{\qcmp{#1}{0}}
+\newcommand{\qvec}[1]{\mcol{#1}}
+\newcommand{\qcol}[3][0ex]{\left[ \begin{matrix} {#2}\\[#1] {#3} \end{matrix} \right]} %the content of a matrix environment must not be enclosed in braces
+\newcommand{\qcolcmp}[5][0ex]{\left[ \begin{matrix} {#2}\\[#1] {#3}\\[#1] {#4}\\[#1] {#5} \end{matrix} \right]} %4-component column notation with optional vertical spacing
+\newcommand{\qi}{\symbfup{i}}
+\newcommand{\qj}{\symbfup{j}}
+\newcommand{\qk}{\symbfup{k}}
+\newcommand{\qcon}[1]{{#1}^{*}}
+\newcommand{\qconp}[1]{\left({#1}\right)^{*}}
+\newcommand{\qprod}{\odot}
+\newcommand{\qnorm}[1]{\left\|{#1}\right\|}
+\newcommand{\RotQAxAng}[2]{\quat{\rotq}_{\rotax \rotang}\rndp{{{#1}}, {{#2}}}}
+\newcommand{\RotQ}[2]{\quat{\rotq}^{#1}_{#2}} %attitude quaternion (1:reference, 2: target)
+\newcommand{\RotQdot}[2]{\dot{\quat{\rotq}}^{#1}_{#2}} 
+\newcommand{\RotQcon}[2]{\qcon{\left( \RotQ{#1}{#2} \right)}} 
+\newcommand{\RotQdotcon}[2]{\qcon{\left( \RotQdot{#1}{#2} \right)}} 
+\newcommand{\RotQEuler}[3]{\quat{\rotq}_{\Eulersymb}\rndp{{{#1}}, {{#2}}, {{#3}}}}
+\newcommand{\RotQRotV}[1]{\quat{\rotq}_{\rotvecsymb}\rndp{{#1}}}
+\newcommand{\qprj}[2]{\quat{#1}^{#2}}
+\newcommand{\cRotQ}[3]{\csubprj{\rotq}{#2}{#1}{#3}} %component representation of a rotation (1: original, 2: target)
+\newcommand{\reRotQ}[2]{\cRotQ{{#1}}{{#2}}{0}} 
+\newcommand{\imRotQ}[2]{\mcol{\rotq}^{#1}_{#2}} 
+\newcommand{\qvangv}[1]{\qvec{\angvelsymb} \mkern-2mu \left({#1}\right)} 
+
+
+\begin{comment}
+Command tests:
+\prj{v}{a}
+\sub{v}{a}
+\rel{v}{\alpha}{\beta}
+\subprj{v}{a_1}{\gamma}
+\relprj{u}{\alpha}{\beta}{\gamma}
+\vpsub{v}{a}
+\varel{v}{\alpha}{\beta}
+\vsub{v}{a}
+\vrel{v}{\alpha}{\beta}
+\vsubprj{v}{a}{\gamma}
+\vrelprj{u}{\alpha}{\beta}{\gamma}
+\ind{{\relprj{u}{\alpha}{\beta}{\gamma}}}{j}
+\basisopt
+\basisopt[\alpha]
+\AutC{\alpha}{\beta}{3,2}
+\cRotM{\alpha}{\beta}{i,j}
+\AutM{\alpha}{\beta}
+\RotM{\alpha}{\beta}
+
+\cmp{x}{1}
+\csub{x}{a}{1}
+\cprj{x}{\gamma}{j}
+\crel{x}{\alpha}{\beta}{k}
+\csubprj{x}{\alpha}{\gamma}{3}
+\crelprj{x}{\alpha}{\beta}{\gamma}{3}
+
+\end{comment}
+
+\endinput
